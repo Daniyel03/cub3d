@@ -13,7 +13,8 @@ NAME = cub3D
 all: $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	make -C ./libft
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L./libft -lft
 
 
 $(OBJ_DIR):
@@ -23,9 +24,11 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
 clean:
+	make clean -C ./libft
 	$(RM) $(OBJ_DIR)
 
 fclean: clean
+	make fclean -C ./libft
 	$(RM) $(NAME)
 
 re: fclean all

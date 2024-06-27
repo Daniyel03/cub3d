@@ -6,8 +6,10 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/27 17:06:16 by hrother          ###   ########.fr       */
+/*   Updated: 2024/06/27 17:34:05 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../libft/libft.h"
+#include <stdlib.h>
 #include <unistd.h>
