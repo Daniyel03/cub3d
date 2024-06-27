@@ -3,19 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:08:33 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/27 17:35:02 by hrother          ###   ########.fr       */
+/*   Updated: 2024/06/27 18:21:23 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
-int	main(int argc, char *argv[])
+
+void    get_map(t_cb *cb, char **argv)
 {
-	(void)argc;
-	(void)argv;
-    ft_putendl_fd("This is cub3D!!", 1);
-	return (0);
+	(void)cb;
+    int i = 0;
+    while (argv[1][i])
+        printf("%c\n", argv[1][i++]);
+}
+
+void    cub3d(char **argv)
+{
+    t_cb cb;
+
+	ft_bzero(&cb, sizeof(t_cb));
+    get_map(&cb, argv);
+}
+
+int main(int argc, char **argv)
+{
+    if (argc == 2)
+        cub3d(argv);
+    return 0;
 }
