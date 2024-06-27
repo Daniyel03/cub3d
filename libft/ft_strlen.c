@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: hrother <hrother@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/27 17:08:33 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/27 17:21:06 by hrother          ###   ########.fr       */
+/*   Created: 2023/09/04 13:23:09 by hrother           #+#    #+#             */
+/*   Updated: 2023/09/13 15:03:01 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+size_t	ft_strlen(const char *str)
 {
-	(void)argc;
-	(void)argv;
-	write(1, "This is cub3D\n", 14);
-	return (0);
+	int	result;
+
+	result = 0;
+	while (str[result] != '\0')
+	{
+		result++;
+	}
+	return (result);
 }

@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: hrother <hrother@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/27 17:08:33 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/27 17:21:06 by hrother          ###   ########.fr       */
+/*   Created: 2023/09/04 14:20:26 by hrother           #+#    #+#             */
+/*   Updated: 2023/09/04 19:10:38 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+int	ft_isalnum(int c)
 {
-	(void)argc;
-	(void)argv;
-	write(1, "This is cub3D\n", 14);
-	return (0);
+	return (ft_isalpha(c) || ft_isdigit(c));
 }

@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: hrother <hrother@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/27 17:08:33 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/27 17:21:06 by hrother          ###   ########.fr       */
+/*   Created: 2023/09/06 12:33:38 by hrother           #+#    #+#             */
+/*   Updated: 2023/09/06 16:29:14 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-
-int	main(int argc, char *argv[])
+int	ft_toupper(int c)
 {
-	(void)argc;
-	(void)argv;
-	write(1, "This is cub3D\n", 14);
-	return (0);
+	if ('a' <= c && c <= 'z')
+		c -= 32;
+	return (c);
 }
