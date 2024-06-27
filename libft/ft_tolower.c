@@ -1,15 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: hrother <hrother@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/27 17:34:05 by hrother          ###   ########.fr       */
+/*   Created: 2023/09/06 12:33:38 by hrother           #+#    #+#             */
+/*   Updated: 2023/09/06 15:47:14 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
-#include <stdlib.h>
-#include <unistd.h>
+int	ft_tolower(int c)
+{
+	if ('A' <= c && c <= 'Z')
+		c += 32;
+	return (c);
+}

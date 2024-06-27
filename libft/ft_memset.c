@@ -1,15 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: hrother <hrother@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/27 17:34:05 by hrother          ###   ########.fr       */
+/*   Created: 2023/09/05 13:11:25 by hrother           #+#    #+#             */
+/*   Updated: 2023/09/05 15:05:53 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
-#include <stdlib.h>
-#include <unistd.h>
+#include "libft.h"
+
+void	*ft_memset(void *s, int c, size_t n)
+{
+	size_t			i;
+	unsigned char	*p;
+
+	p = s;
+	i = 0;
+	while (i < n)
+	{
+		p[i] = c;
+		i++;
+	}
+	return (s);
+}

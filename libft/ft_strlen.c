@@ -1,15 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: hrother <hrother@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/27 17:34:05 by hrother          ###   ########.fr       */
+/*   Created: 2023/09/04 13:23:09 by hrother           #+#    #+#             */
+/*   Updated: 2023/09/13 15:03:01 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
-#include <stdlib.h>
-#include <unistd.h>
+#include "libft.h"
+
+size_t	ft_strlen(const char *str)
+{
+	int	result;
+
+	result = 0;
+	while (str[result] != '\0')
+	{
+		result++;
+	}
+	return (result);
+}

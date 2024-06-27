@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: hrother <hrother@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/27 17:08:33 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/27 17:35:02 by hrother          ###   ########.fr       */
+/*   Created: 2023/09/06 12:41:30 by hrother           #+#    #+#             */
+/*   Updated: 2023/09/08 19:23:13 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-int	main(int argc, char *argv[])
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	(void)argc;
-	(void)argv;
-    ft_putendl_fd("This is cub3D!!", 1);
-	return (0);
+	unsigned char	*p;
+	unsigned long	i;
+
+	p = (unsigned char *) s;
+	i = 0;
+	while (i < n)
+	{
+		if (p[i] == (unsigned char)c)
+			return ((void *)p + i);
+		i++;
+	}
+	return (NULL);
 }
