@@ -6,7 +6,7 @@
 /*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/27 23:59:51 by hannes           ###   ########.fr       */
+/*   Updated: 2024/06/28 00:36:35 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,7 @@ typedef struct s_cb
 	t_img	img;
 	// t_pers	pers;
 } t_cb;
+
+void	draw_map(t_cb *cb, int map[10][10], int y_max, int x_max);
 
 #endif
