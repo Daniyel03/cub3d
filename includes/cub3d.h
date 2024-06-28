@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/28 14:16:09 by hrother          ###   ########.fr       */
+/*   Updated: 2024/06/28 14:26:23 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,20 @@
 # define WIDTH 1280
 # define HEIGHT 720
 
+typedef struct s_vec2
+{
+	int			x;
+	int			y;
+}				t_vec2;
+
 typedef void	(*t_key_func)(int *val, int rate);
 
 typedef struct s_keybind
 {
 	int			keycode;
 	int			pressed;
+	int			*val;
+	int 		rate;
 	t_key_func	func;
 }				t_keybind;
 
@@ -53,8 +61,9 @@ typedef struct s_cb
 	void		*mlx;
 	void		*win;
 	t_map		*map;
-	// t_key	*keys;
+	t_keybind	*keybinds;
 	t_img		img;
+	t_vec2		player_pos;
 	// t_pers	pers;
 }				t_cb;
 
