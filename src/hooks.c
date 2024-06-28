@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 14:35:49 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/28 14:48:34 by hrother          ###   ########.fr       */
+/*   Updated: 2024/06/28 15:04:41 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,21 @@ int	close_win(t_cb *cb)
 
 int	on_loop(t_cb *cb)
 {
-    (void)cb;
-	//printf("player_pos: %d, %d\n", cb->player_pos.x, cb->player_pos.y);
+	(void)cb;
+	apply_all_keys(cb);
+	printf("player_pos: %d, %d\n", cb->player_pos.x, cb->player_pos.y);
+	ft_bzero(cb->img.addr, HEIGHT * cb->img.line_length);
+    int map[10][10] =  {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                        {1, 0, 0, 1, 0, 0, 0, 0, 0, 1},
+                        {1, 0, 0, 1, 0, 0, 0, 0, 0, 1},
+                        {1, 0, 1, 1, 1, 0, 0, 0, 0, 1},
+                        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                        {1, 0, 0, 0, 0, 1, 1, 0, 0, 1},
+                        {1, 0, 0, 0, 0, 1, 1, 0, 0, 1},
+                        {1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+                        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+                        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
+    draw_map(cb, map, 10, 10);
 	return (0);
 }
 

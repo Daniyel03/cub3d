@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/28 14:56:12 by hrother          ###   ########.fr       */
+/*   Updated: 2024/06/28 15:02:26 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ void			draw_map(t_cb *cb, int map[10][10], int y_max, int x_max);
 void			init_keybinds(t_cb *cb);
 int				set_key(int keycode, int state, t_cb *cb);
 void			setup_hooks(t_cb *cb);
+void			apply_all_keys(t_cb *cb);
 
 #endif

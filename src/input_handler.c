@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 14:17:16 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/28 14:57:03 by hrother          ###   ########.fr       */
+/*   Updated: 2024/06/28 15:02:00 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,3 +54,17 @@ int	set_key(int keycode, int state, t_cb *cb)
 	}
 	return (1);
 }
+
+void apply_all_keys(t_cb *cb)
+{
+    int	i;
+
+    i = 0;
+    while (cb->keybinds[i].keycode != 0)
+    {
+        if (cb->keybinds[i].pressed)
+            cb->keybinds[i].func(cb->keybinds[i].val, cb->keybinds[i].rate);
+        i++;
+    }
+}
+
