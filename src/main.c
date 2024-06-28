@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:08:33 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/28 18:20:20 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/06/28 23:16:02 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,21 @@ void    alloc_array(t_cb *cb)//close when done reading
         cb->map.arr[i++] = malloc(sizeof(int) * count);
         str = get_next_line(cb->map.fd);
     }
+    close(cb->map.fd);
+    cb->map.fd = open(cb->map.filename, O_RDONLY);
+    str = get_next_line(cb->map.fd);
+    temp = 0;
+    i = 0;
+    if (!ft_strncmp(ft_substr(str, 1, 1), " ", 1))
+        cb->map.arr[i][temp] = 2;
+    else
+        cb->map.arr[i][temp] = ft_atoi(ft_substr(str, 1, 1));
+    printf("%d\n", ft_atoi(ft_substr(str, 1, 1)));
+    // while(str)
+    // {   
+    //     while(str[temp])
+    //         cb->map.arr[i][temp] = ft_atoi(str); 
+    // }
     
     // printf("%s\n", str);
 
