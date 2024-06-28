@@ -1,11 +1,11 @@
 CC=clang
-CFLAGS = -Wall -Wextra -Werror -I./includes
+CFLAGS = -g -Wall -Wextra -Werror -I./includes -I./includes/42get_next_line-master
 RM = rm -rf
 
 SRC_DIR = src
 OBJ_DIR = obj
 
-SRCS = $(wildcard $(SRC_DIR)/*.c)
+SRCS = $(wildcard $(SRC_DIR)/*.c) $(wildcard includes/42get_next_line-master/*.c)
 OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 
 NAME = cub3D
