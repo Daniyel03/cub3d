@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/28 16:29:44 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/06/28 17:32:14 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct t_img
 typedef struct s_map
 {
 	int		fd;
+	char	*filename;
 	int		**arr;
 	int		height;
 	int		width;
@@ -66,7 +67,7 @@ typedef struct s_cb
 {
 	void		*mlx;
 	void		*win;
-	t_map		*map;
+	t_map		map;
 	t_keybind	*keybinds;
 	t_img		img;
 	t_vec2		player_pos;
