@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/28 15:02:26 by hrother          ###   ########.fr       */
+/*   Updated: 2024/06/28 16:29:44 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB3D_H
 
 # include "../libft/libft.h"
+# include "42get_next_line-master/get_next_line.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <math.h>
@@ -21,6 +22,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
+
 
 # define WIDTH 1280
 # define HEIGHT 720
@@ -53,8 +56,11 @@ typedef struct t_img
 
 typedef struct s_map
 {
-	int			*fd;
-}				t_map;
+	int		fd;
+	int		**arr;
+	int		height;
+	int		width;
+}			t_map;
 
 typedef struct s_cb
 {
