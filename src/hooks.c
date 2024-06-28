@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 14:35:49 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/28 15:04:41 by hrother          ###   ########.fr       */
+/*   Updated: 2024/06/28 15:37:27 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	on_loop(t_cb *cb)
 {
 	(void)cb;
 	apply_all_keys(cb);
-	printf("player_pos: %d, %d\n", cb->player_pos.x, cb->player_pos.y);
+	printf("player_pos: %f, %f\n", cb->player_pos.x, cb->player_pos.y);
 	ft_bzero(cb->img.addr, HEIGHT * cb->img.line_length);
     int map[10][10] =  {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
                         {1, 0, 0, 1, 0, 0, 0, 0, 0, 1},

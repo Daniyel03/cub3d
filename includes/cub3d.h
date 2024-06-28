@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/28 16:29:44 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/06/28 16:50:30 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,22 @@
 
 # define WIDTH 1280
 # define HEIGHT 720
+# define MAP_SCALE 50
 
 typedef struct s_vec2
 {
-	int			x;
-	int			y;
+	double		x;
+	double		y;
 }				t_vec2;
 
-typedef void	(*t_key_func)(int *val, int rate);
+typedef void	(*t_key_func)(double *val, double rate);
 
 typedef struct s_keybind
 {
 	int			keycode;
 	int			pressed;
-	int			*val;
-	int			rate;
+	double		*val;
+	double		rate;
 	t_key_func	func;
 }				t_keybind;
 
@@ -66,7 +67,7 @@ typedef struct s_cb
 {
 	void		*mlx;
 	void		*win;
-	t_map		*map;
+	t_map		map;
 	t_keybind	*keybinds;
 	t_img		img;
 	t_vec2		player_pos;
@@ -78,5 +79,7 @@ void			init_keybinds(t_cb *cb);
 int				set_key(int keycode, int state, t_cb *cb);
 void			setup_hooks(t_cb *cb);
 void			apply_all_keys(t_cb *cb);
+
+double			distance(t_vec2 a, t_vec2 b);
 
 #endif
