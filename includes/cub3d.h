@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/28 16:50:30 by hrother          ###   ########.fr       */
+/*   Updated: 2024/06/28 18:01:47 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # define WIDTH 1280
 # define HEIGHT 720
 # define MAP_SCALE 50
+
+# define SUCCESS 0
+# define FAILURE -1
 
 typedef struct s_vec2
 {

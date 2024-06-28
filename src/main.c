@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:08:33 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/28 16:28:07 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/06/28 17:13:32 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void    get_fd(t_cb *cb, char **argv)
         return ;
     if (ft_strncmp(argv[1] + i, ".cub", ft_strlen(argv[1] + i)))
         return ;
-    cb->map->fd = open(argv[1], O_RDONLY);
+    cb->map.fd = open(argv[1], O_RDONLY);
     // perror("");
     if (cb->map->fd == -1)
         return ;
