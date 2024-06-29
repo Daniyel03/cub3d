@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:08:33 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/28 16:28:07 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/06/29 11:31:20 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void    get_fd(t_cb *cb, char **argv)
         return ;
     if (ft_strncmp(argv[1] + i, ".cub", ft_strlen(argv[1] + i)))
         return ;
-    cb->map->fd = open(argv[1], O_RDONLY);
+    cb->map.fd = open(argv[1], O_RDONLY);
     // perror("");
-    if (cb->map->fd == -1)
+    if (cb->map.fd == -1)
         return ;
 }
 
@@ -37,8 +37,8 @@ void    alloc_array(t_cb *cb)//close when done reading
     char *str;
     int count = 0;
     
-    cb->map->arr = malloc(sizeof(int *));
-    str = get_next_line(cb->map->fd);
+    cb->map.arr = malloc(sizeof(int *));
+    str = get_next_line(cb->map.fd);
     while(str[count])
         count++;
     
@@ -71,8 +71,8 @@ int	init_mlx(t_cb *cb)
 void init_struct(t_cb *cb)
 {
 	ft_bzero(cb, sizeof(t_cb));
-    cb->map = malloc(sizeof(t_map));
-    ft_bzero(cb->map, sizeof(t_map));
+    //cb->map = malloc(sizeof(t_map));
+    ft_bzero(&cb->map, sizeof(t_map));
 }
 
 void	cub3d(char **argv)
