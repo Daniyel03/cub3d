@@ -13,7 +13,6 @@
 #include "../includes/cub3d.h"
 #include <stdlib.h>
 
-
 void	get_map(t_cb *cb, char **argv)
 {
 	validate_path(cb, argv);
@@ -36,7 +35,6 @@ int	init_mlx(t_cb *cb)
 	return (0);
 }
 
-
 void	init_struct(t_cb *cb)
 {
 	ft_bzero(cb, sizeof(t_cb));
@@ -49,12 +47,15 @@ void	cub3d(char **argv)
 {
 	t_cb	cb;
 
-	// init_struct(&cb);
+	init_struct(&cb);
 	get_map(&cb, argv);
-	// init_mlx(&cb);
-	// init_keybinds(&cb);
-	// setup_hooks(&cb);
-	// mlx_loop(cb.mlx);
+	// tempory fix:
+	cb.map.width = 10;
+	cb.map.height = 10;
+	init_mlx(&cb);
+	init_keybinds(&cb);
+	setup_hooks(&cb);
+	mlx_loop(cb.mlx);
 	exit_cub(&cb, "success\n");
 }
 
