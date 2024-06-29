@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/29 12:10:10 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/06/29 12:31:42 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # define WIDTH 1280
 # define HEIGHT 720
 # define MAP_SCALE 50
+
+# define SUCCESS 0
+# define FAILURE -1
 
 typedef struct s_vec2
 {
