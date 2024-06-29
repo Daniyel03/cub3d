@@ -17,10 +17,10 @@ int	fill_rec(t_map *map, int x, int y)
 	int	ret;
 
 	ret = SUCCESS;
-	if (map->arr[y][x] == 1 || map->arr[y][x] == 3)
-		return (SUCCESS);
 	if (y <= 0 || y >= map->height - 1 || x <= 0 || x >= map->width - 1)
 		return (FAILURE);
+	if (map->arr[y][x] == 1 || map->arr[y][x] == 3)
+		return (SUCCESS);
 	if (map->arr[y][x] != 0)
 		return (FAILURE);
 	map->arr[y][x] = 3;
@@ -36,26 +36,7 @@ int	flood_fill(t_cb *cb)
 	return (fill_rec(&cb->map, (int)cb->player_pos.x, (int)cb->player_pos.y));
 }
 
-void	print_map(t_map map)
-{
-	int	y;
-	int	x;
-
-	y = 0;
-	x = 0;
-	while (y < map.height)
-	{
-		x = 0;
-		while (x < map.width)
-		{
-			printf("%d ", map.arr[y][x]);
-			x++;
-		}
-		printf("\n");
-		y++;
-	}
-}
-
+/*
 int	**malloc_example_map(int arr[10][10])
 {
 	int	i;
@@ -72,7 +53,6 @@ int	**malloc_example_map(int arr[10][10])
 	return (ret);
 }
 
-/*
 int	main(void)
 {
 	int		arr[10][10] =  {{1, 1, 1, 1, 1, 1, 1, 1, 0, 0},

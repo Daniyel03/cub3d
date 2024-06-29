@@ -52,6 +52,9 @@ void	cub3d(char **argv)
 	// tempory fix:
 	cb.map.width = 10;
 	cb.map.height = 10;
+	cb.player_pos = (t_vec2) {8.5, 1.5};
+	flood_fill(&cb);
+	print_map(cb.map);
 	init_mlx(&cb);
 	init_keybinds(&cb);
 	setup_hooks(&cb);

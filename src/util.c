@@ -30,3 +30,23 @@ void	exit_cub(t_cb *cb, char *str)
     if (str)
         printf("%s", str);
 }
+
+void	print_map(t_map map)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	x = 0;
+	while (y < map.height)
+	{
+		x = 0;
+		while (x < map.width)
+		{
+			printf("%d ", map.arr[y][x]);
+			x++;
+		}
+		printf("\n");
+		y++;
+	}
+}
