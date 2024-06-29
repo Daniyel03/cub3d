@@ -17,8 +17,16 @@ double distance(t_vec2 a, t_vec2 b)
     return (sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2)));
 }
 
-void init_example_map(t_cb *cb)
+void	exit_cub(t_cb *cb, char *str)
 {
-    cb->map.arr = malloc(10 * sizeof(int *));
+	//mlx
+    if (cb->map.arr)
+    {
+        if (cb->map.y)
+            while (cb->map.y)
+                free(cb->map.arr[--cb->map.y]);
+        free(cb->map.arr);
+    }
+    if (str)
+        printf("%s", str);
 }
-

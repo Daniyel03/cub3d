@@ -17,13 +17,12 @@
 # include "42get_next_line-master/get_next_line.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
+# include <fcntl.h>
 # include <math.h>
 # include <mlx.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <fcntl.h>
-
 
 # define WIDTH 1280
 # define HEIGHT 720
@@ -60,10 +59,12 @@ typedef struct t_img
 
 typedef struct s_map
 {
-	char	*filename;
-	int		**arr;
-	int		y;
-}			t_map;
+	char		*filename;
+	int			**arr;
+	int			y;
+	int			width;
+	int			height;
+}				t_map;
 
 typedef struct s_cb
 {
@@ -76,17 +77,20 @@ typedef struct s_cb
 	// t_pers	pers;
 }				t_cb;
 
-void			draw_map(t_cb *cb, int map[10][10], int y_max, int x_max);
+// input handling
 void			init_keybinds(t_cb *cb);
 int				set_key(int keycode, int state, t_cb *cb);
 void			setup_hooks(t_cb *cb);
 void			apply_all_keys(t_cb *cb);
 
+// rendering
 double			distance(t_vec2 a, t_vec2 b);
+void			draw_map(t_cb *cb);
 
-//parser
-void	validate_path(t_cb *cb, char **argv);
-void	alloc_array(t_cb *cb);
-void	exit_cub(t_cb *cb, char *str);
+// parser
+void			validate_path(t_cb *cb, char **argv);
+void			alloc_array(t_cb *cb);
+
+void			exit_cub(t_cb *cb, char *str);
 
 #endif

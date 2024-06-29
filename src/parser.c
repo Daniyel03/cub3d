@@ -12,20 +12,6 @@
 
 #include "../includes/cub3d.h"
 
-void	exit_cub(t_cb *cb, char *str)
-{
-	//mlx
-    if (cb->map.arr)
-    {
-        if (cb->map.y)
-            while (cb->map.y)
-                free(cb->map.arr[--cb->map.y]);
-        free(cb->map.arr);
-    }
-    if (str)
-        printf("%s", str);
-}
-
 void	validate_path(t_cb *cb, char **argv)
 {
 	int	i;
@@ -50,7 +36,7 @@ void	iterate_line(t_cb *cb, int *x, char *str)
 {
 	while (str[(*x)] && str[(*x)] != '\n')
 	{
-		if (str[(*x)] != 'N' && str[(*x)] != '1' && str[(*x)] != '2'
+		if (str[(*x)] != 'N' && str[(*x)] != '0' && str[(*x)] != '1'
 			&& str[(*x)] != ' ' && str[(*x)] != '\0' && str[(*x)] != '\n')
 			return ;
 		if (str[(*x)] == 'N')
