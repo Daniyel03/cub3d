@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 10:04:52 by dscholz           #+#    #+#             */
-/*   Updated: 2024/06/29 14:54:11 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/06/29 18:37:52 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@ void	validate_path(t_cb *cb, char **argv)
 	cb->map.filename = argv[1];
 }
 
-void	iterate_line(t_cb *cb, int *x, char *str)
+void	iterate_line(t_cb *cb, int *x, char *str, int temp_fd)
 {
 	while (str[(*x)] && str[(*x)] != '\n')
 	{
 		if (str[(*x)] != 'N' && str[(*x)] != '0' && str[(*x)] != '1'
 			&& str[(*x)] != ' ' && str[(*x)] != '\0' && str[(*x)] != '\n')
-			return ;
+			return (close(temp_fd), free(str), exit_cub(cb, "invalid map input, only 0 and 1 allowed\n"));
 		if (str[(*x)] == 'N')
 		{
 			if (cb->player_pos.x != -1)
-				return ;
+				return(close(temp_fd), free(str), exit_cub(cb, "invalid map input, only one player position"));
 			cb->player_pos.x = (*x);
 			cb->player_pos.y = cb->map.y;
 		}
@@ -65,7 +65,7 @@ void	validate_input(t_cb *cb)
 	while (str)
 	{
 		x = 0;
-		iterate_line(cb, &x, str);
+		iterate_line(cb, &x, str, temp_fd);
 		cb->map.arr[cb->map.y] = malloc(sizeof(int) * (x + 1));
 		if (!cb->map.arr[cb->map.y++])
 			return (exit_cub(cb, NULL));
@@ -83,8 +83,6 @@ void	fill_lines(t_cb *cb)
 	char	*c;
 	int		x;
 	int		y;
-
-		cb->map.arr[0][0] = ft_atoi("2");
 
 	x = -1;
 	y = 0;
@@ -132,7 +130,7 @@ void	alloc_array(t_cb *cb)
 	cb->map.arr = malloc(sizeof(int *) * count);
 	if (!cb->map.arr)
 		return (exit_cub(cb, NULL));
-	*cb->map.arr = NULL;
+	// *cb->map.arr = NULL;
 	if (close(temp_fd) == -1)
 		return (exit_cub(cb, NULL));
 	validate_input(cb);

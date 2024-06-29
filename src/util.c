@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 15:06:44 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/29 11:31:42 by hrother          ###   ########.fr       */
+/*   Updated: 2024/06/29 18:34:36 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,5 @@ void	exit_cub(t_cb *cb, char *str)
     }
     if (str)
         printf("%s", str);
+    exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:08:33 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/29 14:16:59 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/06/29 18:22:41 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	cub3d(char **argv)
 {
 	t_cb	cb;
 
-	// init_struct(&cb);
+	init_struct(&cb);
 	get_map(&cb, argv);
 	// tempory fix:
 	cb.map.width = 10;
