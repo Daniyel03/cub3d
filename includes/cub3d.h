@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/28 18:01:47 by hrother          ###   ########.fr       */
+/*   Updated: 2024/06/29 12:31:42 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,9 @@ typedef struct t_img
 
 typedef struct s_map
 {
-	int		fd;
+	char	*filename;
 	int		**arr;
-	int		height;
-	int		width;
+	int		y;
 }			t_map;
 
 typedef struct s_cb
@@ -84,5 +83,10 @@ void			setup_hooks(t_cb *cb);
 void			apply_all_keys(t_cb *cb);
 
 double			distance(t_vec2 a, t_vec2 b);
+
+//parser
+void	validate_path(t_cb *cb, char **argv);
+void	alloc_array(t_cb *cb);
+void	exit_cub(t_cb *cb, char *str);
 
 #endif
