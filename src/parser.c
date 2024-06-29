@@ -55,7 +55,7 @@ void	validate_input(t_cb *cb)
 	char	*str;
 	int		temp_fd;
 	int		x;
-    
+
 	cb->map.y = 0;
 	x = 0;
 	temp_fd = open(cb->map.filename, O_RDONLY);
@@ -83,8 +83,6 @@ void	fill_lines(t_cb *cb)
 	char	*c;
 	int		x;
 	int		y;
-
-		cb->map.arr[0][0] = ft_atoi("2");
 
 	x = -1;
 	y = 0;
