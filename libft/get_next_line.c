@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "libft.h"
 
 char	*trim_after(char **str, int len)
 {
@@ -73,6 +74,7 @@ char	*get_next_line(int fd)
 {
 	static char	*str = NULL;
 	int			nl_i;
+	char		*ret;
 
 	str = init_str(str);
 	if (!str)
@@ -87,7 +89,12 @@ char	*get_next_line(int fd)
 		nl_i = get_i_of_newline(str);
 	}
 	if (str && *str)
-		return (trim_after(&str, nl_i + 1));
+	{
+		ret = trim_after(&str, nl_i + 1);
+		if (*str == '\0')
+			(free(str), str = NULL);
+		return (ret);
+	}
 	else
 		return (free(str), str = NULL, NULL);
 }

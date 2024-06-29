@@ -72,17 +72,3 @@ char	*ft_strjoin(const char *str, const char *buffer)
 	res[i] = '\0';
 	return (res);
 }
-
-void	ft_bzero(void *s, size_t n)
-{
-	size_t			i;
-	unsigned char	*p;
-
-	p = s;
-	i = 0;
-	while (i < n)
-	{
-		p[i] = '\0';
-		i++;
-	}
-}
