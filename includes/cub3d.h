@@ -89,7 +89,10 @@ void			draw_map(t_cb *cb);
 // parser
 void			validate_path(t_cb *cb, char **argv);
 void			alloc_array(t_cb *cb);
+int				flood_fill(t_cb *cb);
 
+// util
 void			exit_cub(t_cb *cb, char *str);
+void			print_map(t_map map);
 
 #endif

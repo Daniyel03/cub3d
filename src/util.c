@@ -38,3 +38,23 @@ void	exit_cub(t_cb *cb, char *str)
         printf("%s", str);
     exit(0); //TODO: exit with errorcode when an error occured
 }
+
+void	print_map(t_map map)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	x = 0;
+	while (y < map.y)
+	{
+		x = 0;
+		while (map.arr[y][x] != -1)
+		{
+			printf("%d ", map.arr[y][x]);
+			x++;
+		}
+		printf("\n");
+		y++;
+	}
+}

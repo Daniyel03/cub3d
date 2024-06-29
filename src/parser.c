@@ -42,7 +42,7 @@ void	iterate_line(t_cb *cb, int *x, char *str, int temp_fd)
 		if (str[(*x)] == 'N')
 		{
 			if (cb->player_pos.x != -1)
-				return(close(temp_fd), free(str), exit_cub(cb, "invalid map input, only one player position"));
+				return(close(temp_fd), free(str), exit_cub(cb, "invalid map input, only one player position\n"));
 			cb->player_pos.x = (*x);
 			cb->player_pos.y = cb->map.y;
 		}
@@ -100,10 +100,10 @@ void	fill_lines(t_cb *cb)
 			else
 				cb->map.arr[y][x] = ft_atoi(c);
 			free(c);
-			printf("%d", cb->map.arr[y][x]);
+			// printf("%d", cb->map.arr[y][x]);
 		}
 		cb->map.arr[y][x] = -1;
-		printf("%d\n", cb->map.arr[y][x]);
+		// printf("%d\n", cb->map.arr[y][x]);
 		y++;
 		free(str);
 		str = get_next_line(temp_fd);

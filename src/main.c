@@ -15,8 +15,13 @@
 
 void	get_map(t_cb *cb, char **argv)
 {
+	int	valid;
+
 	validate_path(cb, argv);
 	alloc_array(cb);
+	print_map(cb->map);
+	valid = flood_fill(cb);
+	printf("valid map: %d\n", valid);
 }
 
 int	init_mlx(t_cb *cb)
@@ -50,10 +55,10 @@ void	cub3d(char **argv)
 	t_cb	cb;
 
 	init_struct(&cb);
-	get_map(&cb, argv);
 	// tempory fix:
-	cb.map.width = 10;
-	cb.map.height = 10;
+	get_map(&cb, argv);
+	printf("player: %f, %f\n", cb.player_pos.x, cb.player_pos.y);
+	print_map(cb.map);
 	// init_mlx(&cb);
 	// init_keybinds(&cb);
 	// setup_hooks(&cb);
