@@ -90,6 +90,7 @@ void			draw_map(t_cb *cb);
 // parser
 void			validate_path(t_cb *cb, char **argv);
 void			alloc_array(t_cb *cb);
+
 void			exit_cub(t_cb *cb, char *str);
 
 #endif
