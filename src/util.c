@@ -46,10 +46,10 @@ void	print_map(t_map map)
 
 	y = 0;
 	x = 0;
-	while (y < map.height)
+	while (y < map.y)
 	{
 		x = 0;
-		while (x < map.width)
+		while (map.arr[y][x] != -1)
 		{
 			printf("%d ", map.arr[y][x]);
 			x++;

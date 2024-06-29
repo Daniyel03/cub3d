@@ -15,9 +15,13 @@
 
 void	get_map(t_cb *cb, char **argv)
 {
+	int	valid;
+
 	validate_path(cb, argv);
 	alloc_array(cb);
-	// flood_fill(cb);
+	print_map(cb->map);
+	valid = flood_fill(cb);
+	printf("valid map: %d\n", valid);
 }
 
 int	init_mlx(t_cb *cb)

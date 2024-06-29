@@ -17,7 +17,7 @@ int	fill_rec(t_map *map, int x, int y)
 	int	ret;
 
 	ret = SUCCESS;
-	if (y <= 0 || y >= map->height - 1 || x <= 0 || x >= map->width - 1)
+	if (y <= 0 || y >= map->y - 1 || x <= 0)
 		return (FAILURE);
 	if (map->arr[y][x] == 1 || map->arr[y][x] == 3)
 		return (SUCCESS);

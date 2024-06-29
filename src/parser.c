@@ -100,10 +100,10 @@ void	fill_lines(t_cb *cb)
 			else
 				cb->map.arr[y][x] = ft_atoi(c);
 			free(c);
-			printf("%d", cb->map.arr[y][x]);
+			// printf("%d", cb->map.arr[y][x]);
 		}
 		cb->map.arr[y][x] = -1;
-		printf("%d\n", cb->map.arr[y][x]);
+		// printf("%d\n", cb->map.arr[y][x]);
 		y++;
 		free(str);
 		str = get_next_line(temp_fd);
