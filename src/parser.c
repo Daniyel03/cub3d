@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 10:04:52 by dscholz           #+#    #+#             */
-/*   Updated: 2024/06/29 12:03:27 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/06/29 14:54:11 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	validate_input(t_cb *cb)
 	char	*str;
 	int		temp_fd;
 	int		x;
-    
+
 	cb->map.y = 0;
 	x = 0;
 	temp_fd = open(cb->map.filename, O_RDONLY);
@@ -66,7 +66,7 @@ void	validate_input(t_cb *cb)
 	{
 		x = 0;
 		iterate_line(cb, &x, str);
-		cb->map.arr[cb->map.y] = malloc(sizeof(int) * x);
+		cb->map.arr[cb->map.y] = malloc(sizeof(int) * (x + 1));
 		if (!cb->map.arr[cb->map.y++])
 			return (exit_cub(cb, NULL));
 		free(str);
@@ -87,8 +87,10 @@ void	fill_lines(t_cb *cb)
 	x = -1;
 	y = 0;
 	temp_fd = open(cb->map.filename, O_RDONLY);
+	if (temp_fd == -1)
+		return (exit_cub(cb, NULL));
 	str = get_next_line(temp_fd);
-	while (str)
+	while (y < cb->map.y)
 	{
 		while (str[++x] && str[x] != '\n')
 		{
@@ -98,12 +100,14 @@ void	fill_lines(t_cb *cb)
 			else
 				cb->map.arr[y][x] = ft_atoi(c);
 			free(c);
-			printf("%d", cb->map.arr[y][x]);
+			// printf("%d", cb->map.arr[y][x]);
 		}
+		cb->map.arr[y][x] = -1;
+		// printf("%d\n", cb->map.arr[y][x]);
 		y++;
+		free(str);
 		str = get_next_line(temp_fd);
 		x = -1;
-		printf("\n");
 	}
 }
 
