@@ -14,7 +14,6 @@
 # define CUB3D_H
 
 # include "../libft/libft.h"
-# include "42get_next_line-master/get_next_line.h"
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <fcntl.h>
