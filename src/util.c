@@ -36,4 +36,5 @@ void	exit_cub(t_cb *cb, char *str)
     }
     if (str)
         printf("%s", str);
+    exit(0); //TODO: exit with errorcode when an error occured
 }

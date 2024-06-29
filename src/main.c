@@ -23,15 +23,15 @@ int	init_mlx(t_cb *cb)
 {
 	cb->mlx = mlx_init();
 	if (!cb->mlx)
-		return (-1);
+		return (exit_cub(cb, "mlx error"), FAILURE);
 	cb->win = mlx_new_window(cb->mlx, WIDTH, HEIGHT, "cub3D");
 	if (!cb->win)
-		return (-1);
+		return (exit_cub(cb, "mlx error"), FAILURE);
 	cb->img.img = mlx_new_image(cb->mlx, WIDTH, HEIGHT);
 	cb->img.addr = mlx_get_data_addr(cb->img.img, &cb->img.bits_per_pixel,
 			&cb->img.line_length, &cb->img.endian);
 	if (cb->img.img == NULL || cb->img.addr == NULL)
-		return (-1); // --> exit
+		return (exit_cub(cb, "mlx error"), FAILURE);
 	return (0);
 }
 
@@ -41,6 +41,8 @@ void	init_struct(t_cb *cb)
 	ft_bzero(&cb->map, sizeof(t_map));
 	cb->player_pos.x = -1;
 	cb->player_pos.y = -1;
+	cb->keybinds = NULL;
+	cb->mlx = NULL;
 }
 
 void	cub3d(char **argv)
