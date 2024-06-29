@@ -55,7 +55,7 @@ void	validate_input(t_cb *cb)
 	char	*str;
 	int		temp_fd;
 	int		x;
-    
+
 	cb->map.y = 0;
 	x = 0;
 	temp_fd = open(cb->map.filename, O_RDONLY);

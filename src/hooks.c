@@ -14,16 +14,7 @@
 
 int	close_win(t_cb *cb)
 {
-	// if (cb->map)
-	// free_map(cb->map);
-	if (cb->img.img)
-		mlx_destroy_image(cb->mlx, cb->img.img);
-	if (cb->win)
-		mlx_destroy_window(cb->mlx, cb->win);
-	if (cb->mlx)
-		mlx_destroy_display(cb->mlx);
-	free(cb->mlx);
-	free(cb->keybinds);
+	exit_cub(cb, "window closed\n");
 	exit(0);
 	return (0);
 }
