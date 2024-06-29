@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:21:35 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/28 18:20:40 by hrother          ###   ########.fr       */
+/*   Updated: 2024/06/29 11:24:16 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	**malloc_example_map(int arr[10][10])
 	return (ret);
 }
 
+/*
 int	main(void)
 {
 	int		arr[10][10] =  {{1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
@@ -93,3 +94,4 @@ int	main(void)
 	printf ("valid: %d\n", flood_fill(&cb));
 	print_map(cb.map);
 }
+*/
