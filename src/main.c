@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:08:33 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/28 17:13:32 by hrother          ###   ########.fr       */
+/*   Updated: 2024/06/29 11:42:14 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void    get_fd(t_cb *cb, char **argv)
         return ;
     cb->map.fd = open(argv[1], O_RDONLY);
     // perror("");
-    if (cb->map->fd == -1)
+    if (cb->map.fd == -1)
         return ;
 }
 
@@ -37,8 +37,8 @@ void    alloc_array(t_cb *cb)//close when done reading
     char *str;
     int count = 0;
     
-    cb->map->arr = malloc(sizeof(int *));
-    str = get_next_line(cb->map->fd);
+    cb->map.arr = malloc(sizeof(int *));
+    str = get_next_line(cb->map.fd);
     while(str[count])
         count++;
     
@@ -71,8 +71,8 @@ int	init_mlx(t_cb *cb)
 void init_struct(t_cb *cb)
 {
 	ft_bzero(cb, sizeof(t_cb));
-    cb->map = malloc(sizeof(t_map));
-    ft_bzero(cb->map, sizeof(t_map));
+    //cb->map = malloc(sizeof(t_map));
+    ft_bzero(&cb->map, sizeof(t_map));
 }
 
 void	cub3d(char **argv)

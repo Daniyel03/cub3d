@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 14:17:16 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/28 15:39:37 by hrother          ###   ########.fr       */
+/*   Updated: 2024/06/29 11:35:36 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	set_key(int keycode, int state, t_cb *cb)
 	{
 		if (cb->keybinds[i].keycode == keycode)
 		{
-			printf("set key: %d to %d\n", keycode, state);
 			cb->keybinds[i].pressed = state;
 			return (0);
 		}
