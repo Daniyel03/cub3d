@@ -54,10 +54,10 @@ void	cub3d(char **argv)
 	// tempory fix:
 	cb.map.width = 10;
 	cb.map.height = 10;
-	init_mlx(&cb);
-	init_keybinds(&cb);
-	setup_hooks(&cb);
-	mlx_loop(cb.mlx);
+	// init_mlx(&cb);
+	// init_keybinds(&cb);
+	// setup_hooks(&cb);
+	// mlx_loop(cb.mlx);
 	exit_cub(&cb, "success\n");
 }
 
