@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:08:33 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/29 12:31:52 by hrother          ###   ########.fr       */
+/*   Updated: 2024/06/29 14:16:59 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,15 @@ void	cub3d(char **argv)
 {
 	t_cb	cb;
 
-	init_struct(&cb);
+	// init_struct(&cb);
 	get_map(&cb, argv);
 	// tempory fix:
 	cb.map.width = 10;
 	cb.map.height = 10;
-	init_mlx(&cb);
-	init_keybinds(&cb);
-	setup_hooks(&cb);
-	mlx_loop(cb.mlx);
+	// init_mlx(&cb);
+	// init_keybinds(&cb);
+	// setup_hooks(&cb);
+	// mlx_loop(cb.mlx);
 	exit_cub(&cb, "success\n");
 }
 
