@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:08:33 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/29 18:22:41 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/06/30 11:08:56 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	get_map(t_cb *cb, char **argv)
 
 	validate_path(cb, argv);
 	alloc_array(cb);
-	print_map(cb->map);
 	valid = flood_fill(cb);
+	print_map(cb->map);
 	printf("valid map: %d\n", valid);
 }
 
@@ -58,7 +58,7 @@ void	cub3d(char **argv)
 	// tempory fix:
 	get_map(&cb, argv);
 	printf("player: %f, %f\n", cb.player_pos.x, cb.player_pos.y);
-	print_map(cb.map);
+	// print_map(cb.map);
 	// init_mlx(&cb);
 	// init_keybinds(&cb);
 	// setup_hooks(&cb);

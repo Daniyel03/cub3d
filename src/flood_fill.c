@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:21:35 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/29 11:24:16 by hrother          ###   ########.fr       */
+/*   Updated: 2024/06/30 11:11:27 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	fill_rec(t_map *map, int x, int y)
 	int	ret;
 
 	ret = SUCCESS;
-	if (y <= 0 || y >= map->y - 1 || x <= 0)
+	if (y < 0 || y >= map->y - 1 || x < 0)
 		return (FAILURE);
 	if (map->arr[y][x] == 1 || map->arr[y][x] == 3)
 		return (SUCCESS);
