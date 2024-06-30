@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/29 12:31:42 by hrother          ###   ########.fr       */
+/*   Updated: 2024/06/30 11:47:56 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,14 @@ typedef struct s_vec2
 }				t_vec2;
 
 typedef void	(*t_key_func)(double *val, double rate);
+
+typedef struct s_valid_cords
+{
+	int			x;
+	int			y;
+	struct s_valid_cords	*next;
+}				t_valid_cords;
+
 
 typedef struct s_keybind
 {
@@ -73,6 +81,7 @@ typedef struct s_cb
 	t_keybind	*keybinds;
 	t_img		img;
 	t_vec2		player_pos;
+	t_valid_cords *cords;
 	// t_pers	pers;
 }				t_cb;
 
@@ -90,6 +99,7 @@ void			draw_map(t_cb *cb);
 void			validate_path(t_cb *cb, char **argv);
 void			alloc_array(t_cb *cb);
 int				flood_fill(t_cb *cb);
+void	print_cord(t_cb *cb);
 
 // util
 void			exit_cub(t_cb *cb, char *str);

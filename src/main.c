@@ -6,12 +6,14 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:08:33 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/30 11:08:56 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/06/30 12:03:38 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 #include <stdlib.h>
+
+
 
 void	get_map(t_cb *cb, char **argv)
 {
@@ -21,6 +23,7 @@ void	get_map(t_cb *cb, char **argv)
 	alloc_array(cb);
 	valid = flood_fill(cb);
 	print_map(cb->map);
+	print_cord(cb);
 	printf("valid map: %d\n", valid);
 }
 
@@ -44,6 +47,8 @@ void	init_struct(t_cb *cb)
 {
 	ft_bzero(cb, sizeof(t_cb));
 	ft_bzero(&cb->map, sizeof(t_map));
+	// cb->cords = malloc(sizeof(t_valid_cords));
+	// ft_bzero(cb->cords, sizeof(t_valid_cords));
 	cb->player_pos.x = -1;
 	cb->player_pos.y = -1;
 	cb->keybinds = NULL;
