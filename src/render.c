@@ -45,7 +45,7 @@ void	draw_map(t_cb *cb)
 		{
 			if (y / MAP_SCALE >= cb->map.y || cb->map.arr[y / MAP_SCALE][x / MAP_SCALE] == -1)
 				break ;
-			if (is_player(x, y, cb->player_pos))
+			if (is_player(x, y, cb->player.pos))
 				put_pixel(cb->img, x, y, 0xff0000);
 			else if (cb->map.arr[y / MAP_SCALE][x / MAP_SCALE] == 1)
 				put_pixel(cb->img, x, y, 0x0000ff);

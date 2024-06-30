@@ -30,10 +30,10 @@ void	init_keybind(t_keybind *keybind, int keycode, t_key_func func, double *val,
 void	init_keybinds(t_cb *cb)
 {
 	cb->keybinds = malloc(sizeof(t_keybind) * 5);
-	init_keybind(&cb->keybinds[0], XK_w, add_to_val, &cb->player_pos.y, 0.1);
-    init_keybind(&cb->keybinds[1], XK_s, add_to_val, &cb->player_pos.y, -0.1);
-    init_keybind(&cb->keybinds[2], XK_a, add_to_val, &cb->player_pos.x, -0.1);
-    init_keybind(&cb->keybinds[3], XK_d, add_to_val, &cb->player_pos.x, 0.1);
+	init_keybind(&cb->keybinds[0], XK_w, add_to_val, &cb->player.pos.y, 0.1);
+    init_keybind(&cb->keybinds[1], XK_s, add_to_val, &cb->player.pos.y, -0.1);
+    init_keybind(&cb->keybinds[2], XK_a, add_to_val, &cb->player.pos.x, -0.1);
+    init_keybind(&cb->keybinds[3], XK_d, add_to_val, &cb->player.pos.x, 0.1);
 	init_keybind(&cb->keybinds[4], 0, NULL, NULL, 0);
 }
 

@@ -65,7 +65,7 @@ int	fill_rec(t_cb *cb, t_map *map, int x, int y)
 
 int	flood_fill(t_cb *cb)
 {
-	return (fill_rec(cb, &cb->map, (int)cb->player_pos.x, (int)cb->player_pos.y));
+	return (fill_rec(cb, &cb->map, (int)cb->player.pos.x, (int)cb->player.pos.y));
 }
 
 /*
@@ -100,8 +100,8 @@ int	main(void)
 	t_cb	cb;
 
 	cb.map = (t_map){0, malloc_example_map(arr), 10, 10};
-	cb.player_pos.x = 2;
-	cb.player_pos.y = 2;
+	cb.player.pos.x = 2;
+	cb.player.pos.y = 2;
 	print_map(cb.map);
 	printf ("valid: %d\n", flood_fill(&cb));
 	print_map(cb.map);

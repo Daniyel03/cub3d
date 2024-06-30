@@ -49,8 +49,8 @@ void	init_struct(t_cb *cb)
 	ft_bzero(&cb->map, sizeof(t_map));
 	// cb->cords = malloc(sizeof(t_valid_cords));
 	// ft_bzero(cb->cords, sizeof(t_valid_cords));
-	cb->player_pos.x = -1;
-	cb->player_pos.y = -1;
+	cb->player.pos.x = -1;
+	cb->player.pos.y = -1;
 	cb->keybinds = NULL;
 	cb->mlx = NULL;
 }
@@ -62,7 +62,7 @@ void	cub3d(char **argv)
 	init_struct(&cb);
 	// tempory fix:
 	get_map(&cb, argv);
-	printf("player: %f, %f\n", cb.player_pos.x, cb.player_pos.y);
+	printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
 	print_map(cb.map);
 	init_mlx(&cb);
 	init_keybinds(&cb);

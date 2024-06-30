@@ -41,10 +41,10 @@ void	iterate_line(t_cb *cb, int *x, char *str, int temp_fd)
 			return (close(temp_fd), free(str), exit_cub(cb, "invalid map input, only 0 and 1 allowed\n"));
 		if (str[(*x)] == 'N')
 		{
-			if (cb->player_pos.x != -1)
+			if (cb->player.pos.x != -1)
 				return(close(temp_fd), free(str), exit_cub(cb, "invalid map input, only one player position\n"));
-			cb->player_pos.x = (*x);
-			cb->player_pos.y = cb->map.y;
+			cb->player.pos.x = (*x);
+			cb->player.pos.y = cb->map.y;
 		}
 		(*x)++;
 	}
