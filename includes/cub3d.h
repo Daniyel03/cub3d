@@ -132,4 +132,7 @@ void						print_cord(t_cb *cb);
 void						exit_cub(t_cb *cb, char *str);
 void						print_map(t_map map);
 
+t_vec2						get_dir_vec(double distance, double rot);
+t_vec2						scale_vec(t_vec2 vec, double scale);
+
 #endif

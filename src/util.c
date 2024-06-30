@@ -12,10 +12,6 @@
 
 #include "cub3d.h"
 
-double distance(t_vec2 a, t_vec2 b)
-{
-    return (sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2)));
-}
 
 void	exit_cub(t_cb *cb, char *str)
 {

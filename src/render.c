@@ -31,22 +31,6 @@ int	is_player(int x, int y, t_vec2 player_pos)
 	return (distance(pixel, player_pos) < (double)MAP_SCALE * 0.004);
 }
 
-t_vec2	get_dir_vec(double distance, double rot)
-{
-	t_vec2	ret;
-
-	ret.x = distance * sin(rot);
-	ret.y = distance * cos(rot);
-	return (ret);
-}
-
-t_vec2	scale_vec(t_vec2 vec, double scale)
-{
-	vec.x *= scale;
-	vec.y *= scale;
-	return (vec);
-}
-
 void	draw_player_direction(t_cb *cb)
 {
 	t_vec2	to;
