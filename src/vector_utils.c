@@ -20,3 +20,12 @@ t_vec2	scale_vec(t_vec2 vec, double scale)
 	vec.y *= scale;
 	return (vec);
 }
+
+t_vec2 rotate(t_vec2 vec, double radians)
+{
+	t_vec2 ret;
+
+	ret.x = vec.x * cos(radians) - vec.y * sin(radians);
+	ret.y = vec.x * sin(radians) + vec.y * cos(radians);
+	return (ret);
+}

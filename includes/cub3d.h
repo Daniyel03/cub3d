@@ -35,14 +35,13 @@
 # define GREEN 0x00ff00
 # define BLUE 0x0000ff
 
-typedef struct s_cb t_cb;
+typedef struct s_cb			t_cb;
 
 typedef struct s_vec2
 {
 	double					x;
 	double					y;
 }							t_vec2;
-
 
 typedef struct s_valid_cords
 {
@@ -62,7 +61,6 @@ typedef struct s_line_data
 	int						y;
 	int						error;
 }							t_line_data;
-
 
 typedef struct t_img
 {
@@ -139,5 +137,6 @@ void						print_map(t_map map);
 
 t_vec2						get_dir_vec(double distance, double rot);
 t_vec2						scale_vec(t_vec2 vec, double scale);
-void	player_walk(t_cb *cb);
+t_vec2						rotate(t_vec2 vec, double radians);
+void						player_walk(t_cb *cb);
 #endif

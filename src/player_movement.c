@@ -45,6 +45,7 @@ void	valid_x_ll(t_cb *cb)//check if correcty field, then if walk distance is fin
 
 void	player_walk(t_cb *cb)
 {
+    cb->player.input = rotate(cb->player.input, cb->player.rot * -1);
 	// cb->player.pos.x += cb->player.input.x;
 	// cb->player.pos.y += cb->player.input.y;
     valid_x_ll(cb);
