@@ -30,6 +30,11 @@
 # define SUCCESS 0
 # define FAILURE -1
 
+# define WHITE 0xffffff
+# define RED 0xff0000
+# define GREEN 0x00ff00
+# define BLUE 0x0000ff
+
 typedef struct s_vec2
 {
 	double					x;
@@ -73,12 +78,12 @@ typedef struct s_map
 }							t_map;
 
 /**
- * @param rotation: player rotation in radians
-*/
+ * @param rot: player rotation in radians
+ */
 typedef struct s_player
 {
 	t_vec2					pos;
-	double					rotation;
+	double					rot;
 }							t_player;
 
 typedef struct s_cb

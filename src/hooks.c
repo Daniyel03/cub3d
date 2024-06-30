@@ -22,8 +22,10 @@ int	close_win(t_cb *cb)
 int	on_loop(t_cb *cb)
 {
 	apply_all_keys(cb);
+	printf("player pos: %f, %f player rot: %f\n", cb->player.pos.x,
+		cb->player.pos.y, cb->player.rot);
 	ft_bzero(cb->img.addr, HEIGHT * cb->img.line_length);
-    draw_map(cb);
+	draw_map(cb);
 	mlx_put_image_to_window(cb->mlx, cb->win, cb->img.img, 0, 0);
 	return (0);
 }
