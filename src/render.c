@@ -31,6 +31,32 @@ int	is_player(int x, int y, t_vec2 player_pos)
 	return (distance(pixel, player_pos) < (double)MAP_SCALE * 0.004);
 }
 
+t_vec2	get_dir_vec(double distance, double rot)
+{
+	t_vec2	ret;
+
+	ret.x = distance * sin(rot);
+	ret.y = distance * cos(rot);
+	return (ret);
+}
+
+t_vec2	scale_vec(t_vec2 vec, double scale)
+{
+	vec.x *= scale;
+	vec.y *= scale;
+	return (vec);
+}
+
+void	draw_player_direction(t_cb *cb)
+{
+	t_vec2	to;
+
+	to = get_dir_vec(1, cb->player.rot);
+	to.x += cb->player.pos.x;
+	to.y += cb->player.pos.y;
+	draw_line(scale_vec(cb->player.pos, MAP_SCALE), scale_vec(to, MAP_SCALE), cb->img);
+}
+
 void	draw_map(t_cb *cb)
 {
 	int	y;
@@ -43,7 +69,8 @@ void	draw_map(t_cb *cb)
 		x = 0;
 		while (x < WIDTH)
 		{
-			if (y / MAP_SCALE >= cb->map.y || cb->map.arr[y / MAP_SCALE][x / MAP_SCALE] == -1)
+			if (y / MAP_SCALE >= cb->map.y || cb->map.arr[y / MAP_SCALE][x
+				/ MAP_SCALE] == -1)
 				break ;
 			if (is_player(x, y, cb->player.pos))
 				put_pixel(cb->img, x, y, 0xff0000);
@@ -55,4 +82,5 @@ void	draw_map(t_cb *cb)
 		}
 		y++;
 	}
+	draw_player_direction(cb);
 }

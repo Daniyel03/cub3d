@@ -50,6 +50,18 @@ typedef struct s_valid_cords
 	struct s_valid_cords	*next;
 }							t_valid_cords;
 
+typedef struct s_line_data
+{
+	int						dx;
+	int						dy;
+	int						step_x;
+	int						step_y;
+	int						swap;
+	int						x;
+	int						y;
+	int						error;
+}							t_line_data;
+
 typedef struct s_keybind
 {
 	int						keycode;
@@ -105,8 +117,10 @@ void						setup_hooks(t_cb *cb);
 void						apply_all_keys(t_cb *cb);
 
 // rendering
+void						put_pixel(t_img img, int x, int y, int color);
 double						distance(t_vec2 a, t_vec2 b);
 void						draw_map(t_cb *cb);
+void						draw_line(t_vec2 start, t_vec2 end, t_img img);
 
 // parser
 void						validate_path(t_cb *cb, char **argv);
