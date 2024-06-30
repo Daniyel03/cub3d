@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/30 11:47:56 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/06/30 18:21:47 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,14 @@
 # define GREEN 0x00ff00
 # define BLUE 0x0000ff
 
+typedef struct s_cb t_cb;
+
 typedef struct s_vec2
 {
 	double					x;
 	double					y;
 }							t_vec2;
 
-typedef void				(*t_key_func)(double *val, double rate);
 
 typedef struct s_valid_cords
 {
@@ -62,14 +63,6 @@ typedef struct s_line_data
 	int						error;
 }							t_line_data;
 
-typedef struct s_keybind
-{
-	int						keycode;
-	int						pressed;
-	double					*val;
-	double					rate;
-	t_key_func				func;
-}							t_keybind;
 
 typedef struct t_img
 {
@@ -94,9 +87,21 @@ typedef struct s_map
  */
 typedef struct s_player
 {
+	t_vec2					input;
 	t_vec2					pos;
 	double					rot;
 }							t_player;
+
+typedef void				(*t_key_func)(void *cb, double rate);
+
+typedef struct s_keybind
+{
+	int						keycode;
+	int						pressed;
+	double					*val;
+	double					rate;
+	t_key_func				func;
+}							t_keybind;
 
 typedef struct s_cb
 {
@@ -134,5 +139,5 @@ void						print_map(t_map map);
 
 t_vec2						get_dir_vec(double distance, double rot);
 t_vec2						scale_vec(t_vec2 vec, double scale);
-
+void	player_walk(t_cb *cb);
 #endif

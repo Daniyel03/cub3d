@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 14:35:49 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/29 12:10:22 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/06/30 18:31:55 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ int	close_win(t_cb *cb)
 
 int	on_loop(t_cb *cb)
 {
+	cb->player.input = (t_vec2){0, 0};
 	apply_all_keys(cb);
+	player_walk(cb);
 	printf("player pos: %f, %f player rot: %f\n", cb->player.pos.x,
 		cb->player.pos.y, cb->player.rot);
 	ft_bzero(cb->img.addr, HEIGHT * cb->img.line_length);
