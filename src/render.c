@@ -33,30 +33,27 @@ int	is_player(int x, int y, t_vec2 player_pos)
 
 t_vec2	next_wall(t_vec2 pos, t_vec2 dir, t_map map)
 {
-	double	scale;
+	double	scale = 1;
 	t_vec2	ret;
 
 	(void)map;
-	scale = ((int)(pos.x + 1) - pos.x) / dir.x;
 	if (dir.x > 0)
-		ret = scale_vec(dir, scale);
-	ret.x += pos.x;
-	ret.y += pos.y;
+		scale = ((int)(pos.x + 1) - pos.x) / dir.x;
+	else if (dir.x < 0)
+		scale = ((int)(pos.x) - pos.x) / dir.x;
+	dir = scale_vec(dir, scale);
+	ret.x = pos.x + dir.x;
+	ret.y = pos.y + dir.y;
 	return (ret);
 }
 
 void	draw_player_direction(t_cb *cb)
 {
 	t_vec2	direction;
-	t_vec2	direction2;
 
 	direction = get_dir_vec(1, cb->player.rot);
-	direction2 = get_dir_vec(1, cb->player.rot + 0.1);
 	direction = next_wall(cb->player.pos, direction, cb->map);
-	direction2 = next_wall(cb->player.pos, direction2, cb->map);
 	draw_line(scale_vec(cb->player.pos, MAP_SCALE), scale_vec(direction,
-			MAP_SCALE), cb->img);
-	draw_line(scale_vec(cb->player.pos, MAP_SCALE), scale_vec(direction2,
 			MAP_SCALE), cb->img);
 }
 
