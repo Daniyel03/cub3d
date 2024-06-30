@@ -21,10 +21,10 @@ int	close_win(t_cb *cb)
 
 int	on_loop(t_cb *cb)
 {
-	(void)cb;
 	apply_all_keys(cb);
 	ft_bzero(cb->img.addr, HEIGHT * cb->img.line_length);
     draw_map(cb);
+	mlx_put_image_to_window(cb->mlx, cb->win, cb->img.img, 0, 0);
 	return (0);
 }
 

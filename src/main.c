@@ -63,11 +63,11 @@ void	cub3d(char **argv)
 	// tempory fix:
 	get_map(&cb, argv);
 	printf("player: %f, %f\n", cb.player_pos.x, cb.player_pos.y);
-	// print_map(cb.map);
-	// init_mlx(&cb);
-	// init_keybinds(&cb);
-	// setup_hooks(&cb);
-	// mlx_loop(cb.mlx);
+	print_map(cb.map);
+	init_mlx(&cb);
+	init_keybinds(&cb);
+	setup_hooks(&cb);
+	mlx_loop(cb.mlx);
 	exit_cub(&cb, "success\n");
 }
 
