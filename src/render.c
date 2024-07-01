@@ -43,12 +43,12 @@ t_vec2	next_wall_x(t_vec2 pos, t_vec2 dir, t_map map)
 	double	scale;
 	t_vec2	wall;
 
-	// This default value stays in case dir.x == 0, to prevent divison by 0
-	scale = 1;
 	if (dir.x > 0)
 		scale = (ceil(pos.x) - pos.x) / dir.x;
 	else if (dir.x < 0)
 		scale = (floor(pos.x) - pos.x) / dir.x;
+	else
+		return ((t_vec2){-10000, -10000});
 	dir = scale_vec(dir, scale);
 	wall = add_vec(pos, dir);
 	if (dir.x == 0.0)
@@ -66,15 +66,16 @@ t_vec2	next_wall_y(t_vec2 pos, t_vec2 dir, t_map map)
 	double	scale;
 	t_vec2	wall;
 
-	scale = 1;
-	if (dir.y > 0)
+	if (dir.y > 0.0001)
 		scale = (ceil(pos.y) - pos.y) / dir.y;
-	else if (dir.y < 0)
+	else if (dir.y < -0.0001)
 		scale = (floor(pos.y) - pos.y) / dir.y;
+	else
+		return ((t_vec2){-10000, -10000});
 	dir = scale_vec(dir, scale);
 	wall = add_vec(pos, dir);
-	if (dir.y == 0.0)
-		return ((t_vec2){0, 0});
+	if (dir.y < 0.001 && dir.y > -0.001)
+		return ((t_vec2){-10000, -10000});
 	dir = scale_vec(dir, 1 / fabs(dir.y));
 	while (!check_is_wall(map, wall, dir))
 	{
