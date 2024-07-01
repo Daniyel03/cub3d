@@ -43,8 +43,8 @@ void	iterate_line(t_cb *cb, int *x, char *str, int temp_fd)
 		{
 			if (cb->player.pos.x != -1)
 				return(close(temp_fd), free(str), exit_cub(cb, "invalid map input, only one player position\n"));
-			cb->player.pos.x = (*x);
-			cb->player.pos.y = cb->map.y;
+			cb->player.pos.x = (*x) + 0.5;
+			cb->player.pos.y = cb->map.y + 0.5;
 		}
 		(*x)++;
 	}

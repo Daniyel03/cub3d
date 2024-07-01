@@ -28,6 +28,7 @@ int	on_loop(t_cb *cb)
 	// 	cb->player.pos.y, cb->player.rot);
 	ft_bzero(cb->img.addr, HEIGHT * cb->img.line_length);
 	draw_map(cb);
+	draw_view(cb);
 	mlx_put_image_to_window(cb->mlx, cb->win, cb->img.img, 0, 0);
 	return (0);
 }
