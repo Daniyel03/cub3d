@@ -26,6 +26,7 @@
 # define WIDTH 1280
 # define HEIGHT 720
 # define FOV 3.141 / 2 // in radians
+# define Y_SCALE 80
 # define MAP_SCALE 50
 
 # define SUCCESS 0
@@ -125,6 +126,7 @@ void						put_pixel(t_img img, int x, int y, int color);
 double						distance(t_vec2 a, t_vec2 b);
 void						draw_map(t_cb *cb);
 void						draw_line(t_vec2 start, t_vec2 end, t_img img);
+void						draw_view(t_cb *cb);
 
 // parser
 void						validate_path(t_cb *cb, char **argv);

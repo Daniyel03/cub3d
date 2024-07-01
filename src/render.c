@@ -54,7 +54,6 @@ t_vec2	next_wall_x(t_vec2 pos, t_vec2 dir, t_map map)
 	if (dir.x == 0.0)
 		return ((t_vec2){0, 0});
 	dir = scale_vec(dir, 1 / fabs(dir.x));
-	printf("dir: %f, %f\n", dir.x, dir.y);
 	while (!check_is_wall(map, wall, dir))
 	{
 		wall = add_vec(wall, dir);
@@ -77,7 +76,6 @@ t_vec2	next_wall_y(t_vec2 pos, t_vec2 dir, t_map map)
 	if (dir.y == 0.0)
 		return ((t_vec2){0, 0});
 	dir = scale_vec(dir, 1 / fabs(dir.y));
-	printf("dir: %f, %f\n", dir.y, dir.y);
 	while (!check_is_wall(map, wall, dir))
 	{
 		wall = add_vec(wall, dir);
@@ -112,6 +110,26 @@ void	draw_player_rays(t_cb *cb)
 		vec = next_wall(cb->player.pos, vec, cb->map);
 		draw_line(scale_vec(cb->player.pos, MAP_SCALE), scale_vec(vec,
 				MAP_SCALE), cb->img);
+		i++;
+	}
+}
+
+void	draw_view(t_cb *cb)
+{
+	t_vec2	vec;
+	int		i;
+	double	rot_offset;
+	double	len;
+
+	i = 0;
+	while (i < WIDTH)
+	{
+		rot_offset = FOV / 2 - FOV / WIDTH * i;
+		vec = get_dir_vec(1, cb->player.rot + rot_offset);
+		vec = next_wall(cb->player.pos, vec, cb->map);
+		len = Y_SCALE / distance(cb->player.pos, vec);
+		draw_line((t_vec2){i, HEIGHT / 2 - len}, (t_vec2){i, HEIGHT / 2 + len},
+			cb->img);
 		i++;
 	}
 }
