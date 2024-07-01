@@ -138,5 +138,6 @@ void						print_map(t_map map);
 t_vec2						get_dir_vec(double distance, double rot);
 t_vec2						scale_vec(t_vec2 vec, double scale);
 t_vec2						rotate(t_vec2 vec, double radians);
+t_vec2						add_vec(t_vec2 a, t_vec2 b);
 void						player_walk(t_cb *cb);
 #endif

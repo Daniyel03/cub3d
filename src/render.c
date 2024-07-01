@@ -31,20 +31,36 @@ int	is_player(int x, int y, t_vec2 player_pos)
 	return (distance(pixel, player_pos) < (double)MAP_SCALE * 0.004);
 }
 
+int	check_is_wall(t_map map, t_vec2 coor, t_vec2 direction)
+{
+	coor = add_vec(coor, scale_vec(direction, 0.01));
+	return (coor.y < 0 || coor.x < 0 || coor.y > map.y
+		|| map.arr[(int)coor.y][(int)coor.x] != 3);
+}
+
 t_vec2	next_wall(t_vec2 pos, t_vec2 dir, t_map map)
 {
-	double	scale = 1;
-	t_vec2	ret;
+	double	scale;
+	t_vec2	wall;
 
+	scale = 1;
 	(void)map;
 	if (dir.x > 0)
-		scale = ((int)(pos.x + 1) - pos.x) / dir.x;
+		scale = (ceil(pos.x) - pos.x) / dir.x;
 	else if (dir.x < 0)
-		scale = ((int)(pos.x) - pos.x) / dir.x;
+		scale = (floor(pos.x) - pos.x) / dir.x;
 	dir = scale_vec(dir, scale);
-	ret.x = pos.x + dir.x;
-	ret.y = pos.y + dir.y;
-	return (ret);
+	wall.x = pos.x + dir.x;
+	wall.y = pos.y + dir.y;
+	if (dir.x == 0.0)
+		return ((t_vec2){0, 0});
+	dir = scale_vec(dir, 1 / fabs(dir.x));
+	printf("dir: %f, %f\n", dir.x, dir.y);
+	while (!check_is_wall(map, wall, dir))
+	{
+		wall = add_vec(wall, dir);
+	}
+	return (wall);
 }
 
 void	draw_player_direction(t_cb *cb)
