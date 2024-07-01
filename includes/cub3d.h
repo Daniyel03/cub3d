@@ -25,6 +25,7 @@
 
 # define WIDTH 1280
 # define HEIGHT 720
+# define FOV 3.141 / 2 // in radians
 # define MAP_SCALE 50
 
 # define SUCCESS 0

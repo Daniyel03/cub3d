@@ -43,15 +43,14 @@ t_vec2	next_wall_x(t_vec2 pos, t_vec2 dir, t_map map)
 	double	scale;
 	t_vec2	wall;
 
+	// This default value stays in case dir.x == 0, to prevent divison by 0
 	scale = 1;
-	(void)map;
 	if (dir.x > 0)
 		scale = (ceil(pos.x) - pos.x) / dir.x;
 	else if (dir.x < 0)
 		scale = (floor(pos.x) - pos.x) / dir.x;
 	dir = scale_vec(dir, scale);
-	wall.x = pos.x + dir.x;
-	wall.y = pos.y + dir.y;
+	wall = add_vec(pos, dir);
 	if (dir.x == 0.0)
 		return ((t_vec2){0, 0});
 	dir = scale_vec(dir, 1 / fabs(dir.x));
@@ -62,20 +61,19 @@ t_vec2	next_wall_x(t_vec2 pos, t_vec2 dir, t_map map)
 	}
 	return (wall);
 }
+
 t_vec2	next_wall_y(t_vec2 pos, t_vec2 dir, t_map map)
 {
 	double	scale;
 	t_vec2	wall;
 
-	// This default value stays in case dir.y == 0, to prevent divison by 0
 	scale = 1;
 	if (dir.y > 0)
 		scale = (ceil(pos.y) - pos.y) / dir.y;
 	else if (dir.y < 0)
 		scale = (floor(pos.y) - pos.y) / dir.y;
 	dir = scale_vec(dir, scale);
-	wall.x = pos.x + dir.x;
-	wall.y = pos.y + dir.y;
+	wall = add_vec(pos, dir);
 	if (dir.y == 0.0)
 		return ((t_vec2){0, 0});
 	dir = scale_vec(dir, 1 / fabs(dir.y));
@@ -87,18 +85,35 @@ t_vec2	next_wall_y(t_vec2 pos, t_vec2 dir, t_map map)
 	return (wall);
 }
 
-void	draw_player_direction(t_cb *cb)
+t_vec2	next_wall(t_vec2 pos, t_vec2 dir, t_map map)
 {
-	t_vec2	vec1;
-	t_vec2	vec2;
+	t_vec2	wall_x;
+	t_vec2	wall_y;
 
-	vec1 = get_dir_vec(1, cb->player.rot);
-	vec2 = next_wall_x(cb->player.pos, vec1, cb->map);
-	vec1 = next_wall_y(cb->player.pos, vec1, cb->map);
-	if (distance(cb->player.pos, vec1) > distance(cb->player.pos, vec2))
-		vec1 = vec2;
-	draw_line(scale_vec(cb->player.pos, MAP_SCALE), scale_vec(vec1, MAP_SCALE),
-		cb->img);
+	wall_x = next_wall_x(pos, dir, map);
+	wall_y = next_wall_y(pos, dir, map);
+	if (distance(pos, wall_x) < distance(pos, wall_y))
+		return (wall_x);
+	else
+		return (wall_y);
+}
+
+void	draw_player_rays(t_cb *cb)
+{
+	t_vec2	vec;
+	int		i;
+	double	rot_offset;
+
+	i = 0;
+	while (i < WIDTH)
+	{
+		rot_offset = FOV / WIDTH * i - FOV / 2;
+		vec = get_dir_vec(1, cb->player.rot + rot_offset);
+		vec = next_wall(cb->player.pos, vec, cb->map);
+		draw_line(scale_vec(cb->player.pos, MAP_SCALE), scale_vec(vec,
+				MAP_SCALE), cb->img);
+		i++;
+	}
 }
 
 void	draw_map(t_cb *cb)
@@ -126,5 +141,5 @@ void	draw_map(t_cb *cb)
 		}
 		y++;
 	}
-	draw_player_direction(cb);
+	draw_player_rays(cb);
 }
