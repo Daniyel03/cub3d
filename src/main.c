@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:08:33 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/30 18:13:32 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/07/01 13:05:46 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	cub3d(char **argv)
 	init_struct(&cb);
 	// tempory fix:
 	get_map(&cb, argv);
-	printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
+	// printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
 	print_map(cb.map);
 	init_mlx(&cb);
 	init_keybinds(&cb);
