@@ -36,6 +36,8 @@
 # define RED 0xff0000
 # define GREEN 0x00ff00
 # define BLUE 0x0000ff
+# define SHADE1 0xdbb11a
+# define SHADE2 0xb89723
 
 typedef struct s_cb			t_cb;
 
@@ -125,7 +127,7 @@ void						apply_all_keys(t_cb *cb);
 void						put_pixel(t_img img, int x, int y, int color);
 double						distance(t_vec2 a, t_vec2 b);
 void						draw_map(t_cb *cb);
-void						draw_line(t_vec2 start, t_vec2 end, t_img img);
+void						draw_line(t_vec2 start, t_vec2 end, int color, t_img img);
 void						draw_view(t_cb *cb);
 
 // parser

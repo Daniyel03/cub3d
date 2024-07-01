@@ -41,7 +41,7 @@ t_line_data	set_line_data(t_vec2 start, t_vec2 end)
 	return (data);
 }
 
-void	draw_line(t_vec2 start, t_vec2 end, t_img img)
+void	draw_line(t_vec2 start, t_vec2 end, int color, t_img img)
 {
 	t_line_data	data;
 	int			i;
@@ -50,7 +50,7 @@ void	draw_line(t_vec2 start, t_vec2 end, t_img img)
 	i = 0;
 	while (i <= data.dx)
 	{
-		put_pixel(img, (int)data.x, (int)data.y, WHITE);
+		put_pixel(img, (int)data.x, (int)data.y, color);
 		if (data.error > 0)
 		{
 			if (data.swap)
