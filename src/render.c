@@ -38,7 +38,7 @@ int	check_is_wall(t_map map, t_vec2 coor, t_vec2 direction)
 		|| map.arr[(int)coor.y][(int)coor.x] != 3);
 }
 
-t_vec2	next_wall(t_vec2 pos, t_vec2 dir, t_map map)
+t_vec2	next_wall_x(t_vec2 pos, t_vec2 dir, t_map map)
 {
 	double	scale;
 	t_vec2	wall;
@@ -62,15 +62,43 @@ t_vec2	next_wall(t_vec2 pos, t_vec2 dir, t_map map)
 	}
 	return (wall);
 }
+t_vec2	next_wall_y(t_vec2 pos, t_vec2 dir, t_map map)
+{
+	double	scale;
+	t_vec2	wall;
+
+	// This default value stays in case dir.y == 0, to prevent divison by 0
+	scale = 1;
+	if (dir.y > 0)
+		scale = (ceil(pos.y) - pos.y) / dir.y;
+	else if (dir.y < 0)
+		scale = (floor(pos.y) - pos.y) / dir.y;
+	dir = scale_vec(dir, scale);
+	wall.x = pos.x + dir.x;
+	wall.y = pos.y + dir.y;
+	if (dir.y == 0.0)
+		return ((t_vec2){0, 0});
+	dir = scale_vec(dir, 1 / fabs(dir.y));
+	printf("dir: %f, %f\n", dir.y, dir.y);
+	while (!check_is_wall(map, wall, dir))
+	{
+		wall = add_vec(wall, dir);
+	}
+	return (wall);
+}
 
 void	draw_player_direction(t_cb *cb)
 {
-	t_vec2	direction;
+	t_vec2	vec1;
+	t_vec2	vec2;
 
-	direction = get_dir_vec(1, cb->player.rot);
-	direction = next_wall(cb->player.pos, direction, cb->map);
-	draw_line(scale_vec(cb->player.pos, MAP_SCALE), scale_vec(direction,
-			MAP_SCALE), cb->img);
+	vec1 = get_dir_vec(1, cb->player.rot);
+	vec2 = next_wall_x(cb->player.pos, vec1, cb->map);
+	vec1 = next_wall_y(cb->player.pos, vec1, cb->map);
+	if (distance(cb->player.pos, vec1) > distance(cb->player.pos, vec2))
+		vec1 = vec2;
+	draw_line(scale_vec(cb->player.pos, MAP_SCALE), scale_vec(vec1, MAP_SCALE),
+		cb->img);
 }
 
 void	draw_map(t_cb *cb)
