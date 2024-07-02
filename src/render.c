@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/06/28 16:51:19 by hrother          ###   ########.fr       */
+/*   Updated: 2024/07/02 20:40:18 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,9 @@ void	draw_view(t_cb *cb)
 		else
 			color = SHADE2;
 		len = Y_SCALE / distance(cb->player.pos, vec);
-		draw_line((t_vec2){i, HEIGHT / 2 - len}, (t_vec2){i, HEIGHT / 2 + len},
+		if (len > HEIGHT)
+			len = HEIGHT;	
+		draw_line((t_vec2){i, (double)HEIGHT / 2 - len}, (t_vec2){i, (double)HEIGHT / 2 + len},
 			color, cb->img);
 		i++;
 	}
