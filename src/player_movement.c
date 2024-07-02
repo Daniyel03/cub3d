@@ -47,6 +47,17 @@ void	valid_x_ll(t_cb *cb)
 	}
 	// printf("changed walking: %f, %f\n", cb->player.input.x,
 		// cb->player.input.y);
+	
+	if ((cb->player.pos.x + cb->player.input.x) == ceil(cb->player.pos.x) && cb->player.input.x > 0)
+		cb->player.input.x -= 0.01;
+	if ((cb->player.pos.y + cb->player.input.y) == ceil(cb->player.pos.y) && cb->player.input.y > 0)
+		cb->player.input.y -= 0.01;
+	if ((cb->player.pos.x + cb->player.input.x) == floor(cb->player.pos.x) && cb->player.input.x < 0)
+		cb->player.input.x += 0.01;
+	if ((cb->player.pos.y + cb->player.input.y) == floor(cb->player.pos.y) && cb->player.input.y < 0)
+		cb->player.input.y += 0.01;
+
+
 	cb->player.pos.x += cb->player.input.x;
 	cb->player.pos.y += cb->player.input.y;
 }
