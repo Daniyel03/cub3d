@@ -40,6 +40,8 @@ int	init_mlx(t_cb *cb)
 			&cb->img.line_length, &cb->img.endian);
 	if (cb->img.img == NULL || cb->img.addr == NULL)
 		return (exit_cub(cb, "mlx error"), FAILURE);
+	cb->img.width = WIDTH;
+	cb->img.height = HEIGHT;
 	return (0);
 }
 
@@ -60,13 +62,16 @@ void	cub3d(char **argv)
 	t_cb	cb;
 
 	init_struct(&cb);
-	// tempory fix:
 	get_map(&cb, argv);
 	// printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
 	print_map(cb.map);
 	init_mlx(&cb);
 	init_keybinds(&cb);
-	setup_hooks(&cb);
+	cb.texture.img = mlx_xpm_file_to_image(cb.mlx, "grass-block_16.xpm", &cb.texture.width, &cb.texture.height);
+	cb.texture.addr = mlx_get_data_addr(cb.texture.img, &cb.texture.bits_per_pixel,
+			&cb.texture.line_length, &cb.texture.endian);
+	mlx_put_image_to_window(cb.mlx, cb.win, cb.texture.img, 0, 0);
+	// setup_hooks(&cb);
 	mlx_loop(cb.mlx);
 	exit_cub(&cb, "success\n");
 }

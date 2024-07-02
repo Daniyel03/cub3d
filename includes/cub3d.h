@@ -73,6 +73,8 @@ typedef struct t_img
 	int						bits_per_pixel;
 	int						line_length;
 	int						endian;
+	int						width;
+	int						height;
 }							t_img;
 
 typedef struct s_map
@@ -114,6 +116,7 @@ typedef struct s_cb
 	t_img					img;
 	t_player				player;
 	t_valid_cords			*cords;
+	t_img					texture;
 	// t_pers	pers;
 }							t_cb;
 
@@ -127,7 +130,8 @@ void						apply_all_keys(t_cb *cb);
 void						put_pixel(t_img img, int x, int y, int color);
 double						distance(t_vec2 a, t_vec2 b);
 void						draw_map(t_cb *cb);
-void						draw_line(t_vec2 start, t_vec2 end, int color, t_img img);
+void						draw_line(t_vec2 start, t_vec2 end, int color,
+								t_img img);
 void						draw_view(t_cb *cb);
 
 // parser
