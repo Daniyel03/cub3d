@@ -60,7 +60,6 @@ void	cub3d(char **argv)
 	t_cb	cb;
 
 	init_struct(&cb);
-	// tempory fix:
 	get_map(&cb, argv);
 	// printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
 	print_map(cb.map);
