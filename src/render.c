@@ -33,7 +33,7 @@ int	is_player(int x, int y, t_vec2 player_pos)
 
 int	check_is_wall(t_map map, t_vec2 coor, t_vec2 direction)
 {
-	coor = add_vec(coor, scale_vec(direction, 0.01));
+	coor = add_vec(coor, scale_vec(direction, 0.00001));
 	return (coor.y < 0 || coor.x < 0 || coor.y > map.y
 		|| map.arr[(int)coor.y][(int)coor.x] != 3);
 }
