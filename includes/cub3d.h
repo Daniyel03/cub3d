@@ -137,6 +137,7 @@ void						draw_map(t_cb *cb);
 void						draw_line(t_vec2 start, t_vec2 end, int color,
 								t_img img);
 void						draw_view(t_cb *cb);
+void						draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb);
 
 // parser
 void						validate_path(t_cb *cb, char **argv);

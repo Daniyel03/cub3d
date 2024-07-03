@@ -13,8 +13,6 @@
 #include "../includes/cub3d.h"
 #include <stdlib.h>
 
-
-
 void	get_map(t_cb *cb, char **argv)
 {
 	int	valid;
@@ -57,6 +55,17 @@ void	init_struct(t_cb *cb)
 	cb->mlx = NULL;
 }
 
+t_img	init_texture(char *filename, t_cb *cb)
+{
+	t_img	texture;
+
+	texture.img = mlx_xpm_file_to_image(cb->mlx, filename, &texture.width,
+			&texture.height);
+	texture.addr = mlx_get_data_addr(&texture.img, &texture.bits_per_pixel,
+			&texture.line_length, &texture.endian);
+	return (texture);
+}
+
 void	cub3d(char **argv)
 {
 	t_cb	cb;
@@ -66,12 +75,9 @@ void	cub3d(char **argv)
 	// printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
 	print_map(cb.map);
 	init_mlx(&cb);
+	cb.texture = init_texture("grass-block_16.xpm", &cb);
 	init_keybinds(&cb);
-	cb.texture.img = mlx_xpm_file_to_image(cb.mlx, "grass-block_16.xpm", &cb.texture.width, &cb.texture.height);
-	cb.texture.addr = mlx_get_data_addr(cb.texture.img, &cb.texture.bits_per_pixel,
-			&cb.texture.line_length, &cb.texture.endian);
-	mlx_put_image_to_window(cb.mlx, cb.win, cb.texture.img, 0, 0);
-	// setup_hooks(&cb);
+	setup_hooks(&cb);
 	mlx_loop(cb.mlx);
 	exit_cub(&cb, "success\n");
 }
