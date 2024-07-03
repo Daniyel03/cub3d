@@ -4,7 +4,7 @@ int	get_pixel(t_img img, int x, int y)
 {
 	char	*dst;
 
-	if (y >= HEIGHT || x >= WIDTH || y < 0 || x < 0)
+	if (y >= img.height || x >= img.width || y < 0 || x < 0)
 		return (-1);
 	dst = img.addr + (y * img.line_length + x * (img.bits_per_pixel / 8));
 	return (*(unsigned int *)dst);
@@ -25,7 +25,10 @@ void	draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb)
 		y_text = (wall_pos.y - floor(wall_pos.y)) * texture.width;
 	}
 	else
+	{
 		texture = cb->texture;
+		y_text = (wall_pos.x - floor(wall_pos.x)) * texture.width;
+	}
 	len = HEIGHT / distance(cb->player.pos, wall_pos);
 	if (len > HEIGHT)
 		len = HEIGHT;
