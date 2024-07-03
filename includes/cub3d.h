@@ -107,8 +107,7 @@ typedef struct s_keybind
 }							t_keybind;
 
 /**
- * @param last_frame_time: timestamp of the last frame in milliseconds
- * @param deltatime: time between frames in milliseconds
+ * @param deltatime: time between frames in seconds
  */
 typedef struct s_cb
 {
@@ -119,7 +118,7 @@ typedef struct s_cb
 	t_img					img;
 	t_player				player;
 	t_valid_cords			*cords;
-	int						deltatime;
+	double					deltatime;
 }							t_cb;
 
 // input handling

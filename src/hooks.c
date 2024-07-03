@@ -25,9 +25,9 @@ void	set_deltatime(t_cb *cb)
 	static long		old_time = 0;
 
 	new_time = get_time_ms();
-	cb->deltatime = new_time - old_time;
-	printf("deltatime: %i\n", cb->deltatime);
-	// printf("fps: %i\n", 1000 / cb->deltatime);
+	cb->deltatime = (new_time - old_time) / 1000.0;
+	// printf("deltatime: %fs\n", cb->deltatime);
+	printf("fps: %f\n", 1 / cb->deltatime);
 	old_time = new_time;
 }
 
@@ -40,7 +40,7 @@ int	on_loop(t_cb *cb)
 	// printf("player pos: %f, %f player rot: %f\n", cb->player.pos.x,
 	// 	cb->player.pos.y, cb->player.rot);
 	ft_bzero(cb->img.addr, HEIGHT * cb->img.line_length);
-	draw_map(cb);
+	// draw_map(cb);
 	draw_view(cb);
 	mlx_put_image_to_window(cb->mlx, cb->win, cb->img.img, 0, 0);
 	return (0);
