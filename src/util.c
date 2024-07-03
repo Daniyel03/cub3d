@@ -12,6 +12,16 @@
 
 #include "cub3d.h"
 
+long	get_time_ms(void)
+{
+	struct timeval	tv;
+	long			time;
+
+	if (gettimeofday(&tv, NULL) == -1)
+		perror("gettimeofday"); // is this protection enough?
+	time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	return (time);
+}
 
 void	exit_cub(t_cb *cb, char *str)
 {
@@ -23,16 +33,16 @@ void	exit_cub(t_cb *cb, char *str)
 		mlx_destroy_display(cb->mlx);
 	free(cb->mlx);
 	free(cb->keybinds);
-    if (cb->map.arr)
-    {
-        if (cb->map.y)
-            while (cb->map.y)
-                free(cb->map.arr[--cb->map.y]);
-        free(cb->map.arr);
-    }
-    if (str)
-        printf("%s", str);
-    exit(0); //TODO: exit with errorcode when an error occured
+	if (cb->map.arr)
+	{
+		if (cb->map.y)
+			while (cb->map.y)
+				free(cb->map.arr[--cb->map.y]);
+		free(cb->map.arr);
+	}
+	if (str)
+		printf("%s", str);
+	exit(0); // TODO: exit with errorcode when an error occured
 }
 
 void	print_map(t_map map)
