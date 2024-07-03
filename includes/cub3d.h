@@ -21,10 +21,11 @@
 # include <mlx.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/time.h>
 # include <unistd.h>
 
-# define WIDTH 1900
-# define HEIGHT 1000
+# define WIDTH 1080
+# define HEIGHT 720
 # define FOV 3.141 / 2 // in radians
 # define Y_SCALE 500
 # define MAP_SCALE 50
@@ -105,6 +106,10 @@ typedef struct s_keybind
 	t_key_func				func;
 }							t_keybind;
 
+/**
+ * @param last_frame_time: timestamp of the last frame in milliseconds
+ * @param deltatime: time between frames in milliseconds
+ */
 typedef struct s_cb
 {
 	void					*mlx;
@@ -114,7 +119,7 @@ typedef struct s_cb
 	t_img					img;
 	t_player				player;
 	t_valid_cords			*cords;
-	// t_pers	pers;
+	int						deltatime;
 }							t_cb;
 
 // input handling
@@ -127,7 +132,8 @@ void						apply_all_keys(t_cb *cb);
 void						put_pixel(t_img img, int x, int y, int color);
 double						distance(t_vec2 a, t_vec2 b);
 void						draw_map(t_cb *cb);
-void						draw_line(t_vec2 start, t_vec2 end, int color, t_img img);
+void						draw_line(t_vec2 start, t_vec2 end, int color,
+								t_img img);
 void						draw_view(t_cb *cb);
 
 // parser
@@ -139,7 +145,9 @@ void						print_cord(t_cb *cb);
 // util
 void						exit_cub(t_cb *cb, char *str);
 void						print_map(t_map map);
+long						get_time_ms(void);
 
+// vector utils
 t_vec2						get_dir_vec(double distance, double rot);
 t_vec2						scale_vec(t_vec2 vec, double scale);
 t_vec2						rotate(t_vec2 vec, double radians);
