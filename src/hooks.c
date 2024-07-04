@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 14:35:49 by hrother           #+#    #+#             */
-/*   Updated: 2024/07/01 13:07:26 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/07/03 23:28:19 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	set_deltatime(t_cb *cb)
 	new_time = get_time_ms();
 	cb->deltatime = (new_time - old_time) / 1000.0;
 	// printf("deltatime: %fs\n", cb->deltatime);
-	printf("fps: %f\n", 1 / cb->deltatime);
+	// printf("fps: %f\n", 1 / cb->deltatime);
 	old_time = new_time;
 }
 

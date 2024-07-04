@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 14:17:16 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/30 18:29:08 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/07/03 22:49:18 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void	init_keybinds(t_cb *cb)
 	init_keybind(&cb->keybinds[1], XK_w, add_to_val, &cb->player.input.y, 4);
 	init_keybind(&cb->keybinds[2], XK_a, add_to_val, &cb->player.input.x, 4);
 	init_keybind(&cb->keybinds[3], XK_d, add_to_val, &cb->player.input.x, -4);
-	init_keybind(&cb->keybinds[4], XK_Left, add_to_val, &cb->player.rot, 2);
+	init_keybind(&cb->keybinds[4], XK_Left, add_to_val, &cb->player.rot, 3);
 	init_keybind(&cb->keybinds[5], XK_Right, add_to_val, &cb->player.rot,
-		-2);
+		-3);
 	init_keybind(&cb->keybinds[6], 0, NULL, NULL, 0);
 }
 
