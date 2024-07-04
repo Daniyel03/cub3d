@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/02 20:40:18 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/07/04 15:57:25 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,53 @@ int	is_player(int x, int y, t_vec2 player_pos)
 	return (distance(pixel, player_pos) < (double)MAP_SCALE * 0.004);
 }
 
-int	check_is_wall(t_map map, t_vec2 coor, t_vec2 direction)
+
+void	check_x(t_cb *cb, t_vec2 *coor)
 {
-	coor = add_vec(coor, scale_vec(direction, 0.00001));
-	return (coor.y < 0 || coor.x < 0 || coor.y > map.y
-		|| map.arr[(int)coor.y][(int)coor.x] != 3);
+	double highest_x;
+	t_valid_cords *temp = cb->cords;
+	highest_x = 0;
+	while (temp)
+	{
+		if (temp->y == floor((*coor).y) && highest_x < floor(temp->x))
+			highest_x = floor(temp->x);
+		temp = temp->next;
+	}
+	// printf("highest %f in %f\n", x, (*coor).y);
+	if (highest_x + 1 < floor((*coor).x))
+		(*coor).x = highest_x + 1;
+	// if (x < floor((*coor).x))
+		// printf("invalid %f in %f\n", (*coor).x, (*coor).y);
+	
 }
 
-t_vec2	next_wall_x(t_vec2 pos, t_vec2 dir, t_map map)
+int	check_is_wall(t_cb *cb, t_map map, t_vec2 coor, t_vec2 direction)
+{
+	coor = add_vec(coor, scale_vec(direction, 0.00001));
+	// printf("%f %f\n", coor.x, coor.y);
+	// if (coor.x > 1.1)
+	// 	coor.x = floor(coor.x * 10) / 10;
+	// if (coor.y > 1.1)
+	// 	coor.y = floor(coor.y * 10) / 10;
+	check_x(cb, &coor);
+	// (void)cb;
+	if (coor.y < 0) {
+		return 1;
+	}
+	if (coor.x < 0) {
+		return 1;
+	}
+	if (coor.y > map.y) {
+		return 1;
+	}
+	if (map.arr[(int)coor.y][(int)coor.x] != 3) {
+		return 1;
+	}
+
+	return 0;
+}
+
+t_vec2	next_wall_x(t_cb *cb, t_vec2 pos, t_vec2 dir, t_map map)
 {
 	double	scale;
 	t_vec2	wall;
@@ -54,14 +93,14 @@ t_vec2	next_wall_x(t_vec2 pos, t_vec2 dir, t_map map)
 	if (dir.x == 0.0)
 		return ((t_vec2){0, 0});
 	dir = scale_vec(dir, 1 / fabs(dir.x));
-	while (!check_is_wall(map, wall, dir))
+	while (!check_is_wall(cb, map, wall, dir))
 	{
 		wall = add_vec(wall, dir);
 	}
 	return (wall);
 }
 
-t_vec2	next_wall_y(t_vec2 pos, t_vec2 dir, t_map map)
+t_vec2	next_wall_y(t_cb *cb, t_vec2 pos, t_vec2 dir, t_map map)
 {
 	double	scale;
 	t_vec2	wall;
@@ -77,20 +116,20 @@ t_vec2	next_wall_y(t_vec2 pos, t_vec2 dir, t_map map)
 	if (dir.y < 0.001 && dir.y > -0.001)
 		return ((t_vec2){-10000, -10000});
 	dir = scale_vec(dir, 1 / fabs(dir.y));
-	while (!check_is_wall(map, wall, dir))
+	while (!check_is_wall(cb, map, wall, dir))
 	{
 		wall = add_vec(wall, dir);
 	}
 	return (wall);
 }
 
-t_vec2	next_wall(t_vec2 pos, t_vec2 dir, t_map map)
+t_vec2	next_wall(t_cb *cb, t_vec2 pos, t_vec2 dir, t_map map)
 {
 	t_vec2	wall_x;
 	t_vec2	wall_y;
 
-	wall_x = next_wall_x(pos, dir, map);
-	wall_y = next_wall_y(pos, dir, map);
+	wall_x = next_wall_x(cb, pos, dir, map);
+	wall_y = next_wall_y(cb, pos, dir, map);
 	if (distance(pos, wall_x) < distance(pos, wall_y))
 		return (wall_x);
 	else
@@ -108,7 +147,7 @@ void	draw_player_rays(t_cb *cb)
 	{
 		rot_offset = FOV / WIDTH * i - FOV / 2;
 		vec = get_dir_vec(1, cb->player.rot + rot_offset);
-		vec = next_wall(cb->player.pos, vec, cb->map);
+		vec = next_wall(cb, cb->player.pos, vec, cb->map);
 		draw_line(scale_vec(cb->player.pos, MAP_SCALE), scale_vec(vec,
 				MAP_SCALE), WHITE, cb->img);
 		i++;
@@ -126,7 +165,7 @@ void	draw_view(t_cb *cb)
 	{
 		rot_offset = FOV / 2 - FOV / WIDTH * i;
 		vec = get_dir_vec(1, cb->player.rot + rot_offset);
-		vec = next_wall(cb->player.pos, vec, cb->map);
+		vec = next_wall(cb, cb->player.pos, vec, cb->map);
 		draw_wall_line(i, vec, cb);
 		i++;
 	}

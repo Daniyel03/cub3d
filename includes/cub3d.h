@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/30 18:21:47 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/07/04 16:17:00 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define WIDTH 1080
 # define HEIGHT 720
 # define FOV 3.141 / 2 // in radians
+#define PI 3.141
 # define Y_SCALE 500
 # define MAP_SCALE 50
 
