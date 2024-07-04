@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/04 13:49:31 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/07/04 15:57:25 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,21 @@ int	is_player(int x, int y, t_vec2 player_pos)
 
 void	check_x(t_cb *cb, t_vec2 *coor)
 {
-	double x;
+	double highest_x;
 	t_valid_cords *temp = cb->cords;
-	x = 0;
+	highest_x = 0;
 	while (temp)
 	{
-		if (temp->y == floor((*coor).y) && x < floor(temp->x))
-			x = floor((*coor).x);
+		if (temp->y == floor((*coor).y) && highest_x < floor(temp->x))
+			highest_x = floor(temp->x);
 		temp = temp->next;
 	}
 	// printf("highest %f in %f\n", x, (*coor).y);
-	if (x + 1 < floor((*coor).x))
-		(*coor).x = x;
-	// if (x + 1 < floor((*coor).x))
-	// printf("invalid %f in %f\n", (*coor).x, (*coor).y);
-		
+	if (highest_x + 1 < floor((*coor).x))
+		(*coor).x = highest_x + 1;
+	// if (x < floor((*coor).x))
+		// printf("invalid %f in %f\n", (*coor).x, (*coor).y);
+	
 }
 
 int	check_is_wall(t_cb *cb, t_map map, t_vec2 coor, t_vec2 direction)
@@ -60,8 +60,21 @@ int	check_is_wall(t_cb *cb, t_map map, t_vec2 coor, t_vec2 direction)
 	// if (coor.y > 1.1)
 	// 	coor.y = floor(coor.y * 10) / 10;
 	check_x(cb, &coor);
-	return (coor.y < 0 || coor.x < 0 || coor.y > map.y
-		|| map.arr[(int)coor.y][(int)coor.x] != 3);
+	// (void)cb;
+	if (coor.y < 0) {
+		return 1;
+	}
+	if (coor.x < 0) {
+		return 1;
+	}
+	if (coor.y > map.y) {
+		return 1;
+	}
+	if (map.arr[(int)coor.y][(int)coor.x] != 3) {
+		return 1;
+	}
+
+	return 0;
 }
 
 t_vec2	next_wall_x(t_cb *cb, t_vec2 pos, t_vec2 dir, t_map map)

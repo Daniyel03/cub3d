@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 10:04:52 by dscholz           #+#    #+#             */
-/*   Updated: 2024/06/29 18:37:52 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/07/04 16:26:42 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,32 @@ void	validate_path(t_cb *cb, char **argv)
 	cb->map.filename = argv[1];
 }
 
+void	set_player_rot(t_cb *cb, int *x, char *str)
+{
+	if (str[(*x)] == 'N')
+		return (cb->player.rot = 0, (void )0);
+	if (str[(*x)] == 'S')
+		return (cb->player.rot = PI, (void )0);
+	if (str[(*x)] == 'E')
+		return (cb->player.rot = PI * 0.5, (void )0);
+	if (str[(*x)] == 'W')
+		return (cb->player.rot = PI  * 1.5, (void)0);
+}
+
 void	iterate_line(t_cb *cb, int *x, char *str, int temp_fd)
 {
 	while (str[(*x)] && str[(*x)] != '\n')
 	{
-		if (str[(*x)] != 'N' && str[(*x)] != '0' && str[(*x)] != '1'
+		if (!(str[(*x)] == 'N' || str[(*x)] == 'W' || str[(*x)] == 'S' || str[(*x)] == 'E') && str[(*x)] != '0' && str[(*x)] != '1'
 			&& str[(*x)] != ' ' && str[(*x)] != '\0' && str[(*x)] != '\n')
 			return (close(temp_fd), free(str), exit_cub(cb, "invalid map input, only 0 and 1 allowed\n"));
-		if (str[(*x)] == 'N')
+		if (str[(*x)] == 'N' || str[(*x)] == 'W' || str[(*x)] == 'S' || str[(*x)] == 'E')
 		{
 			if (cb->player.pos.x != -1)
 				return(close(temp_fd), free(str), exit_cub(cb, "invalid map input, only one player position\n"));
 			cb->player.pos.x = (*x) + 0.5;
 			cb->player.pos.y = cb->map.y + 0.5;
+			set_player_rot(cb, x, str);
 		}
 		(*x)++;
 	}
