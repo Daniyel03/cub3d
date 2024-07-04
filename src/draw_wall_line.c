@@ -35,7 +35,10 @@ void	draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb)
 	y_scale = (double)texture.height / len;
 	y_offest = HEIGHT / 2 - len / 2;
 	if (len > HEIGHT)
-		len = HEIGHT;
+	{
+		i += (len - HEIGHT) / 2;
+		len -= i;
+	}
 	while (i < len)
 	{
 		color = get_pixel(texture, texture_col, i * y_scale);
