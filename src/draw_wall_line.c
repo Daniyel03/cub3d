@@ -15,9 +15,10 @@ void	draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb)
 	int		len;
 	t_img	texture;
 	int		i;
-	int		texture_col;
+	double	y_scale;
+	int		y_offest;
 	int		color;
-	int		texture_row;
+	int		texture_col;
 
 	i = 0;
 	if (wall_pos.x == round(wall_pos.x))
@@ -31,13 +32,14 @@ void	draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb)
 		texture_col = (wall_pos.x - floor(wall_pos.x)) * texture.width;
 	}
 	len = HEIGHT / distance(cb->player.pos, wall_pos);
+	y_scale = (double)texture.height / len;
+	y_offest = HEIGHT / 2 - len / 2;
 	if (len > HEIGHT)
 		len = HEIGHT;
 	while (i < len)
 	{
-		texture_row = ((double)i / len) * texture.height;
-		color = get_pixel(texture, texture_col, texture_row);
-		put_pixel(cb->img, x, HEIGHT / 2 - len / 2 + i, color);
+		color = get_pixel(texture, texture_col, i * y_scale);
+		put_pixel(cb->img, x, y_offest + i, color);
 		i++;
 	}
 }
