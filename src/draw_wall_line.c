@@ -15,26 +15,28 @@ void	draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb)
 	int		len;
 	t_img	texture;
 	int		i;
-	int		y_text;
+	int		texture_col;
 	int		color;
+	int		texture_row;
 
 	i = 0;
 	if (wall_pos.x == round(wall_pos.x))
 	{
 		texture = cb->texture;
-		y_text = (wall_pos.y - floor(wall_pos.y)) * texture.width;
+		texture_col = (wall_pos.y - floor(wall_pos.y)) * texture.width;
 	}
 	else
 	{
-		texture = cb->texture;
-		y_text = (wall_pos.x - floor(wall_pos.x)) * texture.width;
+		texture = cb->texture; // use different texture here
+		texture_col = (wall_pos.x - floor(wall_pos.x)) * texture.width;
 	}
 	len = HEIGHT / distance(cb->player.pos, wall_pos);
 	if (len > HEIGHT)
 		len = HEIGHT;
 	while (i < len)
 	{
-		color = get_pixel(texture, 4, y_text);
+		texture_row = ((double)i / len) * texture.height;
+		color = get_pixel(texture, texture_col, texture_row);
 		put_pixel(cb->img, x, HEIGHT / 2 - len / 2 + i, color);
 		i++;
 	}
