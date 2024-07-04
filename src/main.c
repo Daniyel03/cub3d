@@ -13,8 +13,6 @@
 #include "../includes/cub3d.h"
 #include <stdlib.h>
 
-
-
 void	get_map(t_cb *cb, char **argv)
 {
 	int	valid;
@@ -40,6 +38,16 @@ int	init_mlx(t_cb *cb)
 			&cb->img.line_length, &cb->img.endian);
 	if (cb->img.img == NULL || cb->img.addr == NULL)
 		return (exit_cub(cb, "mlx error"), FAILURE);
+	cb->img.width = WIDTH;
+	cb->img.height = HEIGHT;
+	// cb->texture.img = mlx_new_image(cb->mlx, 100, 100);
+	// cb->texture.addr = mlx_get_data_addr(cb->texture.img,
+	// &cb->texture.bits_per_pixel, &cb->texture.line_length,
+	// &cb->texture.endian);
+	// if (cb->texture.img == NULL || cb->texture.addr == NULL)
+		// return (exit_cub(cb, "mlx error"), FAILURE);
+	cb->texture.width = 100;
+	cb->texture.height = 100;
 	return (0);
 }
 
@@ -55,6 +63,58 @@ void	init_struct(t_cb *cb)
 	cb->mlx = NULL;
 }
 
+void	init_texture(char *filename, t_cb *cb)
+{
+	cb->texture.img = mlx_xpm_file_to_image(cb->mlx, filename,
+			&cb->texture.width, &cb->texture.height);
+	cb->texture.addr = mlx_get_data_addr(cb->texture.img,
+			&cb->texture.bits_per_pixel, &cb->texture.line_length,
+			&cb->texture.endian);
+}
+
+void	put_texture(t_cb *cb)
+{
+	int	color;
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (y < cb->texture.height)
+	{
+		x = 0;
+		while (x < cb->texture.width)
+		{
+			color = get_pixel(cb->texture, x, y);
+			printf("%i: %i, ", x, color);
+			put_pixel(cb->img, x, y, color);
+			x++;
+		}
+		printf("y: %i\n", y);
+		y++;
+	}
+	mlx_put_image_to_window(cb->mlx, cb->win, cb->img.img, 0, 0);
+}
+
+void	put_pattern(t_cb *cb)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	while (y < 100)
+	{
+		x = 0;
+		while (x < 100)
+		{
+			put_pixel(cb->texture, x, y, 0x00ff10 + x + y);
+			x++;
+		}
+		y++;
+	}
+}
+
 void	cub3d(char **argv)
 {
 	t_cb	cb;
@@ -64,6 +124,8 @@ void	cub3d(char **argv)
 	// printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
 	print_map(cb.map);
 	init_mlx(&cb);
+	init_texture("grass-block_16.xpm", &cb);
+	// put_pattern(&cb);
 	init_keybinds(&cb);
 	setup_hooks(&cb);
 	mlx_loop(cb.mlx);

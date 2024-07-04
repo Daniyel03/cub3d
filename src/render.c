@@ -159,8 +159,6 @@ void	draw_view(t_cb *cb)
 	t_vec2	vec;
 	int		i;
 	double	rot_offset;
-	double	len;
-	int		color;
 
 	i = 0;
 	while (i < WIDTH)
@@ -168,15 +166,7 @@ void	draw_view(t_cb *cb)
 		rot_offset = FOV / 2 - FOV / WIDTH * i;
 		vec = get_dir_vec(1, cb->player.rot + rot_offset);
 		vec = next_wall(cb, cb->player.pos, vec, cb->map);
-		if (vec.x == round(vec.x))
-			color = SHADE1;
-		else
-			color = SHADE2;
-		len = Y_SCALE / distance(cb->player.pos, vec);
-		if (len > HEIGHT)
-			len = HEIGHT;
-		draw_line((t_vec2){i, (double)HEIGHT / 2 - len}, (t_vec2){i,
-			(double)HEIGHT / 2 + len}, color, cb->img);
+		draw_wall_line(i, vec, cb);
 		i++;
 	}
 }

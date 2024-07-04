@@ -75,6 +75,8 @@ typedef struct t_img
 	int						bits_per_pixel;
 	int						line_length;
 	int						endian;
+	int						width;
+	int						height;
 }							t_img;
 
 typedef struct s_map
@@ -119,6 +121,7 @@ typedef struct s_cb
 	t_img					img;
 	t_player				player;
 	t_valid_cords			*cords;
+	t_img					texture;
 	double					deltatime;
 }							t_cb;
 
@@ -135,6 +138,8 @@ void						draw_map(t_cb *cb);
 void						draw_line(t_vec2 start, t_vec2 end, int color,
 								t_img img);
 void						draw_view(t_cb *cb);
+void						draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb);
+int							get_pixel(t_img img, int x, int y);
 
 // parser
 void						validate_path(t_cb *cb, char **argv);
