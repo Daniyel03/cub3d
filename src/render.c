@@ -166,7 +166,7 @@ void	draw_view(t_cb *cb)
 		rot_offset = FOV / 2 - FOV / WIDTH * i;
 		vec = get_dir_vec(1, cb->player.rot + rot_offset);
 		vec = next_wall(cb, cb->player.pos, vec, cb->map);
-		draw_wall_line(i, vec, cb);
+		draw_wall_line(i, vec, cb, rot_offset);
 		i++;
 	}
 }

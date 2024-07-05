@@ -138,7 +138,7 @@ void						draw_map(t_cb *cb);
 void						draw_line(t_vec2 start, t_vec2 end, int color,
 								t_img img);
 void						draw_view(t_cb *cb);
-void						draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb);
+void						draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb, double rot_offset);
 int							get_pixel(t_img img, int x, int y);
 
 // parser
