@@ -45,9 +45,7 @@ int	init_mlx(t_cb *cb)
 	// &cb->texture.bits_per_pixel, &cb->texture.line_length,
 	// &cb->texture.endian);
 	// if (cb->texture.img == NULL || cb->texture.addr == NULL)
-		// return (exit_cub(cb, "mlx error"), FAILURE);
-	cb->texture.width = 100;
-	cb->texture.height = 100;
+	// return (exit_cub(cb, "mlx error"), FAILURE);
 	return (0);
 }
 
@@ -63,15 +61,18 @@ void	init_struct(t_cb *cb)
 	cb->mlx = NULL;
 }
 
-void	init_texture(char *filename, t_cb *cb)
+t_img	init_texture(char *filename, t_cb *cb)
 {
-	cb->texture.img = mlx_xpm_file_to_image(cb->mlx, filename,
-			&cb->texture.width, &cb->texture.height);
-	cb->texture.addr = mlx_get_data_addr(cb->texture.img,
-			&cb->texture.bits_per_pixel, &cb->texture.line_length,
-			&cb->texture.endian);
+	t_img	texture;
+
+	texture.img = mlx_xpm_file_to_image(cb->mlx, filename, &texture.width,
+			&texture.height);
+	texture.addr = mlx_get_data_addr(texture.img, &texture.bits_per_pixel,
+			&texture.line_length, &texture.endian);
+	return (texture);
 }
 
+/*
 void	put_texture(t_cb *cb)
 {
 	int	color;
@@ -80,12 +81,12 @@ void	put_texture(t_cb *cb)
 
 	x = 0;
 	y = 0;
-	while (y < cb->texture.height)
+	while (y < cb->textures.height)
 	{
 		x = 0;
-		while (x < cb->texture.width)
+		while (x < cb->textures.width)
 		{
-			color = get_pixel(cb->texture, x, y);
+			color = get_pixel(cb->textures, x, y);
 			printf("%i: %i, ", x, color);
 			put_pixel(cb->img, x, y, color);
 			x++;
@@ -108,12 +109,13 @@ void	put_pattern(t_cb *cb)
 		x = 0;
 		while (x < 100)
 		{
-			put_pixel(cb->texture, x, y, 0x00ff10 + x + y);
+			put_pixel(cb->textures, x, y, 0x00ff10 + x + y);
 			x++;
 		}
 		y++;
 	}
 }
+*/
 
 void	cub3d(char **argv)
 {
@@ -124,7 +126,8 @@ void	cub3d(char **argv)
 	// printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
 	print_map(cb.map);
 	init_mlx(&cb);
-	init_texture("grass-block_16.xpm", &cb);
+	cb.textures[0] = init_texture("grass-block_16.xpm", &cb);
+	cb.textures[1] = init_texture("TNT.xpm", &cb);
 	// put_pattern(&cb);
 	init_keybinds(&cb);
 	setup_hooks(&cb);

@@ -24,12 +24,12 @@ void	draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb, double rot_offset)
 	i = 0;
 	if (wall_pos.x == round(wall_pos.x))
 	{
-		texture = cb->texture;
+		texture = cb->textures[0];
 		texture_col = (wall_pos.y - floor(wall_pos.y)) * texture.width;
 	}
 	else
 	{
-		texture = cb->texture; // use different texture here
+		texture = cb->textures[1];
 		texture_col = (wall_pos.x - floor(wall_pos.x)) * texture.width;
 	}
 
