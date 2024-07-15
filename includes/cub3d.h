@@ -121,7 +121,7 @@ typedef struct s_cb
 	t_img					img;
 	t_player				player;
 	t_valid_cords			*cords;
-	t_img					texture;
+	t_img					textures[4];
 	double					deltatime;
 }							t_cb;
 
