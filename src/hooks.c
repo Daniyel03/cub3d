@@ -21,8 +21,8 @@ int	close_win(t_cb *cb)
 
 void	set_deltatime(t_cb *cb)
 {
-	long			new_time;
-	static long		old_time = 0;
+	long		new_time;
+	static long	old_time = 0;
 
 	new_time = get_time_ms();
 	cb->deltatime = (new_time - old_time) / 1000.0;
@@ -36,6 +36,7 @@ int	on_loop(t_cb *cb)
 	set_deltatime(cb);
 	cb->player.input = (t_vec2){0, 0};
 	apply_all_keys(cb);
+	cb->player.rot = clamp_rot(cb->player.rot);
 	player_walk(cb);
 	printf("player pos: %f, %f player rot: %f\n", cb->player.pos.x,
 		cb->player.pos.y, cb->player.rot);

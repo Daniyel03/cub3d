@@ -10,7 +10,7 @@ int	get_pixel(t_img img, int x, int y)
 	return (*(unsigned int *)dst);
 }
 
-void	draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb)
+void	draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb, double rot_offset)
 {
 	int		len;
 	t_img	texture;
@@ -21,15 +21,21 @@ void	draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb)
 	int		texture_col;
 
 	i = 0;
-	if (wall_pos.x == round(wall_pos.x))
+	if (wall_pos.y == round(wall_pos.y))
 	{
-		texture = cb->textures[0];
-		texture_col = (wall_pos.y - floor(wall_pos.y)) * texture.width;
+		if (clamp_rot(cb->player.rot + rot_offset) <= 0.5 * PI || clamp_rot(cb->player.rot + rot_offset) > 1.5 * PI)
+			texture = cb->textures[0];
+		else
+			texture = cb->textures[2];
+		texture_col = (wall_pos.x - floor(wall_pos.x)) * texture.width;
 	}
 	else
 	{
-		texture = cb->textures[1];
-		texture_col = (wall_pos.x - floor(wall_pos.x)) * texture.width;
+		if (clamp_rot(cb->player.rot + rot_offset) < PI)
+			texture = cb->textures[1];
+		else
+			texture = cb->textures[3];
+		texture_col = (wall_pos.y - floor(wall_pos.y)) * texture.width;
 	}
 	len = HEIGHT / distance(cb->player.pos, wall_pos);
 	y_scale = (double)texture.height / len;
