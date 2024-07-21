@@ -126,8 +126,8 @@ void	cub3d(char **argv)
 	// printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
 	print_map(cb.map);
 	init_mlx(&cb);
-	cb.textures[0] = init_texture("grass-block_16.xpm", &cb);
-	cb.textures[1] = init_texture("TNT.xpm", &cb);
+	cb.textures[0] = init_texture("maps/textures/grass-block_16.xpm", &cb);
+	cb.textures[1] = init_texture("maps/textures/TNT.xpm", &cb);
 	// put_pattern(&cb);
 	init_keybinds(&cb);
 	setup_hooks(&cb);
