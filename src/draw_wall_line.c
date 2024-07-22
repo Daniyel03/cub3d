@@ -23,7 +23,8 @@ void	draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb, double rot_offset)
 	i = 0;
 	if (wall_pos.y == round(wall_pos.y))
 	{
-		if (clamp_rot(cb->player.rot + rot_offset) <= 0.5 * PI || clamp_rot(cb->player.rot + rot_offset) > 1.5 * PI)
+		if (clamp_rot(cb->player.rot + rot_offset) <= 0.5 * PI
+			|| clamp_rot(cb->player.rot + rot_offset) > 1.5 * PI)
 			texture = cb->map.textures[0];
 		else
 			texture = cb->map.textures[2];
@@ -40,15 +41,20 @@ void	draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb, double rot_offset)
 	len = HEIGHT / distance(cb->player.pos, wall_pos);
 	y_scale = (double)texture.height / len;
 	y_offest = HEIGHT / 2 - len / 2;
-	if (len > HEIGHT)
+	while (i < y_offest)
 	{
-		i += (len - HEIGHT) / 2;
-		len -= i;
+		put_pixel(cb->img, x, i, cb->map.ceil_color);
+		i++;
 	}
-	while (i < len)
+	while (i < y_offest + len && i < HEIGHT)
 	{
-		color = get_pixel(texture, texture_col, i * y_scale);
-		put_pixel(cb->img, x, y_offest + i, color);
+		color = get_pixel(texture, texture_col, (i - y_offest) * y_scale);
+		put_pixel(cb->img, x, i, color);
+		i++;
+	}
+	while (i < HEIGHT)
+	{
+		put_pixel(cb->img, x, i, cb->map.floor_color);
 		i++;
 	}
 }
