@@ -81,10 +81,12 @@ void	cub3d(char **argv)
 	// printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
 	print_map(cb.map);
 	init_mlx(&cb);
-	cb.textures[0] = init_texture("maps/textures/grass-block_16.xpm", &cb);
-	cb.textures[1] = init_texture("maps/textures/TNT.xpm", &cb);
-	cb.textures[2] = init_texture("maps/textures/dimond.xpm", &cb);
-	cb.textures[3] = init_texture("maps/textures/stone.xpm", &cb);
+	cb.map.textures[0] = init_texture("maps/textures/grass-block_16.xpm", &cb);
+	cb.map.textures[1] = init_texture("maps/textures/TNT.xpm", &cb);
+	cb.map.textures[2] = init_texture("maps/textures/dimond.xpm", &cb);
+	cb.map.textures[3] = init_texture("maps/textures/stone.xpm", &cb);
+	cb.map.ceil_color = 0x4881b0;
+	cb.map.floor_color = 0x0eb029;
 	// put_pattern(&cb);
 	init_keybinds(&cb);
 	setup_hooks(&cb);

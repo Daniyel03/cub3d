@@ -24,17 +24,17 @@ void	draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb, double rot_offset)
 	if (wall_pos.y == round(wall_pos.y))
 	{
 		if (clamp_rot(cb->player.rot + rot_offset) <= 0.5 * PI || clamp_rot(cb->player.rot + rot_offset) > 1.5 * PI)
-			texture = cb->textures[0];
+			texture = cb->map.textures[0];
 		else
-			texture = cb->textures[2];
+			texture = cb->map.textures[2];
 		texture_col = (wall_pos.x - floor(wall_pos.x)) * texture.width;
 	}
 	else
 	{
 		if (clamp_rot(cb->player.rot + rot_offset) < PI)
-			texture = cb->textures[1];
+			texture = cb->map.textures[1];
 		else
-			texture = cb->textures[3];
+			texture = cb->map.textures[3];
 		texture_col = (wall_pos.y - floor(wall_pos.y)) * texture.width;
 	}
 	len = HEIGHT / distance(cb->player.pos, wall_pos);
