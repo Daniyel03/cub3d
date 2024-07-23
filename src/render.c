@@ -31,11 +31,12 @@ int	is_player(int x, int y, t_vec2 player_pos)
 	return (distance(pixel, player_pos) < (double)MAP_SCALE * 0.004);
 }
 
-
 void	check_x(t_cb *cb, t_vec2 *coor)
 {
-	double highest_x;
-	t_valid_cords *temp = cb->cords;
+	double			highest_x;
+	t_valid_cords	*temp;
+
+	temp = cb->cords;
 	highest_x = 0;
 	while (temp)
 	{
@@ -45,15 +46,17 @@ void	check_x(t_cb *cb, t_vec2 *coor)
 	}
 	// printf("highest %f in %f\n", x, (*coor).y);
 	if (highest_x + 1 < floor((*coor).x))
+	{
 		(*coor).x = highest_x + 1;
+	}
 	// if (x < floor((*coor).x))
-		// printf("invalid %f in %f\n", (*coor).x, (*coor).y);
-	
+	// printf("invalid %f in %f\n", (*coor).x, (*coor).y);
 }
 
 int	check_is_wall(t_cb *cb, t_map map, t_vec2 coor, t_vec2 direction)
 {
-	coor = add_vec(coor, scale_vec(direction, 0.00001));
+	// TODO: this is a haky fix. Maybe find sth cleaner
+	coor = add_vec(coor, scale_vec(direction, 0.0000001));
 	// printf("%f %f\n", coor.x, coor.y);
 	// if (coor.x > 1.1)
 	// 	coor.x = floor(coor.x * 10) / 10;
@@ -61,20 +64,23 @@ int	check_is_wall(t_cb *cb, t_map map, t_vec2 coor, t_vec2 direction)
 	// 	coor.y = floor(coor.y * 10) / 10;
 	check_x(cb, &coor);
 	// (void)cb;
-	if (coor.y < 0) {
-		return 1;
+	if (coor.y < 0)
+	{
+		return (1);
 	}
-	if (coor.x < 0) {
-		return 1;
+	if (coor.x < 0)
+	{
+		return (1);
 	}
-	if (coor.y > map.y) {
-		return 1;
+	if (coor.y > map.y)
+	{
+		return (1);
 	}
-	if (map.arr[(int)coor.y][(int)coor.x] != 3) {
-		return 1;
+	if (map.arr[(int)coor.y][(int)coor.x] != 3)
+	{
+		return (1);
 	}
-
-	return 0;
+	return (0);
 }
 
 t_vec2	next_wall_x(t_cb *cb, t_vec2 pos, t_vec2 dir, t_map map)

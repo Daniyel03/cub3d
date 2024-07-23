@@ -21,7 +21,8 @@ void	draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb, double rot_offset)
 	int		texture_col;
 
 	i = 0;
-	if (wall_pos.y == round(wall_pos.y))
+	//TODO: hacky fix, probly whould try to be more precise before (in get_next_wall)
+	if (round(wall_pos.y * 1000) == round(wall_pos.y) * 1000)
 	{
 		if (clamp_rot(cb->player.rot + rot_offset) <= 0.5 * PI
 			|| clamp_rot(cb->player.rot + rot_offset) > 1.5 * PI)
