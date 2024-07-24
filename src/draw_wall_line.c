@@ -19,10 +19,11 @@ void	draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb, double rot_offset)
 	int		y_offest;
 	int		color;
 	int		texture_col;
+	int		len2;
 
 	(void)rot_offset;
 	i = 0;
-	//TODO: hacky fix, probly whould try to be more precise before (in get_next_wall)
+	// TODO: hacky fix,probly whould try to be more precise before(in get_next_wall)
 	if (wall_pos.x == round(wall_pos.x))
 	{
 		if (clamp_rot(cb->player.rot + rot_offset) < PI)
@@ -45,8 +46,9 @@ void	draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb, double rot_offset)
 		printf("error invalid wall: %.17g, %.17g\n", wall_pos.x, wall_pos.y);
 		return ;
 	}
-
 	len = HEIGHT / (distance(cb->player.pos, wall_pos) * cos(rot_offset));
+	len2 = HEIGHT / (distance(cb->player.pos, wall_pos));
+	len = (len + len2) / 2;
 	y_scale = (double)texture.height / len;
 	y_offest = HEIGHT / 2 - len / 2;
 	while (i < y_offest)
