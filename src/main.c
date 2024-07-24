@@ -72,51 +72,6 @@ t_img	init_texture(char *filename, t_cb *cb)
 	return (texture);
 }
 
-/*
-void	put_texture(t_cb *cb)
-{
-	int	color;
-	int	x;
-	int	y;
-
-	x = 0;
-	y = 0;
-	while (y < cb->textures.height)
-	{
-		x = 0;
-		while (x < cb->textures.width)
-		{
-			color = get_pixel(cb->textures, x, y);
-			printf("%i: %i, ", x, color);
-			put_pixel(cb->img, x, y, color);
-			x++;
-		}
-		printf("y: %i\n", y);
-		y++;
-	}
-	mlx_put_image_to_window(cb->mlx, cb->win, cb->img.img, 0, 0);
-}
-
-void	put_pattern(t_cb *cb)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	y = 0;
-	while (y < 100)
-	{
-		x = 0;
-		while (x < 100)
-		{
-			put_pixel(cb->textures, x, y, 0x00ff10 + x + y);
-			x++;
-		}
-		y++;
-	}
-}
-*/
-
 void	cub3d(char **argv)
 {
 	t_cb	cb;
@@ -126,8 +81,12 @@ void	cub3d(char **argv)
 	// printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
 	print_map(cb.map);
 	init_mlx(&cb);
-	cb.textures[0] = init_texture("grass-block_16.xpm", &cb);
-	cb.textures[1] = init_texture("TNT.xpm", &cb);
+	cb.map.textures[0] = init_texture("maps/textures/grass-block_16.xpm", &cb);
+	cb.map.textures[1] = init_texture("maps/textures/TNT.xpm", &cb);
+	cb.map.textures[2] = init_texture("maps/textures/dimond.xpm", &cb);
+	cb.map.textures[3] = init_texture("maps/textures/stone.xpm", &cb);
+	cb.map.ceil_color = 0x4881b0;
+	cb.map.floor_color = 0x0eb029;
 	// put_pattern(&cb);
 	init_keybinds(&cb);
 	setup_hooks(&cb);

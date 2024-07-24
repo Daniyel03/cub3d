@@ -64,3 +64,12 @@ void	print_map(t_map map)
 		y++;
 	}
 }
+
+double	clamp_rot(double rot)
+{
+	if (rot >= 2 * PI)
+		return rot - 2 * PI;
+	else if (rot < 0)
+		return rot + 2 * PI;
+	return rot;
+}

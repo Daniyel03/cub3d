@@ -27,7 +27,7 @@
 # define WIDTH 1080
 # define HEIGHT 720
 # define FOV 3.141 / 2 // in radians
-#define PI 3.141
+# define PI 3.1415926
 # define Y_SCALE 500
 # define MAP_SCALE 50
 
@@ -86,6 +86,9 @@ typedef struct s_map
 	int						y;
 	int						width;
 	int						height;
+	t_img					textures[4];
+	int						ceil_color;
+	int						floor_color;
 }							t_map;
 
 /**
@@ -121,7 +124,6 @@ typedef struct s_cb
 	t_img					img;
 	t_player				player;
 	t_valid_cords			*cords;
-	t_img					textures[4];
 	double					deltatime;
 }							t_cb;
 
@@ -138,7 +140,8 @@ void						draw_map(t_cb *cb);
 void						draw_line(t_vec2 start, t_vec2 end, int color,
 								t_img img);
 void						draw_view(t_cb *cb);
-void						draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb, double rot_offset);
+void						draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb,
+								double rot_offset);
 int							get_pixel(t_img img, int x, int y);
 
 // parser
@@ -151,6 +154,7 @@ void						print_cord(t_cb *cb);
 void						exit_cub(t_cb *cb, char *str);
 void						print_map(t_map map);
 long						get_time_ms(void);
+double						clamp_rot(double rot);
 
 // vector utils
 t_vec2						get_dir_vec(double distance, double rot);
