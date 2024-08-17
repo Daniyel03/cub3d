@@ -11,8 +11,23 @@
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+#include "../includes/parser.h"
 
-void	validate_path(t_cb *cb, char **argv)
+// void	free_parser(t_parser *parser)
+// {
+// 	if (parser->fd) || -1
+// 		close (parser->fd);
+// 	if (parser->parser->temp_fd)
+// 		close (parser->parser->temp_fd);
+// 	if (parser->last_graphic)
+// 		close (parser->last_graphic);
+// 	if (parser->fd_textures)
+// 		close (parser->fd_textures);
+// 	if (parser->fd_map)
+// 		close (parser->fd_map);
+// }
+
+void	validate_path(t_parser *parser, char **argv)
 {
 	int	i;
 	int	fd;
@@ -21,77 +36,84 @@ void	validate_path(t_cb *cb, char **argv)
 	while (argv[1][i] && argv[1][i] != '.')
 		i++;
 	if (argv[1][i] != '.')
-		return (exit_cub(cb, "file has to be in .cub format\n"));
+		return (exit_cub(parser->cb, "file has to be in .cub format\n"));
 	if (ft_strncmp(argv[1] + i, ".cub", 5))
-		return (exit_cub(cb, "file has to be in .cub format\n"));
+		return (exit_cub(parser->cb, "file has to be in .cub format\n"));
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-		return (exit_cub(cb, "file doesn't exist\n"));
-	else
-		close(fd);
-	cb->map.filename = argv[1];
+		return (exit_cub(parser->cb, "file doesn't exist\n"));
+	parser->file_fd = fd;
 }
 
-void	set_player_rot(t_cb *cb, int *x, char *str)
+void	set_player_rot(t_parser *parser, int *x, char *str)
 {
 	if (str[(*x)] == 'N')
-		return (cb->player.rot = 0, (void )0);
+		return (parser->cb->player.rot = PI, (void)0);
 	if (str[(*x)] == 'S')
-		return (cb->player.rot = PI, (void )0);
+		return (parser->cb->player.rot = 0, (void)0);
 	if (str[(*x)] == 'E')
-		return (cb->player.rot = PI * 0.5, (void )0);
+		return (parser->cb->player.rot = PI * 0.5, (void)0);
 	if (str[(*x)] == 'W')
-		return (cb->player.rot = PI  * 1.5, (void)0);
+		return (parser->cb->player.rot = PI * 1.5, (void)0);
 }
 
-void	iterate_line(t_cb *cb, int *x, char *str, int temp_fd)
+void	iterate_line(t_parser *parser, int *x, char *str)
 {
 	while (str[(*x)] && str[(*x)] != '\n')
 	{
-		if (!(str[(*x)] == 'N' || str[(*x)] == 'W' || str[(*x)] == 'S' || str[(*x)] == 'E') && str[(*x)] != '0' && str[(*x)] != '1'
+		if (!(str[(*x)] == 'N' || str[(*x)] == 'W' || str[(*x)] == 'S'
+				|| str[(*x)] == 'E') && str[(*x)] != '0' && str[(*x)] != '1'
 			&& str[(*x)] != ' ' && str[(*x)] != '\0' && str[(*x)] != '\n')
-			return (close(temp_fd), free(str), exit_cub(cb, "invalid map input, only 0 and 1 allowed\n"));
-		if (str[(*x)] == 'N' || str[(*x)] == 'W' || str[(*x)] == 'S' || str[(*x)] == 'E')
+			return (close(parser->temp_fd), free(str), 
+			exit_cub(parser->cb, "invalid map input, only 0 and 1 allowed\n"));
+		if (str[(*x)] == 'N' || str[(*x)] == 'W' || str[(*x)] == 'S'
+			|| str[(*x)] == 'E')
 		{
-			if (cb->player.pos.x != -1)
-				return(close(temp_fd), free(str), exit_cub(cb, "invalid map input, only one player position\n"));
-			cb->player.pos.x = (*x) + 0.5;
-			cb->player.pos.y = cb->map.y + 0.5;
-			set_player_rot(cb, x, str);
+			if (parser->cb->player.pos.x != -1)
+				return (close(parser->temp_fd), free(str), exit_cub(parser->cb,
+						"invalid map input, only one player position\n"));
+			parser->cb->player.pos.x = (*x) + 0.5;
+			parser->cb->player.pos.y = parser->cb->map.y + 0.5;
+			set_player_rot(parser, x, str);
 		}
 		(*x)++;
 	}
 }
 
-void	validate_input(t_cb *cb)
-{
-	char	*str;
-	int		temp_fd;
-	int		x;
+//
 
-	cb->map.y = 0;
+// void	parser_input(t_parser *parser)
+// {
+
+// }
+
+void	validate_input(t_parser *parser) // validate_map
+{
+	char *str;
+	int x;
+
+	parser->cb->map.y = 0;
 	x = 0;
-	temp_fd = open(cb->map.filename, O_RDONLY);
-	if (temp_fd == -1)
-		return (exit_cub(cb, NULL));
-	str = get_next_line(temp_fd);
+	parser->temp_fd = dup(parser->file_fd);
+	if (parser->temp_fd == -1)
+		return (exit_cub(parser->cb, NULL));
+	str = get_next_line(parser->temp_fd);
 	while (str)
 	{
 		x = 0;
-		iterate_line(cb, &x, str, temp_fd);
-		cb->map.arr[cb->map.y] = malloc(sizeof(int) * (x + 1));
-		if (!cb->map.arr[cb->map.y++])
-			return (exit_cub(cb, NULL));
+		iterate_line(parser, &x, str);
+		parser->cb->map.arr[parser->cb->map.y] = malloc(sizeof(int) * (x + 1));
+		if (!parser->cb->map.arr[parser->cb->map.y++])
+			return (exit_cub(parser->cb, NULL));
 		free(str);
-		str = get_next_line(temp_fd);
+		str = get_next_line(parser->temp_fd);
 	}
-	if (close(temp_fd) == -1)
-		return (exit_cub(cb, NULL));
+	if (close(parser->temp_fd) == -1)
+		return (exit_cub(parser->cb, NULL));
 }
 
-void	fill_lines(t_cb *cb)
+void	fill_lines(t_parser *parser)
 {
-	int		temp_fd;
 	char	*str;
 	char	*c;
 	int		x;
@@ -99,53 +121,69 @@ void	fill_lines(t_cb *cb)
 
 	x = -1;
 	y = 0;
-	temp_fd = open(cb->map.filename, O_RDONLY);
-	if (temp_fd == -1)
-		return (exit_cub(cb, NULL));
-	str = get_next_line(temp_fd);
-	while (y < cb->map.y)
+	parser->temp_fd = dup(parser->file_fd);
+	if (parser->temp_fd == -1)
+		return (exit_cub(parser->cb, NULL));
+	str = get_next_line(parser->temp_fd);
+	while (y < parser->cb->map.y)
 	{
 		while (str[++x] && str[x] != '\n')
 		{
 			c = ft_substr(str, x, 1);
 			if (!ft_strncmp(c, " ", 1))
-				cb->map.arr[y][x] = 2;
+				parser->cb->map.arr[y][x] = 2;
 			else
-				cb->map.arr[y][x] = ft_atoi(c);
+				parser->cb->map.arr[y][x] = ft_atoi(c);
 			free(c);
-			// printf("%d", cb->map.arr[y][x]);
+			// printf("%d", parser->cb->map.arr[y][x]);
 		}
-		cb->map.arr[y][x] = -1;
-		// printf("%d\n", cb->map.arr[y][x]);
+		parser->cb->map.arr[y][x] = -1;
+		// printf("%d\n", parser->cb->map.arr[y][x]);
 		y++;
 		free(str);
-		str = get_next_line(temp_fd);
+		str = get_next_line(parser->temp_fd);
 		x = -1;
 	}
 }
 
-void	alloc_array(t_cb *cb)
+void	alloc_array(t_parser *parser)
 {
 	int		count;
-	int		temp_fd;
 	char	*temp;
 
 	count = 0;
-	temp_fd = open(cb->map.filename, O_RDONLY);
-	if (temp_fd == -1)
-		return (exit_cub(cb, NULL));
-	temp = get_next_line(temp_fd);
+	parser->temp_fd = dup(parser->file_fd);
+	if (parser->temp_fd == -1)
+		return (exit_cub(parser->cb, NULL));
+	temp = get_next_line(parser->temp_fd);
 	while ((temp) && count++ != -1)
 	{
 		free(temp);
-		temp = get_next_line(temp_fd);
+		temp = get_next_line(parser->temp_fd);
 	}
-	cb->map.arr = malloc(sizeof(int *) * count);
-	if (!cb->map.arr)
-		return (exit_cub(cb, NULL));
-	// *cb->map.arr = NULL;
-	if (close(temp_fd) == -1)
-		return (exit_cub(cb, NULL));
-	validate_input(cb);
-	fill_lines(cb);
+	parser->cb->map.arr = malloc(sizeof(int *) * count);
+	if (!parser->cb->map.arr)
+		return (exit_cub(parser->cb, NULL));
+	// *parser->cb->map.arr = NULL;
+	if (close(parser->temp_fd) == -1)
+		return (exit_cub(parser->cb, NULL));
+	validate_input(parser);
+	fill_lines(parser);
+}
+
+void	parser(t_cb *cb, char **argv)
+{
+	t_parser parser;
+	int valid = 0;
+
+	ft_bzero(&parser, sizeof(parser));
+	parser.cb = cb;
+
+	validate_path(&parser, argv);
+	alloc_array(&parser);
+	valid = flood_fill(&parser);
+	print_map(parser.cb->map);
+	print_cord(cb);
+	printf("valid map: %d\n", valid);
+	print_map(cb->map);
 }

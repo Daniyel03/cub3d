@@ -13,17 +13,6 @@
 #include "../includes/cub3d.h"
 #include <stdlib.h>
 
-void	get_map(t_cb *cb, char **argv)
-{
-	int	valid;
-
-	validate_path(cb, argv);
-	alloc_array(cb);
-	valid = flood_fill(cb);
-	print_map(cb->map);
-	print_cord(cb);
-	printf("valid map: %d\n", valid);
-}
 
 int	init_mlx(t_cb *cb)
 {
@@ -77,9 +66,8 @@ void	cub3d(char **argv)
 	t_cb	cb;
 
 	init_struct(&cb);
-	get_map(&cb, argv);
+	parser(&cb, argv);
 	// printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
-	print_map(cb.map);
 	init_mlx(&cb);
 	cb.map.textures[0] = init_texture("maps/textures/grass-block_16.xpm", &cb);
 	cb.map.textures[1] = init_texture("maps/textures/TNT.xpm", &cb);

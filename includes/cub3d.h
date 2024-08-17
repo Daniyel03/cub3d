@@ -18,11 +18,13 @@
 # include <X11/keysym.h>
 # include <fcntl.h>
 # include <math.h>
-# include <mlx.h>
+# include "../minilibx-linux/mlx.h"
+// # include <../minilibx-linux/mlx_int.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+// # include "parser.h"
 
 # define WIDTH 1080
 # define HEIGHT 720
@@ -81,7 +83,6 @@ typedef struct t_img
 
 typedef struct s_map
 {
-	char					*filename;
 	int						**arr;
 	int						y;
 	int						width;
@@ -145,14 +146,10 @@ void						draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb,
 int							get_pixel(t_img img, int x, int y);
 
 // parser
-void						validate_path(t_cb *cb, char **argv);
-void						alloc_array(t_cb *cb);
-int							flood_fill(t_cb *cb);
-void						print_cord(t_cb *cb);
+void	parser(t_cb *cb, char **argv);
 
 // util
 void						exit_cub(t_cb *cb, char *str);
-void						print_map(t_map map);
 long						get_time_ms(void);
 double						clamp_rot(double rot);
 
