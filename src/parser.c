@@ -94,6 +94,10 @@ void	validate_input(t_parser *parser) // validate_map
 
 	parser->cb->map.y = 0;
 	x = 0;
+
+	str = get_next_line(parser->file_fd);
+	printf("%s\n", str);
+
 	parser->temp_fd = dup(parser->file_fd);
 	if (parser->temp_fd == -1)
 		return (exit_cub(parser->cb, NULL));
@@ -149,10 +153,16 @@ void	fill_lines(t_parser *parser)
 void	alloc_array(t_parser *parser)
 {
 	int		count;
-	char	*temp;
+	char	*temp = NULL;
 
 	count = 0;
 	parser->temp_fd = dup(parser->file_fd);
+
+	// char *str = NULL;
+	// str = get_next_line(parser->temp_fd);
+	// printf("%s\n", str);
+
+
 	if (parser->temp_fd == -1)
 		return (exit_cub(parser->cb, NULL));
 	temp = get_next_line(parser->temp_fd);
@@ -181,8 +191,8 @@ void	parser(t_cb *cb, char **argv)
 
 	validate_path(&parser, argv);
 	alloc_array(&parser);
-	valid = flood_fill(&parser);
 	print_map(parser.cb->map);
+	valid = flood_fill(&parser);
 	print_cord(cb);
 	printf("valid map: %d\n", valid);
 	print_map(cb->map);
