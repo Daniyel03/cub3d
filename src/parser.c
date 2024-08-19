@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 10:04:52 by dscholz           #+#    #+#             */
-/*   Updated: 2024/07/04 16:26:42 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/08/19 12:43:36 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	validate_path(t_parser *parser, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 		return (exit_cub(parser->cb, "file doesn't exist\n"));
-	parser->file_fd = fd;
+	close(fd);
+	parser->filename = argv[1];
 }
 
 void	set_player_rot(t_parser *parser, int *x, char *str)
@@ -94,11 +95,7 @@ void	validate_input(t_parser *parser) // validate_map
 
 	parser->cb->map.y = 0;
 	x = 0;
-
-	str = get_next_line(parser->file_fd);
-	printf("%s\n", str);
-
-	parser->temp_fd = dup(parser->file_fd);
+	parser->temp_fd = open(parser->filename, O_RDONLY);
 	if (parser->temp_fd == -1)
 		return (exit_cub(parser->cb, NULL));
 	str = get_next_line(parser->temp_fd);
@@ -125,7 +122,7 @@ void	fill_lines(t_parser *parser)
 
 	x = -1;
 	y = 0;
-	parser->temp_fd = dup(parser->file_fd);
+	parser->temp_fd = open(parser->filename, O_RDONLY);
 	if (parser->temp_fd == -1)
 		return (exit_cub(parser->cb, NULL));
 	str = get_next_line(parser->temp_fd);
@@ -156,12 +153,7 @@ void	alloc_array(t_parser *parser)
 	char	*temp = NULL;
 
 	count = 0;
-	parser->temp_fd = dup(parser->file_fd);
-
-	// char *str = NULL;
-	// str = get_next_line(parser->temp_fd);
-	// printf("%s\n", str);
-
+	parser->temp_fd = open(parser->filename, O_RDONLY);
 
 	if (parser->temp_fd == -1)
 		return (exit_cub(parser->cb, NULL));

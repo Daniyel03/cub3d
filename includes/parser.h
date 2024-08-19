@@ -14,12 +14,11 @@ typedef struct s_valid_map
 typedef struct s_parser
 {
 	t_cb	*cb;
+	char	*filename;
 	int		graphics_count;
 	// int		last_graphic;
-	int		file_fd;
 	int		temp_fd;
-	// int		fd_textures;
-	int		fd_map;
+	int		line_map;
 }			t_parser;
 
 void		validate_path(t_parser *parser, char **argv);

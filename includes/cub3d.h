@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/07/04 16:17:00 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/08/19 06:11:18 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <X11/keysym.h>
 # include <fcntl.h>
 # include <math.h>
-# include "../minilibx-linux/mlx.h"
+# include <mlx.h>
 // # include <../minilibx-linux/mlx_int.h>
 # include <stdio.h>
 # include <stdlib.h>
