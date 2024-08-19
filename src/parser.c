@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 10:04:52 by dscholz           #+#    #+#             */
-/*   Updated: 2024/08/19 12:43:36 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/08/19 13:13:26 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ void	parser(t_cb *cb, char **argv)
 	validate_path(&parser, argv);
 	alloc_array(&parser);
 	print_map(parser.cb->map);
-	valid = flood_fill(&parser);
+	valid = flood_fill(cb);
 	print_cord(cb);
 	printf("valid map: %d\n", valid);
 	print_map(cb->map);
