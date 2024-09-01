@@ -27,9 +27,10 @@
 // 		close (parser->fd_map);
 // }
 
-void	get_filename(t_parser *parser, char **argv)
+void	validate_path(t_parser *parser, char **argv)
 {
 	int	i;
+	int	fd;
 
 	i = 0;
 	while (argv[1][i] && argv[1][i] != '.')
@@ -38,105 +39,11 @@ void	get_filename(t_parser *parser, char **argv)
 		return (exit_cub(parser->cb, "file has to be in .cub format\n"));
 	if (ft_strncmp(argv[1] + i, ".cub", 5))
 		return (exit_cub(parser->cb, "file has to be in .cub format\n"));
-	parser->temp_fd = open(argv[1], O_RDONLY);
-	if (parser->temp_fd == -1)
+	fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
 		return (exit_cub(parser->cb, "file doesn't exist\n"));
+	close(fd);
 	parser->filename = argv[1];
-}
-
-// only
-// 1. NEWSFC 2. OA 3.
-
-int	check_direction(t_parser *parser)
-{
-	if (parser->temp[0] == 'N' && parser->temp[1] == 'O')
-		return (parser->temp += 2, 1);
-	if (parser->temp[0] == 'S' && parser->temp[1] == 'O')
-		return (parser->temp += 2, 1);
-	if (parser->temp[0] == 'E' && parser->temp[1] == 'A')
-		return (parser->temp += 2, 1);
-	if (parser->temp[0] == 'W' && parser->temp[1] == 'E')
-		return (parser->temp += 2, 1);
-	return (0);
-}
-
-t_img	init_texture(char *filename, t_cb *cb)
-{
-	t_img	texture;
-
-	texture.img = mlx_xpm_file_to_image(cb->mlx, filename, &texture.width,
-			&texture.height);
-	texture.addr = mlx_get_data_addr(texture.img, &texture.bits_per_pixel,
-			&texture.line_length, &texture.endian);
-	return (texture);
-}
-
-void	set_texture(t_parser *parser)
-{
-	parser->temp = parser->str;
-	while (ft_isspace(*parser->temp))
-		parser->temp++;
-	if (*parser->temp == 'N' && *parser->temp + 1 == 'O')
-		parser->i = 0;
-	if (*parser->temp == 'S' && *parser->temp + 1 == 'O')
-		parser->i = 1;
-	if (*parser->temp == 'E' && *parser->temp + 1 == 'A')
-		parser->i = 2;
-	if (*parser->temp == 'W' && *parser->temp + 1 == 'E')
-		parser->i = 3;
-	parser->cb->map.textures[parser->i] = init_texture(parser->filename,
-			parser->cb);
-}
-
-// how to set each texture ->set texture after check texture
-void	test_texture_path(t_parser *parser)
-{
-	int	i;
-
-	i = 0;
-	while (!ft_isspace(*parser->temp + i))
-		i++;
-	parser->file = ft_substr(parser->temp, 0, i);
-	while (ft_isspace(*parser->temp + i))
-		i++;
-	if (*parser->temp != '\0')
-		return ; // invalid texture, character after path
-	if (-1 == open(parser->file, O_RDONLY))
-		return ; // file  doesnt exist;
-				// should it end with .xpm?
-}
-
-void	check_texture(t_parser *parser)
-{
-	parser->str = get_next_line(parser->temp_fd);
-	parser->line_count++;
-	parser->temp = parser->str;
-	while (ft_isspace(*parser->temp))
-		parser->temp++;
-	if (ft_isdigit(*parser->temp) || ft_isdigit(*parser->temp + 1))
-		return exit_cub(parser->cb, "map before textures\n"); // free parser, exitcub false order, textures before map
-	if (!check_direction(parser))
-		return exit_cub(parser->cb, "false texture direction\n"); // false texture direction
-	while (ft_isspace(*parser->temp))
-		parser->temp++;
-	if (parser->temp[0] == '\0')
-		return exit_cub(parser->cb, "no texture file\n"); // no texture file
-}
-
-void	validate_input(t_parser *parser, char **argv)
-{
-	// char	*str;
-
-	get_filename(parser, argv);
-	read_until_not_empty(parser);
-	check_texture(parser);
-
-	// free(str); parser->line_count++;
-	// read_until_not_empty(parser);
-	// str = get_next_line(parser->temp_fd);
-	// printf("%s\n", str);
-
-
 }
 
 void	set_player_rot(t_parser *parser, int *x, char *str)
@@ -158,8 +65,8 @@ void	iterate_line(t_parser *parser, int *x, char *str)
 		if (!(str[(*x)] == 'N' || str[(*x)] == 'W' || str[(*x)] == 'S'
 				|| str[(*x)] == 'E') && str[(*x)] != '0' && str[(*x)] != '1'
 			&& str[(*x)] != ' ' && str[(*x)] != '\0' && str[(*x)] != '\n')
-			return (close(parser->temp_fd), free(str), exit_cub(parser->cb,
-					"invalid map input, only 0 and 1 allowed\n"));
+			return (close(parser->temp_fd), free(str), 
+			exit_cub(parser->cb, "invalid map input, only 0 and 1 allowed\n"));
 		if (str[(*x)] == 'N' || str[(*x)] == 'W' || str[(*x)] == 'S'
 			|| str[(*x)] == 'E')
 		{
@@ -181,30 +88,30 @@ void	iterate_line(t_parser *parser, int *x, char *str)
 
 // }
 
-// void	validate_input(t_parser *parser) // validate_map
-// {
-// 	char *str;
-// 	int x;
+void	validate_input(t_parser *parser) // validate_map
+{
+	char *str;
+	int x;
 
-// 	parser->cb->map.y = 0;
-// 	x = 0;
-// 	parser->temp_fd = open(parser->filename, O_RDONLY);
-// 	if (parser->temp_fd == -1)
-// 		return (exit_cub(parser->cb, NULL));
-// 	str = get_next_line(parser->temp_fd);
-// 	while (str)
-// 	{
-// 		x = 0;
-// 		iterate_line(parser, &x, str);
-// 		parser->cb->map.arr[parser->cb->map.y] = malloc(sizeof(int) * (x + 1));
-// 		if (!parser->cb->map.arr[parser->cb->map.y++])
-// 			return (exit_cub(parser->cb, NULL));
-// 		free(str);
-// 		str = get_next_line(parser->temp_fd);
-// 	}
-// 	if (close(parser->temp_fd) == -1)
-// 		return (exit_cub(parser->cb, NULL));
-// }
+	parser->cb->map.y = 0;
+	x = 0;
+	parser->temp_fd = open(parser->filename, O_RDONLY);
+	if (parser->temp_fd == -1)
+		return (exit_cub(parser->cb, NULL));
+	str = get_next_line(parser->temp_fd);
+	while (str)
+	{
+		x = 0;
+		iterate_line(parser, &x, str);
+		parser->cb->map.arr[parser->cb->map.y] = malloc(sizeof(int) * (x + 1));
+		if (!parser->cb->map.arr[parser->cb->map.y++])
+			return (exit_cub(parser->cb, NULL));
+		free(str);
+		str = get_next_line(parser->temp_fd);
+	}
+	if (close(parser->temp_fd) == -1)
+		return (exit_cub(parser->cb, NULL));
+}
 
 void	fill_lines(t_parser *parser)
 {
@@ -243,11 +150,11 @@ void	fill_lines(t_parser *parser)
 void	alloc_array(t_parser *parser)
 {
 	int		count;
-	char	*temp;
+	char	*temp = NULL;
 
-	temp = NULL;
 	count = 0;
 	parser->temp_fd = open(parser->filename, O_RDONLY);
+
 	if (parser->temp_fd == -1)
 		return (exit_cub(parser->cb, NULL));
 	temp = get_next_line(parser->temp_fd);
@@ -262,22 +169,23 @@ void	alloc_array(t_parser *parser)
 	// *parser->cb->map.arr = NULL;
 	if (close(parser->temp_fd) == -1)
 		return (exit_cub(parser->cb, NULL));
+	validate_input(parser);
 	fill_lines(parser);
 }
 
 void	parser(t_cb *cb, char **argv)
 {
 	t_parser parser;
-	// int valid = 0;
+	int valid = 0;
 
 	ft_bzero(&parser, sizeof(parser));
 	parser.cb = cb;
 
-	validate_input(&parser, argv);
-	// alloc_array(&parser);
-	// print_map(parser.cb->map);
-	// valid = flood_fill(cb);
-	// print_cord(cb);
-	// printf("valid map: %d\n", valid);
-	// print_map(cb->map);
+	validate_path(&parser, argv);
+	alloc_array(&parser);
+	print_map(parser.cb->map);
+	valid = flood_fill(cb);
+	print_cord(cb);
+	printf("valid map: %d\n", valid);
+	print_map(cb->map);
 }

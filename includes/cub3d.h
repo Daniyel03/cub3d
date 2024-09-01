@@ -148,6 +148,9 @@ int							get_pixel(t_img img, int x, int y);
 // parser
 void	parser(t_cb *cb, char **argv);
 
+//parser_utils
+int	empty(char *str);
+
 // util
 void						exit_cub(t_cb *cb, char *str);
 long						get_time_ms(void);

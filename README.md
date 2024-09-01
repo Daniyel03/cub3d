@@ -1,6 +1,14 @@
 # cub3d
 
-maybe get the floodfill to give out highest x and y
+1.  validate textures && validate order
+2.  validate map
+
+1.  while empty line, while isspace, 
+    (if starts with num && graphic_count != 6 -> invalid order) 
+    2 letters, empty spaces, validate path, if isspace only, add graphics_count -> == 6
+
+2.  beginning from the line of last_grapic, while empty line, validate map, 
+    if only empty lines after
 
 WO ./path_to_the_north_texture
 SO ./path_to_the_south_texture
