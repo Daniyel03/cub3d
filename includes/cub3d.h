@@ -81,6 +81,7 @@ typedef struct t_img
 	int						height;
 }							t_img;
 
+//textures: {NO, EA, SO, WE}
 typedef struct s_map
 {
 	int						**arr;

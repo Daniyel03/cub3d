@@ -57,6 +57,10 @@ int	check_direction(t_parser *parser)
 		return (parser->temp += 2, 1);
 	if (parser->temp[0] == 'W' && parser->temp[1] == 'E')
 		return (parser->temp += 2, 1);
+	if (parser->temp[0] == 'C')
+		return (parser->temp += 1, 1);
+	if (parser->temp[0] == 'F')
+		return (parser->temp += 1, 1);
 	return (0);
 }
 
@@ -71,6 +75,14 @@ t_img	init_texture(char *filename, t_cb *cb)
 	return (texture);
 }
 
+void	rgb_to_hexadecimal(t_parser *parser)
+{
+	// parser->file = "0x";
+	char **numbers = ft_split(parser->file, ',');
+	while (*numbers)
+		printf("%s\n", *numbers++);
+}
+
 void	set_texture(t_parser *parser)
 {
 	parser->temp = parser->str;
@@ -79,9 +91,9 @@ void	set_texture(t_parser *parser)
 	if (*parser->temp == 'N' && *parser->temp + 1 == 'O')
 		parser->i = 0;
 	if (*parser->temp == 'S' && *parser->temp + 1 == 'O')
-		parser->i = 1;
-	if (*parser->temp == 'E' && *parser->temp + 1 == 'A')
 		parser->i = 2;
+	if (*parser->temp == 'E' && *parser->temp + 1 == 'A')
+		parser->i = 1;
 	if (*parser->temp == 'W' && *parser->temp + 1 == 'E')
 		parser->i = 3;
 	parser->cb->map.textures[parser->i] = init_texture(parser->filename,
@@ -91,19 +103,20 @@ void	set_texture(t_parser *parser)
 // how to set each texture ->set texture after check texture
 void	test_texture_path(t_parser *parser)
 {
-	int	i;
-
-	i = 0;
-	while (!ft_isspace(*parser->temp + i))
-		i++;
-	parser->file = ft_substr(parser->temp, 0, i);
-	while (ft_isspace(*parser->temp + i))
-		i++;
-	if (*parser->temp != '\0')
-		return ; // invalid texture, character after path
+	while (!ft_isspace(parser->temp[parser->i]))
+		parser->i++;
+	parser->file = ft_substr(parser->temp, 0, parser->i);
+	// while (ft_isspace(parser->temp[parser->i]))
+	// 	parser->i++;
+	// if (empty_line(parser->temp))
+	// 	return ; // invalid texture, character after path
+	if (parser->temp[0] == 'F' || parser->temp[0] == 'C')
+		return rgb_to_hexadecimal(parser);
 	if (-1 == open(parser->file, O_RDONLY))
 		return ; // file  doesnt exist;
-				// should it end with .xpm?
+				// should it end with .xpm?	
+	set_texture(parser);
+	parser->i = 0;
 }
 
 void	check_texture(t_parser *parser)
@@ -114,29 +127,55 @@ void	check_texture(t_parser *parser)
 	while (ft_isspace(*parser->temp))
 		parser->temp++;
 	if (ft_isdigit(*parser->temp) || ft_isdigit(*parser->temp + 1))
-		return exit_cub(parser->cb, "map before textures\n"); // free parser, exitcub false order, textures before map
+		return (exit_cub(parser->cb, "map before textures\n"));
 	if (!check_direction(parser))
-		return exit_cub(parser->cb, "false texture direction\n"); // false texture direction
-	while (ft_isspace(*parser->temp))
-		parser->temp++;
-	if (parser->temp[0] == '\0')
-		return exit_cub(parser->cb, "no texture file\n"); // no texture file
+		return (exit_cub(parser->cb, "false texture direction\n"));
+	// while (ft_isspace(*parser->temp))
+	// 	parser->temp++;
+	if (!empty_line(parser->temp))
+		return (exit_cub(parser->cb, "no texture file\n"));
+	test_texture_path(parser);
+	iterate_until_space(&parser->temp);
+	iterate_until_no_space(&parser->temp);
+	if (parser->temp[0] != '\0')
+		return (exit_cub(parser->cb, 
+		"too many elements, just pass direction and texturefile\n"));
+	parser->graphics_count++;
+}
+
+// void	set_texture(t_parser *parser)
+// {
+
+// }
+
+void	validate_textures(t_parser *parser)
+{
+	
+	read_until_not_empty(parser);
+	check_texture(parser);
+	// set_texture(parser);
+	read_until_not_empty(parser);
+	check_texture(parser);
+	read_until_not_empty(parser);
+	check_texture(parser);
+	// read_until_not_empty(parser);
+	// check_texture(parser);
+	// read_until_not_empty(parser);
+	// check_texture(parser);
+	// read_until_not_empty(parser);
+	// check_texture(parser);
+	// if ()
 }
 
 void	validate_input(t_parser *parser, char **argv)
 {
 	// char	*str;
-
 	get_filename(parser, argv);
-	read_until_not_empty(parser);
-	check_texture(parser);
-
+	validate_textures(parser);
 	// free(str); parser->line_count++;
 	// read_until_not_empty(parser);
 	// str = get_next_line(parser->temp_fd);
 	// printf("%s\n", str);
-
-
 }
 
 void	set_player_rot(t_parser *parser, int *x, char *str)
