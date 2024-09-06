@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 10:04:52 by dscholz           #+#    #+#             */
-/*   Updated: 2024/09/06 20:35:15 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/09/06 21:59:49 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,7 @@ void	check_digit(t_parser *parser)
 	check_commas(parser);
 	parser->i = 0;
 	while (parser->numbers[parser->i]
-		&& str_is_number(parser->numbers[parser->i])
-		&& ft_atoi(parser->numbers[parser->i]))
+		&& str_is_number(parser->numbers[parser->i]))
 	{
 		if (!str_is_number(parser->numbers[parser->i])
 			|| (ft_atoi(parser->numbers[parser->i]) > 255
@@ -169,6 +168,7 @@ void	numarray_to_hexadecimal(t_parser *parser)
     char *table = "0123456789abcdef";
     char *temp1;
     char *temp2;
+	int	temp;
     if (parser->i < 16)
     {
         temp1 = ft_substr(table, parser->i, 1);
@@ -180,13 +180,22 @@ void	numarray_to_hexadecimal(t_parser *parser)
     }
     else
     {
+		temp = parser->i;
 		parser->i /= 16;
         numarray_to_hexadecimal(parser);
-        parser->i = parser->i % 16;
+        parser->i = temp % 16;
 		numarray_to_hexadecimal(parser);
     }
 }
 
+void	append_zero(t_parser *parser)
+{
+	char *temp;
+	temp = ft_strjoin(parser->number, "0");
+	parser->number = temp;
+	temp = NULL;
+	// printf("%s\n", parser->number);
+}
 
 //
 void	set_digits(t_parser *parser)
@@ -196,6 +205,8 @@ void	set_digits(t_parser *parser)
 	while (*(char **)parser->ptr)
 	{
 		parser->i = ft_atoi(*(char **)parser->ptr);
+		if (parser->i < 16)
+			append_zero(parser);
 		numarray_to_hexadecimal(parser);
 		parser->ptr = (char **)parser->ptr + 1;
 	}
