@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 10:04:52 by dscholz           #+#    #+#             */
-/*   Updated: 2024/08/19 13:13:26 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/09/06 20:35:15 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,20 +78,42 @@ t_img	init_texture(char *filename, t_cb *cb)
 void	check_commas(t_parser *parser)
 {
 	parser->i = 0;
-	while(parser->temp[parser->i])
+	while (parser->temp[parser->i])
 	{
-		if (parser->temp[parser->i] == ',' && !ft_isdigit(parser->temp[parser->i + 1]))
+		if (parser->temp[parser->i] == ',' && !ft_isdigit(parser->temp[parser->i
+				+ 1]))
 			exit_cub(parser->cb, "false rgb input\n");
 		parser->i++;
 	}
 }
 
-//	strjoin, convert to hexa recursively
-//	12345678abcdefgh, while num > 16, num % 16, recursiv(num / 16)
-void	numarray_to_hexadecimal(t_parser *parser)
-{
 
-}
+// void	str_array_join(t_parser *parser)
+// {
+// 	parser->temp = NULL;
+// 	parser->i = 0;
+// 	while (parser->numbers[parser->i])
+// 	{
+// 		if (parser->numbers[parser->i + 1])
+// 		{
+// 			if (parser->number)
+// 			{
+// 				parser->temp = ft_strjoin(parser->number,
+						// ft_strjoin(parser->numbers[parser->i],
+						// 	parser->numbers[parser->i + 1]));
+// 				free(parser->number);
+// 				parser->number = parser->temp;
+// 				parser->temp = NULL;
+// 			}
+// 			else
+// 				parser->number = ft_strjoin(parser->numbers[parser->i],
+						// parser->numbers[parser->i + 1]);
+// 			parser->i += 2;
+// 		}
+// 		else
+// 			return ;
+// 	}
+// }
 
 void	check_digit(t_parser *parser)
 {
@@ -100,14 +122,92 @@ void	check_digit(t_parser *parser)
 	parser->i = 0;
 	while (!ft_isspace(parser->temp[parser->i]))
 		parser->i++;
-	if (!ft_isdigit(parser->file[0]) || !ft_isdigit(parser->file[parser->i - 1]))
+	if (!ft_isdigit(parser->file[0]) || !ft_isdigit(parser->file[parser->i
+			- 1]))
 		exit_cub(parser->cb, "false rgb input\n");
 	check_commas(parser);
 	parser->i = 0;
-	while (parser->numbers[parser->i] && str_is_number(parser->numbers[parser->i]))
+	while (parser->numbers[parser->i]
+		&& str_is_number(parser->numbers[parser->i])
+		&& ft_atoi(parser->numbers[parser->i]))
+	{
+		if (!str_is_number(parser->numbers[parser->i])
+			|| (ft_atoi(parser->numbers[parser->i]) > 255
+				|| ft_atoi(parser->numbers[parser->i]) < 0))
+			exit_cub(parser->cb, "invalid rgb input, just numbers 0-255\n");
 		parser->i++;
+	}
 	if (parser->i != 3 || parser->numbers[parser->i] != NULL)
 		exit_cub(parser->cb, "invalid rgb input\n");
+}
+
+	// // strjoin, convert to hexa recursively
+	// 12345678abcdefgh, while num > 16, num % 16, recursiv(num / 16)
+// void	numarray_to_hexadecimal(t_parser *parser)
+// {
+//     char *table = "0123456789abcdef";
+//     char *temp1;
+//     char *temp2;
+//     if (num < 16)
+//     {
+//         temp1 = ft_substr(table, num, 1);
+//         temp2 = ft_strjoin((*str), temp1);
+//         free((*str));
+//         free(temp1);
+//         (*str) = temp2;
+//         temp2 = NULL;
+//     }
+//     else
+//     {
+//         h(str, num / 16);
+//         h(str, num % 16);
+//     }
+// }
+
+void	numarray_to_hexadecimal(t_parser *parser)
+{
+    char *table = "0123456789abcdef";
+    char *temp1;
+    char *temp2;
+    if (parser->i < 16)
+    {
+        temp1 = ft_substr(table, parser->i, 1);
+        temp2 = ft_strjoin(parser->number, temp1);
+        free(parser->number);
+        free(temp1);
+        parser->number = temp2;
+        temp2 = NULL;
+    }
+    else
+    {
+		parser->i /= 16;
+        numarray_to_hexadecimal(parser);
+        parser->i = parser->i % 16;
+		numarray_to_hexadecimal(parser);
+    }
+}
+
+
+//
+void	set_digits(t_parser *parser)
+{	
+	parser->number = ft_strdup("0x");
+	parser->ptr = parser->numbers;
+	while (*(char **)parser->ptr)
+	{
+		parser->i = ft_atoi(*(char **)parser->ptr);
+		numarray_to_hexadecimal(parser);
+		parser->ptr = (char **)parser->ptr + 1;
+	}
+
+	printf("%s\n", parser->number);
+
+	// parser->ptr = parser->numbers;
+	// while (*(char **)parser->ptr)
+	// {
+	// 	printf("%s\n", *(char **)parser->ptr);
+	// 	parser->ptr = (char **)parser->ptr + 1;
+	// }
 }
 
 void	rgb_to_hexadecimal(t_parser *parser)
@@ -115,10 +215,12 @@ void	rgb_to_hexadecimal(t_parser *parser)
 	// parser->file = "0x";
 	parser->numbers = ft_split(parser->file, ',');
 	check_digit(parser);
+	set_digits(parser);
 	// free(parser->file);
 	// parser->file = NULL;
 	// while (parser->numbers[parser->i])
-	// 	parser->file = ft_strjoin(parser->numbers[parser->i], parser->numbers[parser->i + 1]);
+	// 	parser->file = ft_strjoin(parser->numbers[parser->i],
+				// parser->numbers[parser->i + 1]);
 }
 
 void	set_texture(t_parser *parser)
@@ -154,10 +256,10 @@ void	test_texture_path(t_parser *parser)
 	{
 		// if (-1 == open(parser->file, O_RDONLY))
 		// 	return ; // file  doesnt exist;
-		// 			// should it end with .xpm?	
+		// 			// should it end with .xpm?
 		// set_texture(parser);
-	iterate_until_space(&parser->temp);
-	iterate_until_no_space(&parser->temp);
+		iterate_until_space(&parser->temp);
+		iterate_until_no_space(&parser->temp);
 	}
 	iterate_until_space(&parser->temp);
 	iterate_until_no_space(&parser->temp);
@@ -194,7 +296,6 @@ void	check_texture(t_parser *parser)
 
 void	validate_textures(t_parser *parser)
 {
-	
 	read_until_not_empty(parser);
 	check_texture(parser);
 	// set_texture(parser);

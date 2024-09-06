@@ -20,11 +20,13 @@ typedef struct s_parser
 	char 	*temp;
 	char 	*str;
 	char	*file;
+	char	*number;
 	int		i;
 	int		graphics_count;
 	int		line_count;
 	int		temp_fd;
 	int		line_map;
+	void	*ptr;
 }			t_parser;
 
 void		validate_path(t_parser *parser, char **argv);
