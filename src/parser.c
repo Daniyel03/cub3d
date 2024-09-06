@@ -50,17 +50,17 @@ void	get_filename(t_parser *parser, char **argv)
 int	check_direction(t_parser *parser)
 {
 	if (parser->temp[0] == 'N' && parser->temp[1] == 'O')
-		return (parser->temp += 2, 1);
+		return (1);
 	if (parser->temp[0] == 'S' && parser->temp[1] == 'O')
-		return (parser->temp += 2, 1);
+		return (1);
 	if (parser->temp[0] == 'E' && parser->temp[1] == 'A')
-		return (parser->temp += 2, 1);
+		return (1);
 	if (parser->temp[0] == 'W' && parser->temp[1] == 'E')
-		return (parser->temp += 2, 1);
+		return (1);
 	if (parser->temp[0] == 'C')
-		return (parser->temp += 1, 1);
+		return (1);
 	if (parser->temp[0] == 'F')
-		return (parser->temp += 1, 1);
+		return (1);
 	return (0);
 }
 
@@ -75,19 +75,54 @@ t_img	init_texture(char *filename, t_cb *cb)
 	return (texture);
 }
 
+void	check_commas(t_parser *parser)
+{
+	parser->i = 0;
+	while(parser->temp[parser->i])
+	{
+		if (parser->temp[parser->i] == ',' && !ft_isdigit(parser->temp[parser->i + 1]))
+			exit_cub(parser->cb, "false rgb input\n");
+		parser->i++;
+	}
+}
+
+//	strjoin, convert to hexa recursively
+//	12345678abcdefgh, while num > 16, num % 16, recursiv(num / 16)
+void	numarray_to_hexadecimal(t_parser *parser)
+{
+
+}
+
+void	check_digit(t_parser *parser)
+{
+	iterate_until_space(&parser->temp);
+	iterate_until_no_space(&parser->temp);
+	parser->i = 0;
+	while (!ft_isspace(parser->temp[parser->i]))
+		parser->i++;
+	if (!ft_isdigit(parser->file[0]) || !ft_isdigit(parser->file[parser->i - 1]))
+		exit_cub(parser->cb, "false rgb input\n");
+	check_commas(parser);
+	parser->i = 0;
+	while (parser->numbers[parser->i] && str_is_number(parser->numbers[parser->i]))
+		parser->i++;
+	if (parser->i != 3 || parser->numbers[parser->i] != NULL)
+		exit_cub(parser->cb, "invalid rgb input\n");
+}
+
 void	rgb_to_hexadecimal(t_parser *parser)
 {
 	// parser->file = "0x";
-	char **numbers = ft_split(parser->file, ',');
-	while (*numbers)
-		printf("%s\n", *numbers++);
+	parser->numbers = ft_split(parser->file, ',');
+	check_digit(parser);
+	// free(parser->file);
+	// parser->file = NULL;
+	// while (parser->numbers[parser->i])
+	// 	parser->file = ft_strjoin(parser->numbers[parser->i], parser->numbers[parser->i + 1]);
 }
 
 void	set_texture(t_parser *parser)
 {
-	parser->temp = parser->str;
-	while (ft_isspace(*parser->temp))
-		parser->temp++;
 	if (*parser->temp == 'N' && *parser->temp + 1 == 'O')
 		parser->i = 0;
 	if (*parser->temp == 'S' && *parser->temp + 1 == 'O')
@@ -106,16 +141,26 @@ void	test_texture_path(t_parser *parser)
 	while (!ft_isspace(parser->temp[parser->i]))
 		parser->i++;
 	parser->file = ft_substr(parser->temp, 0, parser->i);
+	parser->i = 0;
 	// while (ft_isspace(parser->temp[parser->i]))
 	// 	parser->i++;
 	// if (empty_line(parser->temp))
 	// 	return ; // invalid texture, character after path
+	parser->temp = parser->str;
+	iterate_until_no_space(&parser->temp);
 	if (parser->temp[0] == 'F' || parser->temp[0] == 'C')
-		return rgb_to_hexadecimal(parser);
-	if (-1 == open(parser->file, O_RDONLY))
-		return ; // file  doesnt exist;
-				// should it end with .xpm?	
-	set_texture(parser);
+		rgb_to_hexadecimal(parser);
+	else
+	{
+		// if (-1 == open(parser->file, O_RDONLY))
+		// 	return ; // file  doesnt exist;
+		// 			// should it end with .xpm?	
+		// set_texture(parser);
+	iterate_until_space(&parser->temp);
+	iterate_until_no_space(&parser->temp);
+	}
+	iterate_until_space(&parser->temp);
+	iterate_until_no_space(&parser->temp);
 	parser->i = 0;
 }
 
@@ -124,19 +169,18 @@ void	check_texture(t_parser *parser)
 	parser->str = get_next_line(parser->temp_fd);
 	parser->line_count++;
 	parser->temp = parser->str;
-	while (ft_isspace(*parser->temp))
-		parser->temp++;
+	iterate_until_no_space(&parser->temp);
 	if (ft_isdigit(*parser->temp) || ft_isdigit(*parser->temp + 1))
 		return (exit_cub(parser->cb, "map before textures\n"));
 	if (!check_direction(parser))
 		return (exit_cub(parser->cb, "false texture direction\n"));
-	// while (ft_isspace(*parser->temp))
-	// 	parser->temp++;
+	iterate_until_space(&parser->temp);
 	if (!empty_line(parser->temp))
 		return (exit_cub(parser->cb, "no texture file\n"));
-	test_texture_path(parser);
-	iterate_until_space(&parser->temp);
 	iterate_until_no_space(&parser->temp);
+	test_texture_path(parser);
+	// iterate_until_space(&parser->temp);
+	// iterate_until_no_space(&parser->temp);
 	if (parser->temp[0] != '\0')
 		return (exit_cub(parser->cb, 
 		"too many elements, just pass direction and texturefile\n"));

@@ -15,6 +15,7 @@ typedef struct s_valid_map
 typedef struct s_parser
 {
 	t_cb	*cb;
+	char	**numbers;
 	char	*filename;
 	char 	*temp;
 	char 	*str;
@@ -39,5 +40,6 @@ void	set_fd(t_parser *parser);
 int	read_until_not_empty(t_parser *parser);
 void	iterate_until_no_space(char **str);
 void	iterate_until_space(char **str);
+int	str_is_number(char *str);
 
 #endif

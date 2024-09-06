@@ -35,7 +35,14 @@ void	iterate_until_space(char **str)
 		(*str)++;
 }
 
-
+int	str_is_number(char *str)
+{
+	while (*str && ft_isdigit(*str))
+		str++;
+	if (*str == '\0')
+		return 1;
+	return 0;
+}
 
 // if line found, read until count != i,
 void	set_fd(t_parser *parser)

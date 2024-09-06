@@ -56,3 +56,6 @@ C 225,30,0
 11111111 1111111 111111111111
 
 EA ./path_to_the_east_texture
+
+
+![dsd](image.png)
