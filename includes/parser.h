@@ -16,13 +16,14 @@ typedef struct s_parser
 {
 	t_cb	*cb;
 	char	**numbers;
+	char 	**textures;
 	char	*filename;
 	char 	*temp;
 	char 	*str;
 	char	*file;
 	char	*number;
 	int		i;
-	int		graphics_count;
+	int		map_line;
 	int		line_count;
 	int		temp_fd;
 	int		line_map;
@@ -43,5 +44,7 @@ int	read_until_not_empty(t_parser *parser);
 void	iterate_until_no_space(char **str);
 void	iterate_until_space(char **str);
 int	str_is_number(char *str);
+void	exit_parser(t_parser *parser, char *errormessage);
+void	print_textures(t_parser *parser);
 
 #endif

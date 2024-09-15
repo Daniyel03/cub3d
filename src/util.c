@@ -25,12 +25,12 @@ long	get_time_ms(void)
 
 void	exit_cub(t_cb *cb, char *str)
 {
+	if (cb->mlx)
+		mlx_destroy_display(cb->mlx);
 	if (cb->img.img)
 		mlx_destroy_image(cb->mlx, cb->img.img);
 	if (cb->win)
 		mlx_destroy_window(cb->mlx, cb->win);
-	if (cb->mlx)
-		mlx_destroy_display(cb->mlx);
 	free(cb->mlx);
 	free(cb->keybinds);
 	if (cb->map.arr)
