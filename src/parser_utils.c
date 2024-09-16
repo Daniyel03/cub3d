@@ -79,20 +79,20 @@ int	read_until_not_empty(t_parser *parser)
 	return 0;
 }
 
-void	print_textures(t_parser *parser)
-{
-	printf("0: %s\n", parser->textures[0]);
-	printf("1: %s\n", parser->textures[1]);
-	printf("2: %s\n", parser->textures[2]);
-	printf("3: %s\n", parser->textures[3]);
-	printf("4: %s\n", parser->textures[4]);
-	printf("5: %s\n", parser->textures[5]);
+// void	print_textures(t_parser *parser)
+// {
+// 	printf("0: %s\n", parser->textures[0]);
+// 	printf("1: %s\n", parser->textures[1]);
+// 	printf("2: %s\n", parser->textures[2]);
+// 	printf("3: %s\n", parser->textures[3]);
+// 	printf("4: %s\n", parser->textures[4]);
+// 	printf("5: %s\n", parser->textures[5]);
 
-}
+// }
 
 void	exit_parser(t_parser *parser, char *errormessage)
 {
-	print_textures(parser);
+	// print_textures(parser);
 	parser->i = 0;
 	if (parser->numbers)
 	{
@@ -104,20 +104,20 @@ void	exit_parser(t_parser *parser, char *errormessage)
 		free(parser->numbers);
 		parser->numbers = NULL;
 	}
-	free(parser->textures[0]);
-	parser->textures[0] = NULL;
-	free(parser->textures[1]);
-	parser->textures[1] = NULL;
-	free(parser->textures[2]);
-	parser->textures[2] = NULL;
-	free(parser->textures[3]);
-	parser->textures[3] = NULL;
-	free(parser->textures[4]);
-	parser->textures[4] = NULL;
-	free(parser->textures[5]);
-	parser->textures[5] = NULL;
-	free(parser->textures);
-	parser->textures = NULL;
+	// free(parser->textures[0]);
+	// parser->textures[0] = NULL;
+	// free(parser->textures[1]);
+	// parser->textures[1] = NULL;
+	// free(parser->textures[2]);
+	// parser->textures[2] = NULL;
+	// free(parser->textures[3]);
+	// parser->textures[3] = NULL;
+	// free(parser->textures[4]);
+	// parser->textures[4] = NULL;
+	// free(parser->textures[5]);
+	// parser->textures[5] = NULL;
+	// free(parser->textures);
+	// parser->textures = NULL;
 	if (parser->str)
 		free(parser->str);
 	if (parser->file)

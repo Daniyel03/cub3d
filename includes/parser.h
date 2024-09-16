@@ -16,7 +16,6 @@ typedef struct s_parser
 {
 	t_cb	*cb;
 	char	**numbers;
-	char 	**textures;
 	char	*filename;
 	char 	*temp;
 	char 	*str;

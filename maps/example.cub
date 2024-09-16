@@ -2,10 +2,13 @@
  
  F 33,3,3
 
-NO abc
+ C 44,4,4
 
+NO maps/textures/grass-block_16.xpm
+SO maps/textures/TNT.xpm
+WE maps/textures/dimond.xpm
+EA maps/textures/stone.xpm
 
-    C 255,15,1
 
 
 111111111

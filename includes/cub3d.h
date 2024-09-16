@@ -84,7 +84,8 @@ typedef struct t_img
 //textures: {NO, EA, SO, WE}
 typedef struct s_map
 {
-	int						**arr;
+	char						**arr;
+	char 	**textures_arr;
 	int						y;
 	int						width;
 	int						height;

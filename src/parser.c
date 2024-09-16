@@ -34,9 +34,10 @@ void	get_filename(t_parser *parser, char **argv)
 
 void	is_dir_set(t_parser *parser)
 {
-	if (parser->textures[parser->i])
-		return (exit_parser(parser, 
-			"direction already set / exists more than once\n"));
+	(void)parser;
+	// if (parser->cb->map.textures_arr[parser->i])
+	// 	return (exit_parser(parser, 
+	// 		"direction already set / exists more than once\n"));
 }
 
 int	check_direction(t_parser *parser)
@@ -183,17 +184,17 @@ void	set_texture(t_parser *parser)
 	parser->temp = parser->str;
 	iterate_until_no_space(&parser->temp);
 	if ((*parser->temp == 'N' && parser->temp[1] == 'O'))
-		parser->textures[0] = parser->file;
+		parser->cb->map.textures_arr[0] = parser->file;
 	if (*parser->temp == 'S' && parser->temp[1] == 'O')
-		parser->textures[2] = parser->file;
+		parser->cb->map.textures_arr[2] = parser->file;
 	if (*parser->temp == 'E' && parser->temp[1] == 'A')
-		parser->textures[1] = parser->file;
+		parser->cb->map.textures_arr[1] = parser->file;
 	if (*parser->temp == 'W' && parser->temp[1] == 'E')
-		parser->textures[3] = parser->file;
+		parser->cb->map.textures_arr[3] = parser->file;
 	if (parser->temp[0] == 'C')
-		parser->textures[4] = parser->number;
+		parser->cb->map.textures_arr[4] = parser->number;
 	if (parser->temp[0] == 'F')
-		parser->textures[5] = parser->number;
+		parser->cb->map.textures_arr[5] = parser->number;
 	set_texture_reset(parser);
 }
 
@@ -247,17 +248,17 @@ void	validate_textures(t_parser *parser)
 	check_texture(parser);
 	set_texture(parser);
 
-	// read_until_not_empty(parser);
-	// check_texture(parser);
-	// set_texture(parser);
+	read_until_not_empty(parser);
+	check_texture(parser);
+	set_texture(parser);
 	
-	// read_until_not_empty(parser);
-	// check_texture(parser);
-	// set_texture(parser);
+	read_until_not_empty(parser);
+	check_texture(parser);
+	set_texture(parser);
 	
-	// read_until_not_empty(parser);
-	// check_texture(parser);
-	// set_texture(parser);
+	read_until_not_empty(parser);
+	check_texture(parser);
+	set_texture(parser);
 	
 	read_until_not_empty(parser);
 	check_texture(parser);
@@ -282,7 +283,7 @@ void	validate_input(t_parser *parser, char **argv)
 	alloc_array(parser);
 	flood_fill(parser->cb);
 	print_map(parser->cb->map);
-	exit_parser(parser, NULL);
+	// exit_parser(parser, NULL);
 }
 
 void	set_player_rot(t_parser *parser, int *x, char *str)
@@ -424,7 +425,7 @@ void	parser(t_cb *cb, char **argv)
 
 	ft_bzero(&parser, sizeof(parser));
 	parser.cb = cb;
-	parser.textures = ft_calloc(6, sizeof(char **));
+	parser.cb->map.textures_arr = ft_calloc(6, sizeof(char **));
 
 	validate_input(&parser, argv);
 }
