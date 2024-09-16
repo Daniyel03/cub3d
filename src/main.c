@@ -86,12 +86,12 @@ void	cub3d(char **argv)
 	parser(&cb, argv);
 	// // printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
 	init_mlx(&cb);
-	cb.map.textures[0] = init_texture(cb.map.arr[0], &cb);
-	cb.map.textures[1] = init_texture(cb.map.arr[1], &cb);
-	cb.map.textures[2] = init_texture(cb.map.arr[2], &cb);
-	cb.map.textures[3] = init_texture(cb.map.arr[3], &cb);
-	cb.map.ceil_color  = hex_to_int(cb.map.arr[4]);
-	cb.map.floor_color = hex_to_int(cb.map.arr[5]);
+	cb.map.textures[0] = init_texture(cb.map.textures_arr[0], &cb);
+	cb.map.textures[1] = init_texture(cb.map.textures_arr[1], &cb);
+	cb.map.textures[2] = init_texture(cb.map.textures_arr[2], &cb);
+	cb.map.textures[3] = init_texture(cb.map.textures_arr[3], &cb);
+	cb.map.ceil_color  = hex_to_int(cb.map.textures_arr[4]);
+	cb.map.floor_color = hex_to_int(cb.map.textures_arr[5]);
 	// put_pattern(&cb);
 	init_keybinds(&cb);
 	setup_hooks(&cb);

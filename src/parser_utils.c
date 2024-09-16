@@ -79,16 +79,16 @@ int	read_until_not_empty(t_parser *parser)
 	return 0;
 }
 
-// void	print_textures(t_parser *parser)
-// {
-// 	printf("0: %s\n", parser->textures[0]);
-// 	printf("1: %s\n", parser->textures[1]);
-// 	printf("2: %s\n", parser->textures[2]);
-// 	printf("3: %s\n", parser->textures[3]);
-// 	printf("4: %s\n", parser->textures[4]);
-// 	printf("5: %s\n", parser->textures[5]);
+void	print_textures(t_parser *parser)
+{
+	printf("0: %s\n", parser->cb->map.textures_arr[0]);
+	printf("1: %s\n", parser->cb->map.textures_arr[1]);
+	printf("2: %s\n", parser->cb->map.textures_arr[2]);
+	printf("3: %s\n", parser->cb->map.textures_arr[3]);
+	printf("4: %s\n", parser->cb->map.textures_arr[4]);
+	printf("5: %s\n", parser->cb->map.textures_arr[5]);
 
-// }
+}
 
 void	exit_parser(t_parser *parser, char *errormessage)
 {

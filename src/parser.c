@@ -428,4 +428,5 @@ void	parser(t_cb *cb, char **argv)
 	parser.cb->map.textures_arr = ft_calloc(6, sizeof(char **));
 
 	validate_input(&parser, argv);
+	print_textures(&parser);
 }
