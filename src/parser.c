@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+#include <fcntl.h>
 #include "../includes/parser.h"
 
 //
@@ -34,10 +35,10 @@ void	get_filename(t_parser *parser, char **argv)
 
 void	is_dir_set(t_parser *parser)
 {
-	(void)parser;
-	// if (parser->cb->map.textures_arr[parser->i])
-	// 	return (exit_parser(parser, 
-	// 		"direction already set / exists more than once\n"));
+	// (void)parser;
+	if (parser->cb->map.textures_arr[parser->i])
+		return (exit_parser(parser, 
+			"direction already set / exists more than once\n"));
 }
 
 int	check_direction(t_parser *parser)
@@ -47,10 +48,10 @@ int	check_direction(t_parser *parser)
 		return (parser->i = 0, is_dir_set(parser), 1);
 	if (parser->temp[0] == 'S' && parser->temp[1] == 'O'
 		&& ft_isspace(parser->temp[2]))
-		return (parser->i = 1, is_dir_set(parser), 1);
+		return (parser->i = 2, is_dir_set(parser), 1);
 	if (parser->temp[0] == 'E' && parser->temp[1] == 'A'
 		&& ft_isspace(parser->temp[2]))
-		return (parser->i = 2, is_dir_set(parser), 1);
+		return (parser->i = 1, is_dir_set(parser), 1);
 	if (parser->temp[0] == 'W' && parser->temp[1] == 'E'
 		&& ft_isspace(parser->temp[2]))
 		return (parser->i = 3, is_dir_set(parser), 1);
@@ -147,7 +148,6 @@ void	set_digits(t_parser *parser)
 		numarray_to_hexadecimal(parser);
 		parser->ptr = (char **)parser->ptr + 1;
 	}
-	printf("%s\n", parser->number);
 }
 
 void	rgb_to_hexadecimal(t_parser *parser)
@@ -210,6 +210,8 @@ void	test_texture_path(t_parser *parser)
 		rgb_to_hexadecimal(parser);
 	else
 	{
+		if (open(parser->file, O_RDONLY) == -1)
+			exit_parser(parser, "texture file doesnt exist\n");
 		iterate_until_space(&parser->temp);
 		iterate_until_no_space(&parser->temp);
 	}

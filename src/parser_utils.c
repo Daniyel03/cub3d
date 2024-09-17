@@ -104,20 +104,20 @@ void	exit_parser(t_parser *parser, char *errormessage)
 		free(parser->numbers);
 		parser->numbers = NULL;
 	}
-	// free(parser->textures[0]);
-	// parser->textures[0] = NULL;
-	// free(parser->textures[1]);
-	// parser->textures[1] = NULL;
-	// free(parser->textures[2]);
-	// parser->textures[2] = NULL;
-	// free(parser->textures[3]);
-	// parser->textures[3] = NULL;
-	// free(parser->textures[4]);
-	// parser->textures[4] = NULL;
-	// free(parser->textures[5]);
-	// parser->textures[5] = NULL;
-	// free(parser->textures);
-	// parser->textures = NULL;
+	free(parser->cb->map.textures_arr[0]);
+	parser->cb->map.textures_arr[0] = NULL;
+	free(parser->cb->map.textures_arr[1]);
+	parser->cb->map.textures_arr[1] = NULL;
+	free(parser->cb->map.textures_arr[2]);
+	parser->cb->map.textures_arr[2] = NULL;
+	free(parser->cb->map.textures_arr[3]);
+	parser->cb->map.textures_arr[3] = NULL;
+	free(parser->cb->map.textures_arr[4]);
+	parser->cb->map.textures_arr[4] = NULL;
+	free(parser->cb->map.textures_arr[5]);
+	parser->cb->map.textures_arr[5] = NULL;
+	free(parser->cb->map.textures_arr);
+	parser->cb->map.textures_arr = NULL;
 	if (parser->str)
 		free(parser->str);
 	if (parser->file)
