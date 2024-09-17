@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/07/04 16:17:00 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/08/19 06:11:18 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@
 # include <fcntl.h>
 # include <math.h>
 # include <mlx.h>
+// # include <../minilibx-linux/mlx_int.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+// # include "parser.h"
 
 # define WIDTH 1080
 # define HEIGHT 720
@@ -79,10 +81,12 @@ typedef struct t_img
 	int						height;
 }							t_img;
 
+//textures: {NO, EA, SO, WE}
 typedef struct s_map
 {
 	char					*filename;
 	int						**arr;
+	char 	**textures_arr;
 	int						y;
 	int						width;
 	int						height;
@@ -145,14 +149,13 @@ void						draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb,
 int							get_pixel(t_img img, int x, int y);
 
 // parser
-void						validate_path(t_cb *cb, char **argv);
-void						alloc_array(t_cb *cb);
-int							flood_fill(t_cb *cb);
-void						print_cord(t_cb *cb);
+void	parser(t_cb *cb, char **argv);
+
+//parser_utils
+int	empty(char *str);
 
 // util
 void						exit_cub(t_cb *cb, char *str);
-void						print_map(t_map map);
 long						get_time_ms(void);
 double						clamp_rot(double rot);
 

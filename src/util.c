@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 long	get_time_ms(void)
 {
@@ -33,6 +33,7 @@ void	exit_cub(t_cb *cb, char *str)
 		mlx_destroy_display(cb->mlx);
 	free(cb->mlx);
 	free(cb->keybinds);
+
 	if (cb->map.arr)
 	{
 		if (cb->map.y)
@@ -42,6 +43,36 @@ void	exit_cub(t_cb *cb, char *str)
 	}
 	if (str)
 		printf("%s", str);
+
+	if (cb->cords)
+	{
+		void *ptr = cb->cords;
+		while (cb->cords)
+		{
+			ptr = cb->cords->next;
+			free(cb->cords);
+			cb->cords = ptr;
+		}
+		// free(cb->cords);
+	}
+
+
+	free(cb->map.textures_arr[0]);
+	cb->map.textures_arr[0] = NULL;
+	free(cb->map.textures_arr[1]);
+	cb->map.textures_arr[1] = NULL;
+	free(cb->map.textures_arr[2]);
+	cb->map.textures_arr[2] = NULL;
+	free(cb->map.textures_arr[3]);
+	cb->map.textures_arr[3] = NULL;
+	free(cb->map.textures_arr[4]);
+	cb->map.textures_arr[4] = NULL;
+	free(cb->map.textures_arr[5]);
+	cb->map.textures_arr[5] = NULL;
+	free(cb->map.textures_arr);
+	cb->map.textures_arr = NULL;
+
+
 	exit(0); // TODO: exit with errorcode when an error occured
 }
 

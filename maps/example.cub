@@ -1,5 +1,18 @@
+
+ 
+ F 33,3,3
+
+ C 44,244,4
+
+NO maps/textures/grass-block_16.xpm
+SO maps/textures/TNT.xpm
+WE maps/textures/dimond.xpm
+EA maps/textures/stone.xpm
+
+
+
 111111111
-1110N0111
+1110S01111
 111100000111
    111111111
    111111111
