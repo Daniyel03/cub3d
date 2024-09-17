@@ -14,8 +14,6 @@
 #include <fcntl.h>
 #include "../includes/parser.h"
 
-//
-
 void	get_filename(t_parser *parser, char **argv)
 {
 	int	i;
@@ -35,7 +33,6 @@ void	get_filename(t_parser *parser, char **argv)
 
 void	is_dir_set(t_parser *parser)
 {
-	// (void)parser;
 	if (parser->cb->map.textures_arr[parser->i])
 		return (exit_parser(parser, 
 			"direction already set / exists more than once\n"));
@@ -174,7 +171,6 @@ void	set_texture_reset(t_parser *parser)
 		free(parser->numbers);
 		parser->numbers = NULL;
 	}
-	// free(parser->file);
 	parser->file = NULL;
 	parser->temp = NULL;
 }
@@ -210,8 +206,11 @@ void	test_texture_path(t_parser *parser)
 		rgb_to_hexadecimal(parser);
 	else
 	{
-		if (open(parser->file, O_RDONLY) == -1)
+		(close(parser->temp_fd));
+		parser->temp_fd = open(parser->file, O_RDONLY);
+		if (parser->temp_fd == -1)
 			exit_parser(parser, "texture file doesnt exist\n");
+		// (close(parser->temp_fd));
 		iterate_until_space(&parser->temp);
 		iterate_until_no_space(&parser->temp);
 	}
@@ -266,15 +265,6 @@ void	validate_textures(t_parser *parser)
 	check_texture(parser);
 	set_texture(parser);
 
-	// read_until_not_empty(parser);
-	// parser->map_line = parser->i;
-	// printf("%s\n", get_next_line(parser->temp_fd));
-	// printf("%s\n\n", get_next_line(parser->temp_fd));
-	// parser->i = parser->map_line;
-	// set_fd(parser);
-	// printf("%s\n", get_next_line(parser->temp_fd));
-	// printf("%s\n\n", get_next_line(parser->temp_fd));
-	
 	
 }
 
@@ -285,7 +275,6 @@ void	validate_input(t_parser *parser, char **argv)
 	alloc_array(parser);
 	flood_fill(parser->cb);
 	print_map(parser->cb->map);
-	// exit_parser(parser, NULL);
 }
 
 void	set_player_rot(t_parser *parser, int *x, char *str)
@@ -333,9 +322,6 @@ void	fill_lines(t_parser *parser)
 	x = -1;
 	y = 0;
 
-	// parser->temp_fd = open(parser->filename, O_RDONLY);
-	// if (parser->temp_fd == -1)
-	// 	return (exit_parser(parser, NULL));
 
 	parser->i = parser->map_line;
 	set_fd(parser);
@@ -368,10 +354,6 @@ void	validate_alloc_lines(t_parser *parser)
 	parser->cb->map.y = 0;
 	x = 0;
 
-	// temp_fd = open(parser->cb->map.filename, O_RDONLY);
-	// if (temp_fd == -1)
-	// 	return (exit_cub(parser->cb, NULL));
-
 	parser->i = parser->map_line;
 	set_fd(parser);
 
@@ -397,11 +379,6 @@ void	alloc_array(t_parser *parser)
 
 	temp = NULL;
 	count = 0;
-
-
-	// parser->temp_fd = open(parser->filename, O_RDONLY);
-	// if (parser->temp_fd == -1)
-	// 	return (exit_parser(parser, NULL));
 
 	read_until_not_empty(parser);
 	parser->map_line = parser->i;
@@ -431,4 +408,5 @@ void	parser(t_cb *cb, char **argv)
 
 	validate_input(&parser, argv);
 	print_textures(&parser);
+	close(parser.temp_fd);
 }
