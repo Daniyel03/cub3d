@@ -25,14 +25,15 @@ long	get_time_ms(void)
 
 void	exit_cub(t_cb *cb, char *str)
 {
-	if (cb->mlx)
-		mlx_destroy_display(cb->mlx);
 	if (cb->img.img)
 		mlx_destroy_image(cb->mlx, cb->img.img);
 	if (cb->win)
 		mlx_destroy_window(cb->mlx, cb->win);
+	if (cb->mlx)
+		mlx_destroy_display(cb->mlx);
 	free(cb->mlx);
 	free(cb->keybinds);
+
 	if (cb->map.arr)
 	{
 		if (cb->map.y)
@@ -42,6 +43,19 @@ void	exit_cub(t_cb *cb, char *str)
 	}
 	if (str)
 		printf("%s", str);
+
+	if (cb->cords)
+	{
+		void *ptr = cb->cords;
+		while (cb->cords)
+		{
+			ptr = cb->cords->next;
+			free(cb->cords);
+			cb->cords = ptr;
+		}
+		// free(cb->cords);
+	}
+
 
 	free(cb->map.textures_arr[0]);
 	cb->map.textures_arr[0] = NULL;
