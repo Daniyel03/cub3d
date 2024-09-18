@@ -1,13 +1,13 @@
 
  
- F 33,3,3
+ F 0,0,0
 
- C 44,244,4
+ C 0,0,0
 
-NO maps/textures/grass-block_16.xpm
-SO maps/textures/TNT.xpm
-WE maps/textures/dimond.xpm
-EA maps/textures/stone.xpm
+NO maps/textures/mossy.xpm
+SO maps/textures/purple_stone.xpm
+WE maps/textures/red_brick.xpm
+EA maps/textures/wood.xpm
 
 
 
@@ -16,3 +16,5 @@ EA maps/textures/stone.xpm
 111100000111
    111111111
    111111111
+
+
