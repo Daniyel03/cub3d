@@ -53,6 +53,22 @@ void	check_x(t_cb *cb, t_vec2 *coor)
 	// printf("invalid %f in %f\n", (*coor).x, (*coor).y);
 }
 
+int	invalid_x(double x, t_cb *cb)
+{
+	t_valid_cords	*temp;
+
+	temp = cb->cords;
+	while (temp)
+	{
+		if (x >= temp->x && x < ceil(temp->x))
+			break ;
+		temp = temp->next;
+	}
+	if (!temp)
+		return 1;
+	return 0;
+}
+
 int	check_is_wall(t_cb *cb, t_map map, t_vec2 coor, t_vec2 direction)
 {
 	// TODO: this is a haky fix. Maybe find sth cleaner
@@ -68,7 +84,7 @@ int	check_is_wall(t_cb *cb, t_map map, t_vec2 coor, t_vec2 direction)
 	{
 		return (1);
 	}
-	if (coor.x < 0)
+	if (coor.x < 0 || invalid_x(coor.x, cb))
 	{
 		return (1);
 	}

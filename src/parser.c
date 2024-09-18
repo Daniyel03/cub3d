@@ -353,11 +353,8 @@ void	validate_alloc_lines(t_parser *parser)
 
 	parser->cb->map.y = 0;
 	x = 0;
-
 	parser->i = parser->map_line;
 	set_fd(parser);
-
-
 	str = get_next_line(parser->temp_fd);
 	while (str)
 	{
@@ -369,7 +366,6 @@ void	validate_alloc_lines(t_parser *parser)
 		free(str);
 		str = get_next_line(parser->temp_fd);
 	}
-
 }
 
 void	alloc_array(t_parser *parser)
@@ -380,6 +376,7 @@ void	alloc_array(t_parser *parser)
 	temp = NULL;
 	count = 0;
 
+	set_fd(parser);
 	read_until_not_empty(parser);
 	parser->map_line = parser->i;
 
