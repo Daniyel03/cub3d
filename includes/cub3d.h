@@ -26,8 +26,8 @@
 # include <unistd.h>
 // # include "parser.h"
 
-# define WIDTH 1080
-# define HEIGHT 720
+# define WIDTH 450
+# define HEIGHT 300
 # define FOV 3.141 / 2 // in radians
 # define PI 3.1415926
 # define Y_SCALE 500

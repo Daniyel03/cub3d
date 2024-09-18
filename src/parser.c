@@ -19,10 +19,10 @@ void	get_filename(t_parser *parser, char **argv)
 	int	i;
 
 	i = 0;
-	while (argv[1][i] && argv[1][i] != '.')
+	while (argv[1][i])
 		i++;
-	if (argv[1][i] != '.')
-		return (exit_parser(parser, "file has to be in .cub format\n"));
+	if (i > 4)
+		i -= 4;
 	if (ft_strncmp(argv[1] + i, ".cub", 5))
 		return (exit_parser(parser, "file has to be in .cub format\n"));
 	parser->temp_fd = open(argv[1], O_RDONLY);
