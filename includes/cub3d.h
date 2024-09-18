@@ -131,11 +131,17 @@ typedef struct s_cb
 	double					deltatime;
 }							t_cb;
 
+
+// x '2' y '1'
+// x '1' y '1'
+// x '3' y '1'
+
 // input handling
 void						init_keybinds(t_cb *cb);
 int							set_key(int keycode, int state, t_cb *cb);
 void						setup_hooks(t_cb *cb);
 void						apply_all_keys(t_cb *cb);
+void		print_cord(t_cb *cb);
 
 // rendering
 void						put_pixel(t_img img, int x, int y, int color);

@@ -53,19 +53,20 @@ void	check_x(t_cb *cb, t_vec2 *coor)
 	// printf("invalid %f in %f\n", (*coor).x, (*coor).y);
 }
 
-int	invalid_x(double x, t_cb *cb)
+int	invalid_x(t_vec2 vec, t_cb *cb)
 {
 	t_valid_cords	*temp;
 
 	temp = cb->cords;
 	while (temp)
 	{
-		if (x >= temp->x && x < ceil(temp->x))
+		if (floor(vec.y) == temp->y && (vec.x >= temp->x && vec.x <= temp->x + 1))
 			break ;
 		temp = temp->next;
 	}
 	if (!temp)
 		return 1;
+		// return (printf("x %f y%f\n", vec.x, vec.y), 1);
 	return 0;
 }
 
@@ -84,7 +85,7 @@ int	check_is_wall(t_cb *cb, t_map map, t_vec2 coor, t_vec2 direction)
 	{
 		return (1);
 	}
-	if (coor.x < 0 || invalid_x(coor.x, cb))
+	if (coor.x < 0 || invalid_x(coor, cb))
 	{
 		return (1);
 	}
