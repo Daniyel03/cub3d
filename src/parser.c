@@ -366,6 +366,9 @@ void	validate_alloc_lines(t_parser *parser)
 		free(str);
 		str = get_next_line(parser->temp_fd);
 	}
+	if (parser->cb->player.pos.x == -1)
+		exit_parser(parser, 
+		"No player position set, set it by placing either 'N', 'S', 'W', or 'E' within the map.\n");
 }
 
 void	alloc_array(t_parser *parser)
