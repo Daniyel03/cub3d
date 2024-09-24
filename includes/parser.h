@@ -30,7 +30,6 @@ typedef struct s_parser
 }			t_parser;
 
 void		validate_path(t_parser *parser, char **argv);
-void		alloc_array(t_parser *parser);
 int			flood_fill(t_cb *cb);
 void		print_cord(t_cb *cb);
 void		print_map(t_map map);
@@ -45,5 +44,13 @@ void	iterate_until_space(char **str);
 int	str_is_number(char *str);
 void	exit_parser(t_parser *parser, char *errormessage);
 void	print_textures(t_parser *parser);
+
+
+//parser_map
+void	set_player_rot(t_parser *parser, int *x, char *str);
+void	iterate_line(t_parser *parser, int *x, char *str);
+void	fill_lines(t_parser *parser);
+void	validate_alloc_lines(t_parser *parser);
+void	alloc_array(t_parser *parser);
 
 #endif
