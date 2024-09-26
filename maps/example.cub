@@ -1,19 +1,11 @@
-
- 
- F 0,0,0
-
- C 0,0,0
-
+F 0,0,0
 NO maps/textures/mossy.xpm
 SO maps/textures/purple_stone.xpm
 WE maps/textures/red_brick.xpm
 EA maps/textures/wood.xpm
+C 0,0,0
 
-
-111111111
+11111111
 10S00111
-1111111111
-   111111111
-   111111111
-
+11111111
 

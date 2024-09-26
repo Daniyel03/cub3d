@@ -22,7 +22,7 @@ void	draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb, double rot_offset)
 
 	i = 0;
 	//TODO: hacky fix, probly whould try to be more precise before (in get_next_wall)
-	if (wall_pos.x == round(wall_pos.x))
+	if (wall_pos.x == round(wall_pos.x) || wall_pos.x < 1)
 	{
 		if (clamp_rot(cb->player.rot + rot_offset) < PI)
 			texture = cb->map.textures[1];
