@@ -26,16 +26,24 @@
 # include <unistd.h>
 // # include "parser.h"
 
+# define SUCCESS 0
+# define FAILURE -1
+# define PI 3.1415926
+
+//window
 # define WIDTH 1080
 # define HEIGHT 720
+
+//rendering
 # define FOV 3.141 / 2 // in radians
-# define PI 3.1415926
 # define Y_SCALE 500
 # define MAP_SCALE 50
 
-# define SUCCESS 0
-# define FAILURE -1
+//movement
+# define WALK_SPEED 4
+# define TURN_SPEED 3
 
+//colors
 # define WHITE 0xffffff
 # define RED 0xff0000
 # define GREEN 0x00ff00
