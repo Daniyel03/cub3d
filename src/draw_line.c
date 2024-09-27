@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "render.h"
 
 t_line_data	set_line_data(t_vec2 start, t_vec2 end)
 {

@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "render.h"
 
 int	get_pixel(t_img img, int x, int y)
 {
