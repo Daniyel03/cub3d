@@ -180,17 +180,17 @@ void	draw_player_rays(t_cb *cb)
 void	draw_view(t_cb *cb)
 {
 	t_vec2	vec;
-	int		i;
-	double	rot_offset;
+	t_render_data data;
 
-	i = 0;
-	while (i < WIDTH)
+	data.cb = cb;
+	data.col = 0;
+	while (data.col < WIDTH)
 	{
-		rot_offset = FOV / 2 - FOV / WIDTH * i;
-		vec = get_dir_vec(1, cb->player.rot + rot_offset);
-		vec = next_wall(cb, cb->player.pos, vec, cb->map);
-		draw_wall_line(i, vec, cb, rot_offset);
-		i++;
+		data.rot_offset = FOV / 2 - FOV / WIDTH * data.col;
+		vec = get_dir_vec(1, cb->player.rot + data.rot_offset);
+		data.wall_hit = next_wall(cb, cb->player.pos, vec, cb->map);
+		draw_wall_line(&data);
+		data.col++;
 	}
 }
 
