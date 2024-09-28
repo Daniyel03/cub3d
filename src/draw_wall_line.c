@@ -19,9 +19,7 @@ void	draw_wall_line(t_render_data *data)
 	int		y_offest;
 	int		color;
 	int		texture_col;
-	int		len2;
 
-	(void)rot_offset;
 	i = 0;
 	// TODO: hacky fix, probly whould try to be more precise before (in get_next_wall)
 	if (data->wall_hit.x == round(data->wall_hit.x) || data->wall_hit.x < 1)
@@ -46,7 +44,7 @@ void	draw_wall_line(t_render_data *data)
 		printf("error invalid wall: %.17g, %.17g\n", data->wall_hit.x, data->wall_hit.y);
 		return ;
 	}
-	len = HEIGHT / (distance(cb->player.pos, wall_pos) * cos(rot_offset));
+	len = HEIGHT / (distance(data->cb->player.pos, data->wall_hit) * cos(data->rot_offset));
 	y_scale = (double)texture.height / len;
 	y_offest = HEIGHT / 2 - len / 2;
 	while (i < y_offest)
