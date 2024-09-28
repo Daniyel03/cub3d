@@ -6,146 +6,83 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 10:04:52 by dscholz           #+#    #+#             */
-/*   Updated: 2024/07/04 16:26:42 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/09/24 11:06:27 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+#include <fcntl.h>
+#include "../includes/parser.h"
 
-void	validate_path(t_cb *cb, char **argv)
+void	get_filename(t_parser *parser, char **argv)
 {
 	int	i;
-	int	fd;
 
 	i = 0;
-	while (argv[1][i] && argv[1][i] != '.')
+	while (argv[1][i])
 		i++;
-	if (argv[1][i] != '.')
-		return (exit_cub(cb, "file has to be in .cub format\n"));
+	if (i > 4)
+		i -= 4;
 	if (ft_strncmp(argv[1] + i, ".cub", 5))
-		return (exit_cub(cb, "file has to be in .cub format\n"));
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-		return (exit_cub(cb, "file doesn't exist\n"));
-	else
-		close(fd);
-	cb->map.filename = argv[1];
+		return (exit_parser(parser, "file has to be in .cub format\n"));
+	parser->temp_fd = open(argv[1], O_RDONLY);
+	if (parser->temp_fd == -1)
+		return (exit_parser(parser, "file doesn't exist\n"));
+	parser->filename = argv[1];
 }
 
-void	set_player_rot(t_cb *cb, int *x, char *str)
+
+int	check_direction(t_parser *parser)
 {
-	if (str[(*x)] == 'N')
-		return (cb->player.rot = 0, (void )0);
-	if (str[(*x)] == 'S')
-		return (cb->player.rot = PI, (void )0);
-	if (str[(*x)] == 'E')
-		return (cb->player.rot = PI * 0.5, (void )0);
-	if (str[(*x)] == 'W')
-		return (cb->player.rot = PI  * 1.5, (void)0);
+	if (parser->temp[0] == 'N' && parser->temp[1] == 'O'
+		&& ft_isspace(parser->temp[2]))
+		return (parser->i = 0, is_dir_set(parser), 1);
+	if (parser->temp[0] == 'S' && parser->temp[1] == 'O'
+		&& ft_isspace(parser->temp[2]))
+		return (parser->i = 2, is_dir_set(parser), 1);
+	if (parser->temp[0] == 'E' && parser->temp[1] == 'A'
+		&& ft_isspace(parser->temp[2]))
+		return (parser->i = 1, is_dir_set(parser), 1);
+	if (parser->temp[0] == 'W' && parser->temp[1] == 'E'
+		&& ft_isspace(parser->temp[2]))
+		return (parser->i = 3, is_dir_set(parser), 1);
+	if (parser->temp[0] == 'C' && ft_isspace(parser->temp[1]))
+		return (parser->i = 4, is_dir_set(parser), 1);
+	if (parser->temp[0] == 'F' && ft_isspace(parser->temp[1]))
+		return (parser->i = 5, is_dir_set(parser), 1);
+	return (0);
 }
 
-void	iterate_line(t_cb *cb, int *x, char *str, int temp_fd)
+void	check_commas(t_parser *parser)
 {
-	while (str[(*x)] && str[(*x)] != '\n')
+	parser->i = 0;
+	while (parser->temp[parser->i])
 	{
-		if (!(str[(*x)] == 'N' || str[(*x)] == 'W' || str[(*x)] == 'S' || str[(*x)] == 'E') && str[(*x)] != '0' && str[(*x)] != '1'
-			&& str[(*x)] != ' ' && str[(*x)] != '\0' && str[(*x)] != '\n')
-			return (close(temp_fd), free(str), exit_cub(cb, "invalid map input, only 0 and 1 allowed\n"));
-		if (str[(*x)] == 'N' || str[(*x)] == 'W' || str[(*x)] == 'S' || str[(*x)] == 'E')
-		{
-			if (cb->player.pos.x != -1)
-				return(close(temp_fd), free(str), exit_cub(cb, "invalid map input, only one player position\n"));
-			cb->player.pos.x = (*x) + 0.5;
-			cb->player.pos.y = cb->map.y + 0.5;
-			set_player_rot(cb, x, str);
-		}
-		(*x)++;
+		if (parser->temp[parser->i] == ',' && !ft_isdigit(parser->temp[parser->i
+				+ 1]))
+			exit_parser(parser, "false rgb input\n");
+		parser->i++;
 	}
 }
 
-void	validate_input(t_cb *cb)
+void	validate_input(t_parser *parser, char **argv)
 {
-	char	*str;
-	int		temp_fd;
-	int		x;
-
-	cb->map.y = 0;
-	x = 0;
-	temp_fd = open(cb->map.filename, O_RDONLY);
-	if (temp_fd == -1)
-		return (exit_cub(cb, NULL));
-	str = get_next_line(temp_fd);
-	while (str)
-	{
-		x = 0;
-		iterate_line(cb, &x, str, temp_fd);
-		cb->map.arr[cb->map.y] = malloc(sizeof(int) * (x + 1));
-		if (!cb->map.arr[cb->map.y++])
-			return (exit_cub(cb, NULL));
-		free(str);
-		str = get_next_line(temp_fd);
-	}
-	if (close(temp_fd) == -1)
-		return (exit_cub(cb, NULL));
+	get_filename(parser, argv);
+	validate_textures(parser);
+	alloc_array(parser);
+	flood_fill(parser->cb);
+	print_map(parser->cb->map);
 }
 
-void	fill_lines(t_cb *cb)
+void	parser(t_cb *cb, char **argv)
 {
-	int		temp_fd;
-	char	*str;
-	char	*c;
-	int		x;
-	int		y;
+	t_parser parser;
 
-	x = -1;
-	y = 0;
-	temp_fd = open(cb->map.filename, O_RDONLY);
-	if (temp_fd == -1)
-		return (exit_cub(cb, NULL));
-	str = get_next_line(temp_fd);
-	while (y < cb->map.y)
-	{
-		while (str[++x] && str[x] != '\n')
-		{
-			c = ft_substr(str, x, 1);
-			if (!ft_strncmp(c, " ", 1))
-				cb->map.arr[y][x] = 2;
-			else
-				cb->map.arr[y][x] = ft_atoi(c);
-			free(c);
-			// printf("%d", cb->map.arr[y][x]);
-		}
-		cb->map.arr[y][x] = -1;
-		// printf("%d\n", cb->map.arr[y][x]);
-		y++;
-		free(str);
-		str = get_next_line(temp_fd);
-		x = -1;
-	}
-}
+	ft_bzero(&parser, sizeof(parser));
+	parser.cb = cb;
+	parser.cb->map.textures_arr = ft_calloc(6, sizeof(char **));
 
-void	alloc_array(t_cb *cb)
-{
-	int		count;
-	int		temp_fd;
-	char	*temp;
-
-	count = 0;
-	temp_fd = open(cb->map.filename, O_RDONLY);
-	if (temp_fd == -1)
-		return (exit_cub(cb, NULL));
-	temp = get_next_line(temp_fd);
-	while ((temp) && count++ != -1)
-	{
-		free(temp);
-		temp = get_next_line(temp_fd);
-	}
-	cb->map.arr = malloc(sizeof(int *) * count);
-	if (!cb->map.arr)
-		return (exit_cub(cb, NULL));
-	// *cb->map.arr = NULL;
-	if (close(temp_fd) == -1)
-		return (exit_cub(cb, NULL));
-	validate_input(cb);
-	fill_lines(cb);
+	validate_input(&parser, argv);
+	print_textures(&parser);
+	close(parser.temp_fd);
 }

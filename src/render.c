@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "render.h"
 
 void	put_pixel(t_img img, int x, int y, int color)
 {
@@ -53,6 +53,23 @@ void	check_x(t_cb *cb, t_vec2 *coor)
 	// printf("invalid %f in %f\n", (*coor).x, (*coor).y);
 }
 
+int	invalid_x(t_vec2 vec, t_cb *cb)
+{
+	t_valid_cords	*temp;
+
+	temp = cb->cords;
+	while (temp)
+	{
+		if (floor(vec.y) == temp->y && (vec.x >= temp->x && vec.x <= temp->x + 1))
+			break ;
+		temp = temp->next;
+	}
+	if (!temp)
+		return 1;
+		// return (printf("x %f y%f\n", vec.x, vec.y), 1);
+	return 0;
+}
+
 int	check_is_wall(t_cb *cb, t_map map, t_vec2 coor, t_vec2 direction)
 {
 	// TODO: this is a haky fix. Maybe find sth cleaner
@@ -68,7 +85,7 @@ int	check_is_wall(t_cb *cb, t_map map, t_vec2 coor, t_vec2 direction)
 	{
 		return (1);
 	}
-	if (coor.x < 0)
+	if (coor.x < 0 || invalid_x(coor, cb))
 	{
 		return (1);
 	}
@@ -163,17 +180,17 @@ void	draw_player_rays(t_cb *cb)
 void	draw_view(t_cb *cb)
 {
 	t_vec2	vec;
-	int		i;
-	double	rot_offset;
+	t_render_data data;
 
-	i = 0;
-	while (i < WIDTH)
+	data.cb = cb;
+	data.col = 0;
+	while (data.col < WIDTH)
 	{
-		rot_offset = FOV / 2 - FOV / WIDTH * i;
-		vec = get_dir_vec(1, cb->player.rot + rot_offset);
-		vec = next_wall(cb, cb->player.pos, vec, cb->map);
-		draw_wall_line(i, vec, cb, rot_offset);
-		i++;
+		data.rot_offset = FOV / 2 - FOV / WIDTH * data.col;
+		vec = get_dir_vec(1, cb->player.rot + data.rot_offset);
+		data.wall_hit = next_wall(cb, cb->player.pos, vec, cb->map);
+		draw_wall_line(&data);
+		data.col++;
 	}
 }
 

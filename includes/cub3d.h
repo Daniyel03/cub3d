@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/07/04 16:17:00 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/08/19 06:11:18 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,31 @@
 # include <fcntl.h>
 # include <math.h>
 # include <mlx.h>
+// # include <../minilibx-linux/mlx_int.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
-
-# define WIDTH 1080
-# define HEIGHT 720
-# define FOV 3.141 / 2 // in radians
-# define PI 3.1415926
-# define Y_SCALE 500
-# define MAP_SCALE 50
+// # include "parser.h"
 
 # define SUCCESS 0
 # define FAILURE -1
+# define PI 3.1415926
 
+//window
+# define WIDTH 1080
+# define HEIGHT 720
+
+//rendering
+# define FOV 3.141 / 2 // in radians
+# define Y_SCALE 500
+# define MAP_SCALE 50
+
+//movement
+# define WALK_SPEED 4
+# define TURN_SPEED 3
+
+//colors
 # define WHITE 0xffffff
 # define RED 0xff0000
 # define GREEN 0x00ff00
@@ -79,10 +89,12 @@ typedef struct t_img
 	int						height;
 }							t_img;
 
+//textures: {NO, EA, SO, WE}
 typedef struct s_map
 {
 	char					*filename;
 	int						**arr;
+	char 	**textures_arr;
 	int						y;
 	int						width;
 	int						height;
@@ -127,32 +139,29 @@ typedef struct s_cb
 	double					deltatime;
 }							t_cb;
 
+
+// x '2' y '1'
+// x '1' y '1'
+// x '3' y '1'
+
 // input handling
 void						init_keybinds(t_cb *cb);
 int							set_key(int keycode, int state, t_cb *cb);
 void						setup_hooks(t_cb *cb);
 void						apply_all_keys(t_cb *cb);
+void		print_cord(t_cb *cb);
 
 // rendering
-void						put_pixel(t_img img, int x, int y, int color);
-double						distance(t_vec2 a, t_vec2 b);
-void						draw_map(t_cb *cb);
-void						draw_line(t_vec2 start, t_vec2 end, int color,
-								t_img img);
-void						draw_view(t_cb *cb);
-void						draw_wall_line(int x, t_vec2 wall_pos, t_cb *cb,
-								double rot_offset);
-int							get_pixel(t_img img, int x, int y);
+void	draw_view(t_cb *cb);
 
 // parser
-void						validate_path(t_cb *cb, char **argv);
-void						alloc_array(t_cb *cb);
-int							flood_fill(t_cb *cb);
-void						print_cord(t_cb *cb);
+void	parser(t_cb *cb, char **argv);
+
+//parser_utils
+int	empty(char *str);
 
 // util
 void						exit_cub(t_cb *cb, char *str);
-void						print_map(t_map map);
 long						get_time_ms(void);
 double						clamp_rot(double rot);
 

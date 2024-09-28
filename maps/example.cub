@@ -1,5 +1,11 @@
-111111111
-1110N0111
-111100000111
-   111111111
-   111111111
+F 0,0,0
+NO maps/textures/mossy.xpm
+SO maps/textures/purple_stone.xpm
+WE maps/textures/red_brick.xpm
+EA maps/textures/wood.xpm
+C 0,0,0
+
+11111111
+10S00111
+11111111
+

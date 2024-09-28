@@ -13,17 +13,6 @@
 #include "../includes/cub3d.h"
 #include <stdlib.h>
 
-void	get_map(t_cb *cb, char **argv)
-{
-	int	valid;
-
-	validate_path(cb, argv);
-	alloc_array(cb);
-	valid = flood_fill(cb);
-	print_map(cb->map);
-	print_cord(cb);
-	printf("valid map: %d\n", valid);
-}
 
 int	init_mlx(t_cb *cb)
 {
@@ -72,21 +61,37 @@ t_img	init_texture(char *filename, t_cb *cb)
 	return (texture);
 }
 
+int hex_atoi(char c)
+{
+    if (c >= '0' && c <= '9')
+        return c - 48;
+    return c - 87;
+}
+
+int hex_to_int(char *str)
+{
+    int res = 0;
+    int power = 5;
+    str += 2;
+    while (*str)
+        res += hex_atoi(*str++) * (int)pow((int)16, (int)power--);
+    return res;
+}
+
 void	cub3d(char **argv)
 {
 	t_cb	cb;
 
 	init_struct(&cb);
-	get_map(&cb, argv);
-	// printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
-	print_map(cb.map);
+	parser(&cb, argv);
+	// // printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
 	init_mlx(&cb);
-	cb.map.textures[0] = init_texture("maps/textures/grass-block_16.xpm", &cb);
-	cb.map.textures[1] = init_texture("maps/textures/TNT.xpm", &cb);
-	cb.map.textures[2] = init_texture("maps/textures/dimond.xpm", &cb);
-	cb.map.textures[3] = init_texture("maps/textures/stone.xpm", &cb);
-	cb.map.ceil_color = 0x4881b0;
-	cb.map.floor_color = 0x0eb029;
+	cb.map.textures[0] = init_texture(cb.map.textures_arr[0], &cb);
+	cb.map.textures[1] = init_texture(cb.map.textures_arr[1], &cb);
+	cb.map.textures[2] = init_texture(cb.map.textures_arr[2], &cb);
+	cb.map.textures[3] = init_texture(cb.map.textures_arr[3], &cb);
+	cb.map.ceil_color  = hex_to_int(cb.map.textures_arr[4]);
+	cb.map.floor_color = hex_to_int(cb.map.textures_arr[5]);
 	// put_pattern(&cb);
 	init_keybinds(&cb);
 	setup_hooks(&cb);

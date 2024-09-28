@@ -35,13 +35,18 @@ void	init_keybind(t_keybind *keybind, int keycode, t_key_func func,
 void	init_keybinds(t_cb *cb)
 {
 	cb->keybinds = malloc(sizeof(t_keybind) * 7);
-	init_keybind(&cb->keybinds[0], XK_s, add_to_val, &cb->player.input.y, -4);
-	init_keybind(&cb->keybinds[1], XK_w, add_to_val, &cb->player.input.y, 4);
-	init_keybind(&cb->keybinds[2], XK_a, add_to_val, &cb->player.input.x, 4);
-	init_keybind(&cb->keybinds[3], XK_d, add_to_val, &cb->player.input.x, -4);
-	init_keybind(&cb->keybinds[4], XK_Left, add_to_val, &cb->player.rot, 3);
+	init_keybind(&cb->keybinds[0], XK_s, add_to_val, &cb->player.input.y,
+		-WALK_SPEED);
+	init_keybind(&cb->keybinds[1], XK_w, add_to_val, &cb->player.input.y,
+		WALK_SPEED);
+	init_keybind(&cb->keybinds[2], XK_a, add_to_val, &cb->player.input.x,
+		WALK_SPEED);
+	init_keybind(&cb->keybinds[3], XK_d, add_to_val, &cb->player.input.x,
+		-WALK_SPEED);
+	init_keybind(&cb->keybinds[4], XK_Left, add_to_val, &cb->player.rot,
+		TURN_SPEED);
 	init_keybind(&cb->keybinds[5], XK_Right, add_to_val, &cb->player.rot,
-		-3);
+		-TURN_SPEED);
 	init_keybind(&cb->keybinds[6], 0, NULL, NULL, 0);
 }
 
@@ -70,7 +75,8 @@ void	apply_all_keys(t_cb *cb)
 	while (cb->keybinds[i].keycode != 0)
 	{
 		if (cb->keybinds[i].pressed)
-			cb->keybinds[i].func(cb->keybinds[i].val, cb->keybinds[i].rate * cb->deltatime);
+			cb->keybinds[i].func(cb->keybinds[i].val, cb->keybinds[i].rate
+				* cb->deltatime);
 		i++;
 	}
 }
