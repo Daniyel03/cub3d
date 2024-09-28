@@ -60,14 +60,15 @@ int	invalid_x(t_vec2 vec, t_cb *cb)
 	temp = cb->cords;
 	while (temp)
 	{
-		if (floor(vec.y) == temp->y && (vec.x >= temp->x && vec.x <= temp->x + 1))
+		if (floor(vec.y) == temp->y && (vec.x >= temp->x && vec.x <= temp->x
+				+ 1))
 			break ;
 		temp = temp->next;
 	}
 	if (!temp)
-		return 1;
-		// return (printf("x %f y%f\n", vec.x, vec.y), 1);
-	return 0;
+		return (1);
+	// return (printf("x %f y%f\n", vec.x, vec.y), 1);
+	return (0);
 }
 
 int	check_is_wall(t_cb *cb, t_map map, t_vec2 coor, t_vec2 direction)
@@ -177,17 +178,31 @@ void	draw_player_rays(t_cb *cb)
 	}
 }
 
+double angle(t_vec2 a, t_vec2 b)
+{
+	double dot = a.x * b.x + a.y * b.y;
+	double mag1 = sqrt(a.x*a.x + a.y*a.y);
+	double mag2 = sqrt(b.x*b.x + b.y*b.y);
+	return acos(dot / (mag1 * mag2));
+}
+
 void	draw_view(t_cb *cb)
 {
-	t_vec2	vec;
-	t_render_data data;
+	t_vec2			vec;
+	t_render_data	data;
+	double			plane_len;
+	double				offset;
 
 	data.cb = cb;
 	data.col = 0;
+	plane_len = 2 * tan(FOV / 2);
 	while (data.col < WIDTH)
 	{
-		data.rot_offset = FOV / 2 - FOV / WIDTH * data.col;
-		vec = get_dir_vec(1, cb->player.rot + data.rot_offset);
+		offset = plane_len / 2 - plane_len / WIDTH * data.col;
+		vec = get_dir_vec(1, cb->player.rot);
+		vec.x += vec.y * offset;
+		vec.y += -vec.x * offset;
+		data.rot_offset = angle(get_dir_vec(1, cb->player.rot), vec);
 		data.wall_hit = next_wall(cb, cb->player.pos, vec, cb->map);
 		draw_wall_line(&data);
 		data.col++;
