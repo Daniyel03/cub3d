@@ -60,17 +60,18 @@ int	invalid_x(t_vec2 vec, t_cb *cb)
 	temp = cb->cords;
 	while (temp)
 	{
-		if (floor(vec.y) == temp->y && (vec.x >= temp->x && vec.x <= temp->x + 1))
+		if (floor(vec.y) == temp->y && (vec.x >= temp->x && vec.x <= temp->x
+				+ 1))
 			break ;
 		temp = temp->next;
 	}
 	if (!temp)
-		return 1;
-		// return (printf("x %f y%f\n", vec.x, vec.y), 1);
-	return 0;
+		return (1);
+	// return (printf("x %f y%f\n", vec.x, vec.y), 1);
+	return (0);
 }
 
-int	check_is_wall(t_cb *cb, t_map map, t_vec2 coor, t_vec2 direction)
+int	check_is_wall(t_cb *cb, t_vec2 coor, t_vec2 direction)
 {
 	// TODO: this is a haky fix. Maybe find sth cleaner
 	coor = add_vec(coor, scale_vec(direction, 0.0000001));
@@ -89,76 +90,92 @@ int	check_is_wall(t_cb *cb, t_map map, t_vec2 coor, t_vec2 direction)
 	{
 		return (1);
 	}
-	if (coor.y > map.y)
+	if (coor.y > cb->map.y)
 	{
 		return (1);
 	}
-	if (map.arr[(int)coor.y][(int)coor.x] != 3)
+	if (cb->map.arr[(int)coor.y][(int)coor.x] != 3)
 	{
 		return (1);
 	}
 	return (0);
 }
 
-t_vec2	next_wall_x(t_cb *cb, t_vec2 pos, t_vec2 dir, t_map map)
+t_vec2	next_wall_x(t_cb *cb, t_vec2 dir)
 {
 	double	scale;
 	t_vec2	wall;
 
 	if (dir.x > 0)
-		scale = (ceil(pos.x) - pos.x) / dir.x;
+		scale = (ceil(cb->player.pos.x) - cb->player.pos.x) / dir.x;
 	else if (dir.x < 0)
-		scale = (floor(pos.x) - pos.x) / dir.x;
+		scale = (floor(cb->player.pos.x) - cb->player.pos.x) / dir.x;
 	else
 		return ((t_vec2){-10000, -10000});
 	dir = scale_vec(dir, scale);
-	wall = add_vec(pos, dir);
+	wall = add_vec(cb->player.pos, dir);
 	if (dir.x == 0.0)
 		return ((t_vec2){0, 0});
 	dir = scale_vec(dir, 1 / fabs(dir.x));
-	while (!check_is_wall(cb, map, wall, dir))
+	while (!check_is_wall(cb, wall, dir))
 	{
 		wall = add_vec(wall, dir);
 	}
 	return (wall);
 }
 
-t_vec2	next_wall_y(t_cb *cb, t_vec2 pos, t_vec2 dir, t_map map)
+t_vec2	next_wall_y(t_cb *cb, t_vec2 dir)
 {
 	double	scale;
 	t_vec2	wall;
 
 	if (dir.y > 0.0001)
-		scale = (ceil(pos.y) - pos.y) / dir.y;
+		scale = (ceil(cb->player.pos.y) - cb->player.pos.y) / dir.y;
 	else if (dir.y < -0.0001)
-		scale = (floor(pos.y) - pos.y) / dir.y;
+		scale = (floor(cb->player.pos.y) - cb->player.pos.y) / dir.y;
 	else
 		return ((t_vec2){-10000, -10000});
 	dir = scale_vec(dir, scale);
-	wall = add_vec(pos, dir);
+	wall = add_vec(cb->player.pos, dir);
 	if (dir.y < 0.001 && dir.y > -0.001)
 		return ((t_vec2){-10000, -10000});
 	dir = scale_vec(dir, 1 / fabs(dir.y));
-	while (!check_is_wall(cb, map, wall, dir))
+	while (!check_is_wall(cb, wall, dir))
 	{
 		wall = add_vec(wall, dir);
 	}
 	return (wall);
 }
 
-t_vec2	next_wall(t_cb *cb, t_vec2 pos, t_vec2 dir, t_map map)
+t_vec2	next_wall(t_render_data *data, t_vec2 dir)
 {
 	t_vec2	wall_x;
 	t_vec2	wall_y;
 
-	wall_x = next_wall_x(cb, pos, dir, map);
-	wall_y = next_wall_y(cb, pos, dir, map);
-	if (distance(pos, wall_x) < distance(pos, wall_y))
+	wall_x = next_wall_x(data->cb, dir);
+	wall_y = next_wall_y(data->cb, dir);
+	if (distance(data->cb->player.pos, wall_x) < distance(data->cb->player.pos,
+			wall_y))
+	{
+		if (dir.x > 0)
+			data->texture = data->cb->map.textures[1];
+		else
+			data->texture = data->cb->map.textures[3];
+		data->distance = fabs(wall_x.x - data->cb->player.pos.x);
 		return (wall_x);
+	}
 	else
+	{
+		if (dir.y > 0)
+			data->texture = data->cb->map.textures[2];
+		else
+			data->texture = data->cb->map.textures[0];
+		data->distance = fabs(wall_y.y - data->cb->player.pos.y);
 		return (wall_y);
+	}
 }
 
+/*
 void	draw_player_rays(t_cb *cb)
 {
 	t_vec2	vec;
@@ -170,25 +187,46 @@ void	draw_player_rays(t_cb *cb)
 	{
 		rot_offset = FOV / WIDTH * i - FOV / 2;
 		vec = get_dir_vec(1, cb->player.rot + rot_offset);
-		vec = next_wall(cb, cb->player.pos, vec, cb->map);
+		vec = next_wall(cb, vec);
 		draw_line(scale_vec(cb->player.pos, MAP_SCALE), scale_vec(vec,
 				MAP_SCALE), WHITE, cb->img);
 		i++;
 	}
 }
+*/
+
+double	angle(t_vec2 a, t_vec2 b)
+{
+	double	dot;
+	double	mag1;
+	double	mag2;
+
+	dot = a.x * b.x + a.y * b.y;
+	mag1 = sqrt(a.x * a.x + a.y * a.y);
+	mag2 = sqrt(b.x * b.x + b.y * b.y);
+	return (acos(dot / (mag1 * mag2)));
+}
 
 void	draw_view(t_cb *cb)
 {
-	t_vec2	vec;
-	t_render_data data;
+	t_vec2			ray_dir;
+	t_vec2			player_dir;
+	t_render_data	data;
+	double			plane_len;
+	double			offset_vec;
 
 	data.cb = cb;
 	data.col = 0;
+	plane_len = 2 * tan(FOV / 2);
 	while (data.col < WIDTH)
 	{
-		data.rot_offset = FOV / 2 - FOV / WIDTH * data.col;
-		vec = get_dir_vec(1, cb->player.rot + data.rot_offset);
-		data.wall_hit = next_wall(cb, cb->player.pos, vec, cb->map);
+		offset_vec = plane_len / 2 - plane_len / WIDTH * data.col;
+		player_dir = get_dir_vec(1, cb->player.rot);
+		ray_dir.x = player_dir.x + player_dir.y * offset_vec;
+		ray_dir.y = player_dir.y - player_dir.x * offset_vec;
+		data.rot_offset = angle(get_dir_vec(1, cb->player.rot), ray_dir);
+		// printf("offset_vec:%f, ray.x: %f, ray.y: %f, rot_offset:%f\n", offset_vec, ray_dir.x, ray_dir.y, data.rot_offset);
+		data.wall_hit = next_wall(&data, ray_dir);
 		draw_wall_line(&data);
 		data.col++;
 	}
@@ -219,5 +257,5 @@ void	draw_map(t_cb *cb)
 		}
 		y++;
 	}
-	draw_player_rays(cb);
+	// draw_player_rays(cb);
 }
