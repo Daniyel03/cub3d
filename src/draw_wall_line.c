@@ -20,7 +20,6 @@ void	draw_wall_line(t_render_data *data)
 	int		color;
 	int		texture_col;
 
-	i = 0;
 	texture = data->cb->map.textures[1];
 	// TODO: hacky fix, probly whould try to be more precise before (in get_next_wall)
 	if (data->wall_hit.x == round(data->wall_hit.x) || data->wall_hit.x < 1)
@@ -52,7 +51,9 @@ void	draw_wall_line(t_render_data *data)
 	len = HEIGHT / (distance(data->cb->player.pos, data->wall_hit) * cos(data->rot_offset));
 	y_scale = (double)texture.height / len;
 	y_offest = HEIGHT / 2 - len / 2;
-	while (i < y_offest)
+	i = 0;
+	printf("rot_offset: %f, len: %d, y_offset: %d\n", data->rot_offset , len, y_offest);
+	while (i < y_offest && i < HEIGHT)
 	{
 		put_pixel(data->cb->img, data->col, i, data->cb->map.ceil_color);
 		i++;

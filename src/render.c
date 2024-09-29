@@ -71,7 +71,7 @@ int	invalid_x(t_vec2 vec, t_cb *cb)
 	return (0);
 }
 
-int	check_is_wall(t_cb *cb, t_map map, t_vec2 coor, t_vec2 direction)
+int	check_is_wall(t_cb *cb, t_vec2 coor, t_vec2 direction)
 {
 	// TODO: this is a haky fix. Maybe find sth cleaner
 	coor = add_vec(coor, scale_vec(direction, 0.0000001));
@@ -90,18 +90,18 @@ int	check_is_wall(t_cb *cb, t_map map, t_vec2 coor, t_vec2 direction)
 	{
 		return (1);
 	}
-	if (coor.y > map.y)
+	if (coor.y > cb->map.y)
 	{
 		return (1);
 	}
-	if (map.arr[(int)coor.y][(int)coor.x] != 3)
+	if (cb->map.arr[(int)coor.y][(int)coor.x] != 3)
 	{
 		return (1);
 	}
 	return (0);
 }
 
-t_vec2	next_wall_x(t_cb *cb, t_vec2 pos, t_vec2 dir, t_map map)
+t_vec2	next_wall_x(t_cb *cb, t_vec2 pos, t_vec2 dir)
 {
 	double	scale;
 	t_vec2	wall;
@@ -117,14 +117,14 @@ t_vec2	next_wall_x(t_cb *cb, t_vec2 pos, t_vec2 dir, t_map map)
 	if (dir.x == 0.0)
 		return ((t_vec2){0, 0});
 	dir = scale_vec(dir, 1 / fabs(dir.x));
-	while (!check_is_wall(cb, map, wall, dir))
+	while (!check_is_wall(cb, wall, dir))
 	{
 		wall = add_vec(wall, dir);
 	}
 	return (wall);
 }
 
-t_vec2	next_wall_y(t_cb *cb, t_vec2 pos, t_vec2 dir, t_map map)
+t_vec2	next_wall_y(t_cb *cb, t_vec2 pos, t_vec2 dir)
 {
 	double	scale;
 	t_vec2	wall;
@@ -140,21 +140,21 @@ t_vec2	next_wall_y(t_cb *cb, t_vec2 pos, t_vec2 dir, t_map map)
 	if (dir.y < 0.001 && dir.y > -0.001)
 		return ((t_vec2){-10000, -10000});
 	dir = scale_vec(dir, 1 / fabs(dir.y));
-	while (!check_is_wall(cb, map, wall, dir))
+	while (!check_is_wall(cb, wall, dir))
 	{
 		wall = add_vec(wall, dir);
 	}
 	return (wall);
 }
 
-t_vec2	next_wall(t_cb *cb, t_vec2 pos, t_vec2 dir, t_map map)
+t_vec2	next_wall(t_cb *cb, t_vec2 dir)
 {
 	t_vec2	wall_x;
 	t_vec2	wall_y;
 
-	wall_x = next_wall_x(cb, pos, dir, map);
-	wall_y = next_wall_y(cb, pos, dir, map);
-	if (distance(pos, wall_x) < distance(pos, wall_y))
+	wall_x = next_wall_x(cb, cb->player.pos, dir);
+	wall_y = next_wall_y(cb, cb->player.pos, dir);
+	if (distance(cb->player.pos, wall_x) < distance(cb->player.pos, wall_y))
 		return (wall_x);
 	else
 		return (wall_y);
@@ -171,7 +171,7 @@ void	draw_player_rays(t_cb *cb)
 	{
 		rot_offset = FOV / WIDTH * i - FOV / 2;
 		vec = get_dir_vec(1, cb->player.rot + rot_offset);
-		vec = next_wall(cb, cb->player.pos, vec, cb->map);
+		vec = next_wall(cb, vec);
 		draw_line(scale_vec(cb->player.pos, MAP_SCALE), scale_vec(vec,
 				MAP_SCALE), WHITE, cb->img);
 		i++;
@@ -191,19 +191,19 @@ void	draw_view(t_cb *cb)
 	t_vec2			vec;
 	t_render_data	data;
 	double			plane_len;
-	double				offset;
+	double			offset_vec;
 
 	data.cb = cb;
 	data.col = 0;
 	plane_len = 2 * tan(FOV / 2);
 	while (data.col < WIDTH)
 	{
-		offset = plane_len / 2 - plane_len / WIDTH * data.col;
+		offset_vec = plane_len / 2 - plane_len / WIDTH * data.col;
 		vec = get_dir_vec(1, cb->player.rot);
-		vec.x += vec.y * offset;
-		vec.y += -vec.x * offset;
+		vec.x += vec.y * offset_vec;
+		vec.y += -vec.x * offset_vec;
 		data.rot_offset = angle(get_dir_vec(1, cb->player.rot), vec);
-		data.wall_hit = next_wall(cb, cb->player.pos, vec, cb->map);
+		data.wall_hit = next_wall(cb, vec);
 		draw_wall_line(&data);
 		data.col++;
 	}
