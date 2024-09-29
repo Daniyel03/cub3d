@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 double	distance(t_vec2 a, t_vec2 b)
 {

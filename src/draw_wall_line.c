@@ -37,7 +37,7 @@ void	draw_wall_line(t_render_data *data)
 	y_scale = (double)data->texture.height / len;
 	y_offest = HEIGHT / 2 - len / 2;
 	i = 0;
-	printf("rot_offset: %f, len: %d, y_offset: %d\n", data->rot_offset , len, y_offest);
+	// printf("rot_offset: %f, len: %d, y_offset: %d\n", data->rot_offset , len, y_offest);
 	while (i < y_offest && i < HEIGHT)
 	{
 		put_pixel(data->cb->img, data->col, i, data->cb->map.ceil_color);

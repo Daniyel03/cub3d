@@ -161,6 +161,7 @@ t_vec2	next_wall(t_render_data *data, t_vec2 dir)
 			data->texture = data->cb->map.textures[1];
 		else
 			data->texture = data->cb->map.textures[3];
+		data->distance = fabs(wall_x.x - data->cb->player.pos.x);
 		return (wall_x);
 	}
 	else
@@ -169,6 +170,7 @@ t_vec2	next_wall(t_render_data *data, t_vec2 dir)
 			data->texture = data->cb->map.textures[2];
 		else
 			data->texture = data->cb->map.textures[0];
+		data->distance = fabs(wall_y.y - data->cb->player.pos.y);
 		return (wall_y);
 	}
 }
@@ -207,7 +209,8 @@ double	angle(t_vec2 a, t_vec2 b)
 
 void	draw_view(t_cb *cb)
 {
-	t_vec2			vec;
+	t_vec2			ray_dir;
+	t_vec2			player_dir;
 	t_render_data	data;
 	double			plane_len;
 	double			offset_vec;
@@ -218,11 +221,12 @@ void	draw_view(t_cb *cb)
 	while (data.col < WIDTH)
 	{
 		offset_vec = plane_len / 2 - plane_len / WIDTH * data.col;
-		vec = get_dir_vec(1, cb->player.rot);
-		vec.x += vec.y * offset_vec;
-		vec.y += -vec.x * offset_vec;
-		data.rot_offset = angle(get_dir_vec(1, cb->player.rot), vec);
-		data.wall_hit = next_wall(&data, vec);
+		player_dir = get_dir_vec(1, cb->player.rot);
+		ray_dir.x = player_dir.x + player_dir.y * offset_vec;
+		ray_dir.y = player_dir.y - player_dir.x * offset_vec;
+		data.rot_offset = angle(get_dir_vec(1, cb->player.rot), ray_dir);
+		// printf("offset_vec:%f, ray.x: %f, ray.y: %f, rot_offset:%f\n", offset_vec, ray_dir.x, ray_dir.y, data.rot_offset);
+		data.wall_hit = next_wall(&data, ray_dir);
 		draw_wall_line(&data);
 		data.col++;
 	}

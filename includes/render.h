@@ -7,10 +7,10 @@ typedef struct s_render_data
 {
     t_cb    *cb;
 	t_img	texture;
-    int     distance;
     t_vec2  wall_hit;
     int     col;
     double  rot_offset;
+    double  distance;
 }			t_render_data;
 
 void		put_pixel(t_img img, int x, int y, int color);
