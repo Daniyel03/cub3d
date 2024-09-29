@@ -101,19 +101,19 @@ int	check_is_wall(t_cb *cb, t_vec2 coor, t_vec2 direction)
 	return (0);
 }
 
-t_vec2	next_wall_x(t_cb *cb, t_vec2 pos, t_vec2 dir)
+t_vec2	next_wall_x(t_cb *cb, t_vec2 dir)
 {
 	double	scale;
 	t_vec2	wall;
 
 	if (dir.x > 0)
-		scale = (ceil(pos.x) - pos.x) / dir.x;
+		scale = (ceil(cb->player.pos.x) - cb->player.pos.x) / dir.x;
 	else if (dir.x < 0)
-		scale = (floor(pos.x) - pos.x) / dir.x;
+		scale = (floor(cb->player.pos.x) - cb->player.pos.x) / dir.x;
 	else
 		return ((t_vec2){-10000, -10000});
 	dir = scale_vec(dir, scale);
-	wall = add_vec(pos, dir);
+	wall = add_vec(cb->player.pos, dir);
 	if (dir.x == 0.0)
 		return ((t_vec2){0, 0});
 	dir = scale_vec(dir, 1 / fabs(dir.x));
@@ -124,19 +124,19 @@ t_vec2	next_wall_x(t_cb *cb, t_vec2 pos, t_vec2 dir)
 	return (wall);
 }
 
-t_vec2	next_wall_y(t_cb *cb, t_vec2 pos, t_vec2 dir)
+t_vec2	next_wall_y(t_cb *cb, t_vec2 dir)
 {
 	double	scale;
 	t_vec2	wall;
 
 	if (dir.y > 0.0001)
-		scale = (ceil(pos.y) - pos.y) / dir.y;
+		scale = (ceil(cb->player.pos.y) - cb->player.pos.y) / dir.y;
 	else if (dir.y < -0.0001)
-		scale = (floor(pos.y) - pos.y) / dir.y;
+		scale = (floor(cb->player.pos.y) - cb->player.pos.y) / dir.y;
 	else
 		return ((t_vec2){-10000, -10000});
 	dir = scale_vec(dir, scale);
-	wall = add_vec(pos, dir);
+	wall = add_vec(cb->player.pos, dir);
 	if (dir.y < 0.001 && dir.y > -0.001)
 		return ((t_vec2){-10000, -10000});
 	dir = scale_vec(dir, 1 / fabs(dir.y));
@@ -147,19 +147,33 @@ t_vec2	next_wall_y(t_cb *cb, t_vec2 pos, t_vec2 dir)
 	return (wall);
 }
 
-t_vec2	next_wall(t_cb *cb, t_vec2 dir)
+t_vec2	next_wall(t_render_data *data, t_vec2 dir)
 {
 	t_vec2	wall_x;
 	t_vec2	wall_y;
 
-	wall_x = next_wall_x(cb, cb->player.pos, dir);
-	wall_y = next_wall_y(cb, cb->player.pos, dir);
-	if (distance(cb->player.pos, wall_x) < distance(cb->player.pos, wall_y))
+	wall_x = next_wall_x(data->cb, dir);
+	wall_y = next_wall_y(data->cb, dir);
+	if (distance(data->cb->player.pos, wall_x) < distance(data->cb->player.pos,
+			wall_y))
+	{
+		if (dir.x > 0)
+			data->texture = data->cb->map.textures[1];
+		else
+			data->texture = data->cb->map.textures[3];
 		return (wall_x);
+	}
 	else
+	{
+		if (dir.y > 0)
+			data->texture = data->cb->map.textures[2];
+		else
+			data->texture = data->cb->map.textures[0];
 		return (wall_y);
+	}
 }
 
+/*
 void	draw_player_rays(t_cb *cb)
 {
 	t_vec2	vec;
@@ -177,13 +191,18 @@ void	draw_player_rays(t_cb *cb)
 		i++;
 	}
 }
+*/
 
-double angle(t_vec2 a, t_vec2 b)
+double	angle(t_vec2 a, t_vec2 b)
 {
-	double dot = a.x * b.x + a.y * b.y;
-	double mag1 = sqrt(a.x*a.x + a.y*a.y);
-	double mag2 = sqrt(b.x*b.x + b.y*b.y);
-	return acos(dot / (mag1 * mag2));
+	double	dot;
+	double	mag1;
+	double	mag2;
+
+	dot = a.x * b.x + a.y * b.y;
+	mag1 = sqrt(a.x * a.x + a.y * a.y);
+	mag2 = sqrt(b.x * b.x + b.y * b.y);
+	return (acos(dot / (mag1 * mag2)));
 }
 
 void	draw_view(t_cb *cb)
@@ -203,7 +222,7 @@ void	draw_view(t_cb *cb)
 		vec.x += vec.y * offset_vec;
 		vec.y += -vec.x * offset_vec;
 		data.rot_offset = angle(get_dir_vec(1, cb->player.rot), vec);
-		data.wall_hit = next_wall(cb, vec);
+		data.wall_hit = next_wall(&data, vec);
 		draw_wall_line(&data);
 		data.col++;
 	}
@@ -234,5 +253,5 @@ void	draw_map(t_cb *cb)
 		}
 		y++;
 	}
-	draw_player_rays(cb);
+	// draw_player_rays(cb);
 }

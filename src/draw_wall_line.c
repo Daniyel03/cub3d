@@ -13,14 +13,12 @@ int	get_pixel(t_img img, int x, int y)
 void	draw_wall_line(t_render_data *data)
 {
 	int		len;
-	t_img	texture;
 	int		i;
 	double	y_scale;
 	int		y_offest;
 	int		color;
 	int		texture_col;
 
-	texture = data->cb->map.textures[1];
 	// TODO: hacky fix, probly whould try to be more precise before (in get_next_wall)
 	if (data->wall_hit.x == round(data->wall_hit.x) || data->wall_hit.x < 1)
 	{
@@ -30,7 +28,7 @@ void	draw_wall_line(t_render_data *data)
 		else
 			texture = data->cb->map.textures[3];
 	*/
-		texture_col = (data->wall_hit.y - floor(data->wall_hit.y)) * texture.width;
+		texture_col = (data->wall_hit.y - floor(data->wall_hit.y)) * data->texture.width;
 	}
 	else if (round(data->wall_hit.y * 1000) == round(data->wall_hit.y) * 1000)
 	{
@@ -41,7 +39,7 @@ void	draw_wall_line(t_render_data *data)
 		else
 			texture = data->cb->map.textures[2];
 	*/
-		texture_col = (data->wall_hit.x - floor(data->wall_hit.x)) * texture.width;
+		texture_col = (data->wall_hit.x - floor(data->wall_hit.x)) * data->texture.width;
 	}
 	else
 	{
@@ -49,7 +47,7 @@ void	draw_wall_line(t_render_data *data)
 		return ;
 	}
 	len = HEIGHT / (distance(data->cb->player.pos, data->wall_hit) * cos(data->rot_offset));
-	y_scale = (double)texture.height / len;
+	y_scale = (double)data->texture.height / len;
 	y_offest = HEIGHT / 2 - len / 2;
 	i = 0;
 	printf("rot_offset: %f, len: %d, y_offset: %d\n", data->rot_offset , len, y_offest);
@@ -60,7 +58,7 @@ void	draw_wall_line(t_render_data *data)
 	}
 	while (i < y_offest + len && i < HEIGHT)
 	{
-		color = get_pixel(texture, texture_col, (i - y_offest) * y_scale);
+		color = get_pixel(data->texture, texture_col, (i - y_offest) * y_scale);
 		put_pixel(data->cb->img, data->col, i, color);
 		i++;
 	}
