@@ -31,8 +31,8 @@
 # define PI 3.1415926
 
 //window
-# define WIDTH 500
-# define HEIGHT 500
+# define WIDTH 1080
+# define HEIGHT 720
 
 //rendering
 # define FOV 3.141 / 2 // in radians
