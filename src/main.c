@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:08:33 by hrother           #+#    #+#             */
-/*   Updated: 2024/09/30 12:33:36 by hrother          ###   ########.fr       */
+/*   Updated: 2024/09/30 13:05:48 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	cub3d(char **argv)
 	parser(&cb, argv);
 	// // printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
 	init_mlx(&cb);
-	cb.map.textures[0] = init_texture(cb.map.textures_arr[1], &cb);
+	cb.map.textures[0] = init_texture(cb.map.textures_arr[0], &cb);
 	cb.map.textures[1] = init_texture(cb.map.textures_arr[1], &cb);
 	cb.map.textures[2] = init_texture(cb.map.textures_arr[2], &cb);
 	cb.map.textures[3] = init_texture(cb.map.textures_arr[3], &cb);
