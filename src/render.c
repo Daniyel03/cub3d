@@ -161,7 +161,7 @@ t_vec2	next_wall(t_render_data *data, t_vec2 dir)
 			data->texture = data->cb->map.textures[1];
 		else
 			data->texture = data->cb->map.textures[3];
-		data->distance = fabs(wall_x.x - data->cb->player.pos.x);
+		data->texture_col = (wall_x.y - floor(wall_x.y)) * data->texture.width;
 		return (wall_x);
 	}
 	else
@@ -170,30 +170,10 @@ t_vec2	next_wall(t_render_data *data, t_vec2 dir)
 			data->texture = data->cb->map.textures[2];
 		else
 			data->texture = data->cb->map.textures[0];
-		data->distance = fabs(wall_y.y - data->cb->player.pos.y);
+		data->texture_col = (wall_y.x - floor(wall_y.x)) * data->texture.width;
 		return (wall_y);
 	}
 }
-
-/*
-void	draw_player_rays(t_cb *cb)
-{
-	t_vec2	vec;
-	int		i;
-	double	rot_offset;
-
-	i = 0;
-	while (i < WIDTH)
-	{
-		rot_offset = FOV / WIDTH * i - FOV / 2;
-		vec = get_dir_vec(1, cb->player.rot + rot_offset);
-		vec = next_wall(cb, vec);
-		draw_line(scale_vec(cb->player.pos, MAP_SCALE), scale_vec(vec,
-				MAP_SCALE), WHITE, cb->img);
-		i++;
-	}
-}
-*/
 
 double	angle(t_vec2 a, t_vec2 b)
 {
@@ -216,46 +196,17 @@ void	draw_view(t_cb *cb)
 	double			offset_vec;
 
 	data.cb = cb;
-	data.col = 0;
+	data.cam_col = 0;
 	plane_len = 2 * tan(FOV / 2);
-	while (data.col < WIDTH)
+	while (data.cam_col < WIDTH)
 	{
-		offset_vec = plane_len / 2 - plane_len / WIDTH * data.col;
+		offset_vec = plane_len / 2 - plane_len / WIDTH * data.cam_col;
 		player_dir = get_dir_vec(1, cb->player.rot);
 		ray_dir.x = player_dir.x + player_dir.y * offset_vec;
 		ray_dir.y = player_dir.y - player_dir.x * offset_vec;
 		data.rot_offset = angle(get_dir_vec(1, cb->player.rot), ray_dir);
-		// printf("offset_vec:%f, ray.x: %f, ray.y: %f, rot_offset:%f\n", offset_vec, ray_dir.x, ray_dir.y, data.rot_offset);
 		data.wall_hit = next_wall(&data, ray_dir);
 		draw_wall_line(&data);
-		data.col++;
+		data.cam_col++;
 	}
-}
-
-void	draw_map(t_cb *cb)
-{
-	int	y;
-	int	x;
-
-	y = 0;
-	x = 0;
-	while (y < HEIGHT)
-	{
-		x = 0;
-		while (x < WIDTH)
-		{
-			if (y / MAP_SCALE >= cb->map.y || cb->map.arr[y / MAP_SCALE][x
-				/ MAP_SCALE] == -1)
-				break ;
-			if (is_player(x, y, cb->player.pos))
-				put_pixel(cb->img, x, y, 0xff0000);
-			else if (cb->map.arr[y / MAP_SCALE][x / MAP_SCALE] == 1)
-				put_pixel(cb->img, x, y, 0x0000ff);
-			else if (cb->map.arr[y / MAP_SCALE][x / MAP_SCALE] == 3)
-				put_pixel(cb->img, x, y, 0x00ff00);
-			x++;
-		}
-		y++;
-	}
-	// draw_player_rays(cb);
 }
