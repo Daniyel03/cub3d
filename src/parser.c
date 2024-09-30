@@ -69,7 +69,8 @@ void	validate_input(t_parser *parser, char **argv)
 	get_filename(parser, argv);
 	validate_textures(parser);
 	alloc_array(parser);
-	flood_fill(parser->cb);
+	if(flood_fill(parser->cb) == FAILURE)
+		exit_parser(parser, "map not surrounded by walls\n");
 	print_map(parser->cb->map);
 }
 
