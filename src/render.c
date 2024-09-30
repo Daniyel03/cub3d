@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/04 15:57:25 by dscholz          ###   ########.fr       */
+/*   Created: 2024/07/10 00:00:00 by dscholz           #+#    #+#             */
+/*   Updated: 2024/09/30 12:18:24 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
-
-void	put_pixel(t_img img, int x, int y, int color)
-{
-	char	*dst;
-
-	if (y >= HEIGHT || x >= WIDTH || y < 0 || x < 0)
-		return ;
-	dst = img.addr + (y * img.line_length + x * (img.bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
-
-int	is_player(int x, int y, t_vec2 player_pos)
-{
-	t_vec2	pixel;
-
-	pixel.x = (double)x / MAP_SCALE;
-	pixel.y = (double)y / MAP_SCALE;
-	return (distance(pixel, player_pos) < (double)MAP_SCALE * 0.004);
-}
 
 void	check_x(t_cb *cb, t_vec2 *coor)
 {
@@ -75,22 +56,8 @@ int	check_is_wall(t_cb *cb, t_vec2 coor, t_vec2 direction)
 {
 	// TODO: this is a haky fix. Maybe find sth cleaner
 	coor = add_vec(coor, scale_vec(direction, 0.0000001));
-	// printf("%f %f\n", coor.x, coor.y);
-	// if (coor.x > 1.1)
-	// 	coor.x = floor(coor.x * 10) / 10;
-	// if (coor.y > 1.1)
-	// 	coor.y = floor(coor.y * 10) / 10;
 	check_x(cb, &coor);
-	// (void)cb;
-	if (coor.y < 0)
-	{
-		return (1);
-	}
-	if (coor.x < 0 || invalid_x(coor, cb))
-	{
-		return (1);
-	}
-	if (coor.y > cb->map.y)
+	if (coor.y < 0 || coor.x < 0 || invalid_x(coor, cb) || coor.y > cb->map.y)
 	{
 		return (1);
 	}

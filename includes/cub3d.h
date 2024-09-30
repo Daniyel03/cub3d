@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/08/19 06:11:18 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/09/30 12:21:04 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,20 @@
 # define FAILURE -1
 # define PI 3.1415926
 
-//window
+// window
 # define WIDTH 1080
 # define HEIGHT 720
 
-//rendering
-# define FOV 3.141 / 2 // in radians
+// rendering
+# define FOV 1.570796327 // in radians
 # define Y_SCALE 500
 # define MAP_SCALE 50
 
-//movement
+// movement
 # define WALK_SPEED 4
 # define TURN_SPEED 3
 
-//colors
+// colors
 # define WHITE 0xffffff
 # define RED 0xff0000
 # define GREEN 0x00ff00
@@ -89,12 +89,12 @@ typedef struct t_img
 	int						height;
 }							t_img;
 
-//textures: {NO, EA, SO, WE}
+// textures: {NO, EA, SO, WE}
 typedef struct s_map
 {
 	char					*filename;
 	int						**arr;
-	char 	**textures_arr;
+	char					**textures_arr;
 	int						y;
 	int						width;
 	int						height;
@@ -139,7 +139,6 @@ typedef struct s_cb
 	double					deltatime;
 }							t_cb;
 
-
 // x '2' y '1'
 // x '1' y '1'
 // x '3' y '1'
@@ -149,16 +148,16 @@ void						init_keybinds(t_cb *cb);
 int							set_key(int keycode, int state, t_cb *cb);
 void						setup_hooks(t_cb *cb);
 void						apply_all_keys(t_cb *cb);
-void		print_cord(t_cb *cb);
+void						print_cord(t_cb *cb);
 
 // rendering
-void	draw_view(t_cb *cb);
+void						draw_view(t_cb *cb);
 
 // parser
-void	parser(t_cb *cb, char **argv);
+void						parser(t_cb *cb, char **argv);
 
-//parser_utils
-int	empty(char *str);
+// parser_utils
+int							empty(char *str);
 
 // util
 void						exit_cub(t_cb *cb, char *str);

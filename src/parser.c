@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 10:04:52 by dscholz           #+#    #+#             */
-/*   Updated: 2024/09/24 11:06:27 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/09/30 12:31:14 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-#include <fcntl.h>
 #include "../includes/parser.h"
+#include <fcntl.h>
 
 void	get_filename(t_parser *parser, char **argv)
 {
@@ -30,7 +30,6 @@ void	get_filename(t_parser *parser, char **argv)
 		return (exit_parser(parser, "file doesn't exist\n"));
 	parser->filename = argv[1];
 }
-
 
 int	check_direction(t_parser *parser)
 {
@@ -76,7 +75,7 @@ void	validate_input(t_parser *parser, char **argv)
 
 void	parser(t_cb *cb, char **argv)
 {
-	t_parser parser;
+	t_parser	parser;
 
 	ft_bzero(&parser, sizeof(parser));
 	parser.cb = cb;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player_movement.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/30 12:27:52 by hrother           #+#    #+#             */
+/*   Updated: 2024/09/30 12:28:58 by hrother          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 #include <X11/X.h>
 
@@ -45,27 +57,21 @@ void	valid_x_ll(t_cb *cb)
 						- cb->player.pos.y);
 		}
 	}
-	// printf("changed walking: %f, %f\n", cb->player.input.x,
-		// cb->player.input.y);
-	
-	if ((cb->player.pos.x + cb->player.input.x) == ceil(cb->player.pos.x) && cb->player.input.x > 0)
+	if ((cb->player.pos.x + cb->player.input.x) == ceil(cb->player.pos.x)
+		&& cb->player.input.x > 0)
 		cb->player.input.x -= 0.02;
-	if ((cb->player.pos.y + cb->player.input.y) == ceil(cb->player.pos.y) && cb->player.input.y > 0)
+	if ((cb->player.pos.y + cb->player.input.y) == ceil(cb->player.pos.y)
+		&& cb->player.input.y > 0)
 		cb->player.input.y -= 0.02;
-	if ((cb->player.pos.x + cb->player.input.x) == floor(cb->player.pos.x) && cb->player.input.x < 0)
+	if ((cb->player.pos.x + cb->player.input.x) == floor(cb->player.pos.x)
+		&& cb->player.input.x < 0)
 		cb->player.input.x += 0.02;
-	if ((cb->player.pos.y + cb->player.input.y) == floor(cb->player.pos.y) && cb->player.input.y < 0)
+	if ((cb->player.pos.y + cb->player.input.y) == floor(cb->player.pos.y)
+		&& cb->player.input.y < 0)
 		cb->player.input.y += 0.02;
-
-
 	cb->player.pos.x += cb->player.input.x;
 	cb->player.pos.y += cb->player.input.y;
 }
-
-// void	new_player_pos(t_cb *cb)
-// {
-
-// }
 
 void	player_walk(t_cb *cb)
 {

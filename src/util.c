@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 15:06:44 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/29 18:34:36 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/09/30 12:23:10 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ long	get_time_ms(void)
 
 void	exit_cub(t_cb *cb, char *str)
 {
+	void	*ptr;
+
 	if (cb->img.img)
 		mlx_destroy_image(cb->mlx, cb->img.img);
 	if (cb->win)
@@ -33,7 +35,6 @@ void	exit_cub(t_cb *cb, char *str)
 		mlx_destroy_display(cb->mlx);
 	free(cb->mlx);
 	free(cb->keybinds);
-
 	if (cb->map.arr)
 	{
 		if (cb->map.y)
@@ -43,10 +44,9 @@ void	exit_cub(t_cb *cb, char *str)
 	}
 	if (str)
 		printf("%s", str);
-
 	if (cb->cords)
 	{
-		void *ptr = cb->cords;
+		ptr = cb->cords;
 		while (cb->cords)
 		{
 			ptr = cb->cords->next;
@@ -55,8 +55,6 @@ void	exit_cub(t_cb *cb, char *str)
 		}
 		// free(cb->cords);
 	}
-
-
 	free(cb->map.textures_arr[0]);
 	cb->map.textures_arr[0] = NULL;
 	free(cb->map.textures_arr[1]);
@@ -71,8 +69,6 @@ void	exit_cub(t_cb *cb, char *str)
 	cb->map.textures_arr[5] = NULL;
 	free(cb->map.textures_arr);
 	cb->map.textures_arr = NULL;
-
-
 	exit(0); // TODO: exit with errorcode when an error occured
 }
 
@@ -99,8 +95,8 @@ void	print_map(t_map map)
 double	clamp_rot(double rot)
 {
 	if (rot >= 2 * PI)
-		return rot - 2 * PI;
+		return (rot - 2 * PI);
 	else if (rot < 0)
-		return rot + 2 * PI;
-	return rot;
+		return (rot + 2 * PI);
+	return (rot);
 }

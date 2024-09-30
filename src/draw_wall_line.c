@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw_wall_line.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/30 12:16:21 by hrother           #+#    #+#             */
+/*   Updated: 2024/09/30 12:16:23 by hrother          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "render.h"
 
 int	get_pixel(t_img img, int x, int y)
@@ -8,6 +20,16 @@ int	get_pixel(t_img img, int x, int y)
 		return (-1);
 	dst = img.addr + (y * img.line_length + x * (img.bits_per_pixel / 8));
 	return (*(unsigned int *)dst);
+}
+
+void	put_pixel(t_img img, int x, int y, int color)
+{
+	char	*dst;
+
+	if (y >= HEIGHT || x >= WIDTH || y < 0 || x < 0)
+		return ;
+	dst = img.addr + (y * img.line_length + x * (img.bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }
 
 void	draw_wall_line(t_render_data *data)

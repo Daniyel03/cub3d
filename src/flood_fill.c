@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:21:35 by hrother           #+#    #+#             */
-/*   Updated: 2024/06/30 11:55:33 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/09/30 12:22:31 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	print_cord(t_cb *cb)
 {
-	t_valid_cords *temp = cb->cords;
+	t_valid_cords	*temp;
+
+	temp = cb->cords;
 	while (temp)
 	{
 		printf("x '%d' y '%d'\n", temp->x, temp->y);
@@ -24,8 +26,9 @@ void	print_cord(t_cb *cb)
 
 void	append_cord(t_cb *cb, int x, int y)
 {
-	t_valid_cords *temp = cb->cords;
+	t_valid_cords	*temp;
 
+	temp = cb->cords;
 	if (!temp)
 	{
 		cb->cords = malloc(sizeof(t_valid_cords));
@@ -65,7 +68,8 @@ int	fill_rec(t_cb *cb, t_map *map, int x, int y)
 
 int	flood_fill(t_cb *cb)
 {
-	return (fill_rec(cb, &cb->map, (int)cb->player.pos.x, (int)cb->player.pos.y));
+	return (fill_rec(cb, &cb->map, (int)cb->player.pos.x,
+			(int)cb->player.pos.y));
 }
 
 /*
@@ -87,18 +91,18 @@ int	**malloc_example_map(int arr[10][10])
 
 int	main(void)
 {
-	int		arr[10][10] =  {{1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
-                            {1, 0, 0, 1, 0, 0, 0, 1, 0, 1},
-                            {1, 0, 0, 1, 0, 0, 0, 1, 0, 1},
-                            {1, 0, 1, 1, 1, 0, 0, 0, 0, 1},
-                            {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                            {1, 0, 0, 0, 0, 1, 1, 0, 0, 1},
-                            {1, 0, 0, 0, 0, 1, 1, 0, 0, 1},
-                            {1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
-                            {1, 0, 0, 1, 0, 0, 0, 0, 0, 1},
-                            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 	t_cb	cb;
 
+	int		arr[10][10] =  {{1, 1, 1, 1, 1, 1, 1, 1, 0, 0},
+							{1, 0, 0, 1, 0, 0, 0, 1, 0, 1},
+							{1, 0, 0, 1, 0, 0, 0, 1, 0, 1},
+							{1, 0, 1, 1, 1, 0, 0, 0, 0, 1},
+							{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+							{1, 0, 0, 0, 0, 1, 1, 0, 0, 1},
+							{1, 0, 0, 0, 0, 1, 1, 0, 0, 1},
+							{1, 1, 1, 0, 0, 0, 0, 0, 0, 1},
+							{1, 0, 0, 1, 0, 0, 0, 0, 0, 1},
+							{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 	cb.map = (t_map){0, malloc_example_map(arr), 10, 10};
 	cb.player.pos.x = 2;
 	cb.player.pos.y = 2;
