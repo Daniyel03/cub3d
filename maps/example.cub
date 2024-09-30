@@ -1,10 +1,12 @@
-F 100,100,100
+C 100,100,250
 NO maps/textures/mossy.xpm
 EA maps/textures/checker.xpm
 WE maps/textures/red_brick.xpm
 SO maps/textures/wood.xpm
-C 100,100,100
+F 150,100,50
 
 11111111
-10S10100
+10S10101
 10100001
+10000001
+11111111

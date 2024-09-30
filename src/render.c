@@ -52,20 +52,26 @@ int	invalid_x(t_vec2 vec, t_cb *cb)
 	return (0);
 }
 
-int	check_is_wall(t_cb *cb, t_vec2 coor, t_vec2 direction)
+int is_wall(t_cb *cb, int x, int y)
+{
+	t_valid_cords	*temp;
+
+	temp = cb->cords;
+	while (temp)
+	{
+		if (temp->x == x && temp->y == y)
+			return (0);
+		temp = temp->next;
+	}
+	return (1);
+}
+
+int	check_hit_wall(t_cb *cb, t_vec2 coor, t_vec2 direction)
 {
 	// TODO: this is a haky fix. Maybe find sth cleaner
 	coor = add_vec(coor, scale_vec(direction, 0.0000001));
-	check_x(cb, &coor);
-	if (coor.y < 0 || coor.x < 0 || invalid_x(coor, cb) || coor.y > cb->map.y)
-	{
-		return (1);
-	}
-	if (cb->map.arr[(int)coor.y][(int)coor.x] != 3)
-	{
-		return (1);
-	}
-	return (0);
+	(void)direction;
+	return(is_wall(cb, (int)coor.x, (int)coor.y));
 }
 
 t_vec2	next_wall_x(t_cb *cb, t_vec2 dir)
@@ -84,7 +90,7 @@ t_vec2	next_wall_x(t_cb *cb, t_vec2 dir)
 	if (dir.x == 0.0)
 		return ((t_vec2){0, 0});
 	dir = scale_vec(dir, 1 / fabs(dir.x));
-	while (!check_is_wall(cb, wall, dir))
+	while (!check_hit_wall(cb, wall, dir))
 	{
 		wall = add_vec(wall, dir);
 	}
@@ -107,7 +113,7 @@ t_vec2	next_wall_y(t_cb *cb, t_vec2 dir)
 	if (dir.y < 0.001 && dir.y > -0.001)
 		return ((t_vec2){-10000, -10000});
 	dir = scale_vec(dir, 1 / fabs(dir.y));
-	while (!check_is_wall(cb, wall, dir))
+	while (!check_hit_wall(cb, wall, dir))
 	{
 		wall = add_vec(wall, dir);
 	}
