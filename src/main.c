@@ -94,7 +94,6 @@ void	cub3d(char **argv)
 	cb.map.textures[3] = init_texture(cb.map.textures_arr[3], &cb);
 	cb.map.ceil_color = hex_to_int(cb.map.textures_arr[4]);
 	cb.map.floor_color = hex_to_int(cb.map.textures_arr[5]);
-	// put_pattern(&cb);
 	init_keybinds(&cb);
 	setup_hooks(&cb);
 	mlx_loop(cb.mlx);

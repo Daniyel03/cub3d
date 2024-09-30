@@ -23,10 +23,26 @@ long	get_time_ms(void)
 	return (time);
 }
 
+void	free_map(t_cb *cb)
+{
+	if (cb->map.arr)
+	{
+		if (cb->map.y)
+			while (cb->map.y)
+				free(cb->map.arr[--cb->map.y]);
+		free(cb->map.arr);
+	}
+	mlx_destroy_image(cb->mlx, cb->map.textures[0].img);
+	mlx_destroy_image(cb->mlx, cb->map.textures[1].img);
+	mlx_destroy_image(cb->mlx, cb->map.textures[2].img);
+	mlx_destroy_image(cb->mlx, cb->map.textures[3].img);
+}
+
 void	exit_cub(t_cb *cb, char *str)
 {
 	void	*ptr;
 
+	free_map(cb);
 	if (cb->img.img)
 		mlx_destroy_image(cb->mlx, cb->img.img);
 	if (cb->win)
@@ -35,13 +51,6 @@ void	exit_cub(t_cb *cb, char *str)
 		mlx_destroy_display(cb->mlx);
 	free(cb->mlx);
 	free(cb->keybinds);
-	if (cb->map.arr)
-	{
-		if (cb->map.y)
-			while (cb->map.y)
-				free(cb->map.arr[--cb->map.y]);
-		free(cb->map.arr);
-	}
 	if (str)
 		printf("%s", str);
 	if (cb->cords)
