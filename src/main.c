@@ -41,8 +41,6 @@ void	init_struct(t_cb *cb)
 {
 	ft_bzero(cb, sizeof(t_cb));
 	ft_bzero(&cb->map, sizeof(t_map));
-	// cb->cords = malloc(sizeof(t_valid_cords));
-	// ft_bzero(cb->cords, sizeof(t_valid_cords));
 	cb->player.pos.x = -1;
 	cb->player.pos.y = -1;
 	cb->keybinds = NULL;

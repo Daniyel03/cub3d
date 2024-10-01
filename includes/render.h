@@ -28,6 +28,6 @@ typedef struct s_render_data
 void		put_pixel(t_img img, int x, int y, int color);
 double		distance(t_vec2 a, t_vec2 b);
 void		draw_wall_line(t_render_data *data);
-int			get_pixel(t_img img, int x, int y);
+t_vec2		next_wall(t_render_data *data, t_vec2 dir);
 
 #endif
