@@ -157,7 +157,7 @@ double	angle(t_vec2 a, t_vec2 b)
 	dot = a.x * b.x + a.y * b.y;
 	mag1 = sqrt(a.x * a.x + a.y * a.y);
 	mag2 = sqrt(b.x * b.x + b.y * b.y);
-	return (acos(dot / (mag1 * mag2)));
+	return ((dot / (mag1 * mag2)));
 }
 
 void	draw_view(t_cb *cb)
