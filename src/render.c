@@ -12,47 +12,7 @@
 
 #include "render.h"
 
-void	check_x(t_cb *cb, t_vec2 *coor)
-{
-	double			highest_x;
-	t_valid_cords	*temp;
-
-	temp = cb->cords;
-	highest_x = 0;
-	while (temp)
-	{
-		if (temp->y == floor((*coor).y) && highest_x < floor(temp->x))
-			highest_x = floor(temp->x);
-		temp = temp->next;
-	}
-	// printf("highest %f in %f\n", x, (*coor).y);
-	if (highest_x + 1 < floor((*coor).x))
-	{
-		(*coor).x = highest_x + 1;
-	}
-	// if (x < floor((*coor).x))
-	// printf("invalid %f in %f\n", (*coor).x, (*coor).y);
-}
-
-int	invalid_x(t_vec2 vec, t_cb *cb)
-{
-	t_valid_cords	*temp;
-
-	temp = cb->cords;
-	while (temp)
-	{
-		if (floor(vec.y) == temp->y && (vec.x >= temp->x && vec.x <= temp->x
-				+ 1))
-			break ;
-		temp = temp->next;
-	}
-	if (!temp)
-		return (1);
-	// return (printf("x %f y%f\n", vec.x, vec.y), 1);
-	return (0);
-}
-
-int is_wall(t_cb *cb, int x, int y)
+int	is_wall(t_cb *cb, int x, int y)
 {
 	t_valid_cords	*temp;
 
@@ -71,7 +31,7 @@ int	check_hit_wall(t_cb *cb, t_vec2 coor, t_vec2 direction)
 	// TODO: this is a haky fix. Maybe find sth cleaner
 	coor = add_vec(coor, scale_vec(direction, 0.0000001));
 	(void)direction;
-	return(is_wall(cb, (int)coor.x, (int)coor.y));
+	return (is_wall(cb, (int)coor.x, (int)coor.y));
 }
 
 t_vec2	next_wall_x(t_cb *cb, t_vec2 dir)
@@ -131,18 +91,18 @@ t_vec2	next_wall(t_render_data *data, t_vec2 dir)
 			wall_y))
 	{
 		if (dir.x > 0)
-			data->texture = data->cb->map.textures[1];
-		else
 			data->texture = data->cb->map.textures[3];
+		else
+			data->texture = data->cb->map.textures[1];
 		data->texture_col = (wall_x.y - floor(wall_x.y)) * data->texture.width;
 		return (wall_x);
 	}
 	else
 	{
 		if (dir.y > 0)
-			data->texture = data->cb->map.textures[2];
-		else
 			data->texture = data->cb->map.textures[0];
+		else
+			data->texture = data->cb->map.textures[2];
 		data->texture_col = (wall_y.x - floor(wall_y.x)) * data->texture.width;
 		return (wall_y);
 	}
