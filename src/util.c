@@ -32,6 +32,7 @@ void	free_map(t_cb *cb)
 				free(cb->map.arr[--cb->map.y]);
 		free(cb->map.arr);
 	}
+	//if statement @han2-ro
 	mlx_destroy_image(cb->mlx, cb->map.textures[0].img);
 	mlx_destroy_image(cb->mlx, cb->map.textures[1].img);
 	mlx_destroy_image(cb->mlx, cb->map.textures[2].img);

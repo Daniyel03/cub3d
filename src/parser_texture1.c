@@ -54,8 +54,12 @@ void	test_texture_path(t_parser *parser)
 		rgb_to_hexadecimal(parser);
 	else
 	{
-		if (close(parser->temp_fd) == -1)
-			exit_parser(parser, NULL);
+		if (parser->temp_fd != -2)
+		{
+			if (close(parser->temp_fd) == -1)
+				exit_parser(parser, NULL);
+			parser->temp_fd = -2;
+		}
 		parser->temp_fd = open(parser->file, O_RDONLY);
 		if (parser->temp_fd == -1)
 			exit_parser(parser, "texture file doesnt exist\n");

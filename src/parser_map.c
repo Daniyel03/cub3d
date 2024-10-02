@@ -20,13 +20,13 @@ void	iterate_line(t_parser *parser, int *x, char *str)
 		if (!(str[(*x)] == 'N' || str[(*x)] == 'W' || str[(*x)] == 'S'
 				|| str[(*x)] == 'E') && str[(*x)] != '0' && str[(*x)] != '1'
 			&& str[(*x)] != ' ' && str[(*x)] != '\0' && str[(*x)] != '\n')
-			return (close(parser->temp_fd), free(str), exit_parser(parser,
+			return (close(parser->temp_fd), parser->temp_fd = -2, free(str), exit_parser(parser,
 					"invalid map input, only 0 and 1 allowed\n"));
 		if (str[(*x)] == 'N' || str[(*x)] == 'W' || str[(*x)] == 'S'
 			|| str[(*x)] == 'E')
 		{
 			if (parser->cb->player.pos.x != -1)
-				return (close(parser->temp_fd), free(str), exit_parser(parser,
+				return (close(parser->temp_fd), parser->temp_fd = -2, free(str), exit_parser(parser,
 						"invalid map input, only one player position\n"));
 			parser->cb->player.pos.x = (*x) + 0.5;
 			parser->cb->player.pos.y = parser->cb->map.y + 0.5;
@@ -117,8 +117,13 @@ void	alloc_array(t_parser *parser)
 	parser->cb->map.arr = malloc(sizeof(int *) * count);
 	if (!parser->cb->map.arr)
 		return (exit_parser(parser, NULL));
-	if (close(parser->temp_fd) == -1)
-		return (exit_parser(parser, NULL));
+	if (parser->temp_fd != -2)
+	{
+		if (close(parser->temp_fd) == -1)
+			return (exit_parser(parser, NULL));
+		parser->temp_fd = -2;
+	}
+	parser->temp_fd = 0;
 	validate_alloc_lines(parser);
 	fill_lines(parser);
 }

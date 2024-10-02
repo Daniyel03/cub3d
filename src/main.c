@@ -84,6 +84,7 @@ void	cub3d(char **argv)
 
 	init_struct(&cb);
 	parser(&cb, argv);
+	// exit_cub(&cb, NULL);
 	// // printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
 	init_mlx(&cb);
 	cb.map.textures[0] = init_texture(cb.map.textures_arr[0], &cb);

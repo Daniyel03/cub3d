@@ -39,6 +39,7 @@ void	draw_wall_line(t_render_data *data)
 	double	y_scale;
 	int		y_offest;
 
+	len = 0;
 	y_scale = (double)data->texture.height / len;
 	y_offest = HEIGHT / 2 - len / 2;
 	i = 0;
