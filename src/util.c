@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 15:06:44 by hrother           #+#    #+#             */
-/*   Updated: 2024/09/30 12:23:10 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/02 12:57:37 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,20 @@ void	free_map(t_cb *cb)
 				free(cb->map.arr[--cb->map.y]);
 		free(cb->map.arr);
 	}
-	mlx_destroy_image(cb->mlx, cb->map.textures[0].img);
-	mlx_destroy_image(cb->mlx, cb->map.textures[1].img);
-	mlx_destroy_image(cb->mlx, cb->map.textures[2].img);
-	mlx_destroy_image(cb->mlx, cb->map.textures[3].img);
+	if (cb->map.textures[0].img)
+		mlx_destroy_image(cb->mlx, cb->map.textures[0].img);
+	if (cb->map.textures[1].img)
+		mlx_destroy_image(cb->mlx, cb->map.textures[1].img);
+	if (cb->map.textures[2].img)
+		mlx_destroy_image(cb->mlx, cb->map.textures[2].img);
+	if (cb->map.textures[3].img)
+		mlx_destroy_image(cb->mlx, cb->map.textures[3].img);
 }
 
-void	exit_cub(t_cb *cb, char *str)
+void	free_cords(t_cb *cb)
 {
 	void	*ptr;
 
-	free_map(cb);
-	if (cb->img.img)
-		mlx_destroy_image(cb->mlx, cb->img.img);
-	if (cb->win)
-		mlx_destroy_window(cb->mlx, cb->win);
-	if (cb->mlx)
-		mlx_destroy_display(cb->mlx);
-	free(cb->mlx);
-	free(cb->keybinds);
-	if (str)
-		printf("%s", str);
 	if (cb->cords)
 	{
 		ptr = cb->cords;
@@ -64,6 +57,22 @@ void	exit_cub(t_cb *cb, char *str)
 		}
 		// free(cb->cords);
 	}
+}
+
+void	exit_cub(t_cb *cb, char *str)
+{
+	free_cords(cb);
+	free_map(cb);
+	if (cb->img.img)
+		mlx_destroy_image(cb->mlx, cb->img.img);
+	if (cb->win)
+		mlx_destroy_window(cb->mlx, cb->win);
+	if (cb->mlx)
+		mlx_destroy_display(cb->mlx);
+	free(cb->mlx);
+	free(cb->keybinds);
+	if (str)
+		printf("%s", str);
 	free(cb->map.textures_arr[0]);
 	cb->map.textures_arr[0] = NULL;
 	free(cb->map.textures_arr[1]);
