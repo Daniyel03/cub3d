@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 14:35:49 by hrother           #+#    #+#             */
-/*   Updated: 2024/09/30 12:32:34 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/02 14:19:01 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ int	on_loop(t_cb *cb)
 	apply_all_keys(cb);
 	cb->player.rot = clamp_rot(cb->player.rot);
 	player_walk(cb);
+	if (cb->player.z_pos > 0)
+		cb->player.up_vel -= GRAVITY * cb->deltatime;
+	else if (cb->player.up_vel < 0)
+		cb->player.up_vel = 0;
+	cb->player.z_pos += cb->player.up_vel * cb->deltatime;
+	printf("z: %f, vel %f\n", cb->player.z_pos, cb->player.up_vel);
 	ft_bzero(cb->img.addr, HEIGHT * cb->img.line_length);
 	draw_view(cb);
 	mlx_put_image_to_window(cb->mlx, cb->win, cb->img.img, 0, 0);

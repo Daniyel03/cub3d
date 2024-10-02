@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/02 12:39:33 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/02 14:21:08 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@
 // movement
 # define WALK_SPEED 4
 # define TURN_SPEED 3
+# define JUMP_FORCE 500
+# define GRAVITY 1000
 
 // colors
 # define WHITE 0xffffff
@@ -113,9 +115,11 @@ typedef struct s_player
 	t_vec2					input;
 	t_vec2					pos;
 	double					rot;
+	double					up_vel;
+	double					z_pos;
 }							t_player;
 
-typedef void				(*t_key_func)(void *cb, double rate);
+typedef void				(*t_key_func)(void *val, double rate, t_cb *cb);
 
 typedef struct s_keybind
 {
