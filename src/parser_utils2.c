@@ -13,8 +13,11 @@ int	str_is_number(char *str)
 void	set_fd(t_parser *parser)
 {
 	parser->i = 0;
-	close(parser->temp_fd);
+	if (close(parser->temp_fd) == -1)
+		exit_parser(parser, NULL);
 	parser->temp_fd = open(parser->filename, O_RDONLY);
+	if (parser->temp_fd == -1)
+		exit_parser(parser, NULL);
 	while (++parser->i < parser->line_count)
 	{
 		parser->str = get_next_line(parser->temp_fd);

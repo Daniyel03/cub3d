@@ -39,7 +39,11 @@ void	numarray_to_hexadecimal(t_parser *parser)
 	if (parser->i < 16)
 	{
 		temp1 = ft_substr(table, parser->i, 1);
+		if (temp1 == NULL)
+			exit_parser(parser, NULL);
 		temp2 = ft_strjoin(parser->number, temp1);
+		if (temp2 == NULL)
+			exit_parser(parser, NULL);
 		free(parser->number);
 		free(temp1);
 		parser->number = temp2;
@@ -60,6 +64,8 @@ void	append_zero(t_parser *parser)
 	char	*temp;
 
 	temp = ft_strjoin(parser->number, "0");
+	if (temp == NULL)
+		exit_parser(parser, NULL);
 	free(parser->number);
 	parser->number = temp;
 	temp = NULL;
@@ -68,6 +74,8 @@ void	append_zero(t_parser *parser)
 void	set_digits(t_parser *parser)
 {
 	parser->number = ft_strdup("0x");
+	if (parser->number == NULL)
+		exit_parser(parser, NULL);
 	parser->ptr = parser->numbers;
 	while (*(char **)parser->ptr)
 	{
@@ -82,6 +90,8 @@ void	set_digits(t_parser *parser)
 void	rgb_to_hexadecimal(t_parser *parser)
 {
 	parser->numbers = ft_split(parser->file, ',');
+	if (parser->numbers == NULL)
+		exit_parser(parser, NULL);
 	check_digit(parser);
 	set_digits(parser);
 	free(parser->file);

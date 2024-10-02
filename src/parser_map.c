@@ -85,6 +85,7 @@ void	validate_alloc_lines(t_parser *parser)
 		x = 0;
 		iterate_line(parser, &x, str);
 		parser->cb->map.arr[parser->cb->map.y] = malloc(sizeof(int) * (x + 1));
+		// parser->cb->map.arr[parser->cb->map.y] = NULL;
 		if (!parser->cb->map.arr[parser->cb->map.y++])
 			return (exit_cub(parser->cb, NULL));
 		free(str);

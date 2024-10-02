@@ -45,6 +45,8 @@ void	test_texture_path(t_parser *parser)
 	while (!ft_isspace(parser->temp[parser->i]))
 		parser->i++;
 	parser->file = ft_substr(parser->temp, 0, parser->i);
+	if (parser->file == NULL)
+		exit_parser(parser, NULL);
 	parser->i = 0;
 	parser->temp = parser->str;
 	iterate_until_no_space(&parser->temp);
@@ -52,7 +54,8 @@ void	test_texture_path(t_parser *parser)
 		rgb_to_hexadecimal(parser);
 	else
 	{
-		(close(parser->temp_fd));
+		if (close(parser->temp_fd) == -1)
+			exit_parser(parser, NULL);
 		parser->temp_fd = open(parser->file, O_RDONLY);
 		if (parser->temp_fd == -1)
 			exit_parser(parser, "texture file doesnt exist\n");
