@@ -39,6 +39,8 @@ void	draw_wall_line(t_render_data *data)
 	double	y_scale;
 	int		y_offest;
 
+ 	len = HEIGHT / (distance(data->cb->player.pos, data->wall_hit)
+			* (data->rot_offset));
 	y_scale = (double)data->texture.height / len;
 	y_offest = HEIGHT / 2 - len / 2;
 	i = 0;
