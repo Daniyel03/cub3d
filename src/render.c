@@ -26,7 +26,6 @@ double	angle(t_vec2 a, t_vec2 b)
 
 void	draw_view(t_cb *cb)
 {
-	t_vec2			ray_dir;
 	t_vec2			player_dir;
 	t_render_data	data;
 	double			plane_len;
@@ -39,10 +38,12 @@ void	draw_view(t_cb *cb)
 	{
 		offset_vec = plane_len / 2 - plane_len / WIDTH * data.cam_col;
 		player_dir = get_dir_vec(1, cb->player.rot);
-		ray_dir.x = player_dir.x + player_dir.y * offset_vec;
-		ray_dir.y = player_dir.y - player_dir.x * offset_vec;
-		data.wall_hit = next_wall(&data, ray_dir);
-		data.rot_offset = angle(get_dir_vec(1, cb->player.rot), ray_dir);
+		data.ray_dir.x = player_dir.x + player_dir.y * offset_vec;
+		data.ray_dir.y = player_dir.y - player_dir.x * offset_vec;
+		data.wall_hit = next_wall(&data, data.ray_dir);
+		data.rot_offset = angle(get_dir_vec(1, cb->player.rot), data.ray_dir);
+		data.wall_height = HEIGHT / (distance(data.cb->player.pos,
+					data.wall_hit) * (data.rot_offset));
 		draw_wall_line(&data);
 		data.cam_col++;
 	}
