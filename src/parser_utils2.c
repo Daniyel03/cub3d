@@ -28,6 +28,7 @@ void	set_fd(t_parser *parser)
 // reads until no empty line, returns 0 if fd is at its end
 int	read_until_not_empty(t_parser *parser)
 {
+	set_fd(parser);
 	parser->temp = get_next_line(parser->temp_fd);
 	if (parser->line_count == 0)
 		parser->line_count = 1;
