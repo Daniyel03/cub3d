@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/09/30 12:21:04 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/02 15:50:28 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 
 // movement
 # define WALK_SPEED 4
-# define TURN_SPEED 3
+# define TURN_SPEED 1
 
 // colors
 # define WHITE 0xffffff
