@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/09/30 12:21:04 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/02 12:39:33 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,11 @@ typedef struct s_cb
 // x '2' y '1'
 // x '1' y '1'
 // x '3' y '1'
+
+// init
+int							init_mlx(t_cb *cb);
+void						init_struct(t_cb *cb);
+t_img						init_texture(char *filename, t_cb *cb);
 
 // input handling
 void						init_keybinds(t_cb *cb);
