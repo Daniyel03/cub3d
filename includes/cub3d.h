@@ -42,6 +42,8 @@
 // movement
 # define WALK_SPEED 4
 # define TURN_SPEED 3
+# define JUMP_FORCE 25
+# define GRAVITY 100
 
 // colors
 # define WHITE 0xffffff
@@ -113,17 +115,19 @@ typedef struct s_player
 	t_vec2					input;
 	t_vec2					pos;
 	double					rot;
+	double					up_vel;
+	double					z_pos;
 }							t_player;
 
-typedef void				(*t_key_func)(void *cb, double rate);
+typedef void				(*t_key_func)(void *val, double rate, t_cb *cb);
 
 typedef struct s_keybind
 {
 	int						keycode;
-	int						pressed;
+	t_key_func				func;
 	double					*val;
 	double					rate;
-	t_key_func				func;
+	int						pressed;
 }							t_keybind;
 
 /**
@@ -145,6 +149,11 @@ typedef struct s_cb
 // x '1' y '1'
 // x '3' y '1'
 
+// init
+int							init_mlx(t_cb *cb);
+void						init_struct(t_cb *cb);
+t_img						init_texture(char *filename, t_cb *cb);
+
 // input handling
 void						init_keybinds(t_cb *cb);
 int							set_key(int keycode, int state, t_cb *cb);
@@ -165,6 +174,10 @@ int							empty(char *str);
 void						exit_cub(t_cb *cb, char *str);
 long						get_time_ms(void);
 double						clamp_rot(double rot);
+void						free_cords(t_cb *cb);
+void						free_map(t_cb *cb);
+
+int							is_wall(t_cb *cb, int x, int y);
 
 // vector utils
 t_vec2						get_dir_vec(double distance, double rot);

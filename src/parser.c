@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 10:04:52 by dscholz           #+#    #+#             */
-/*   Updated: 2024/09/30 12:31:14 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/02 13:52:46 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	validate_input(t_parser *parser, char **argv)
 	get_filename(parser, argv);
 	validate_textures(parser);
 	alloc_array(parser);
-	if(flood_fill(parser->cb) == FAILURE)
+	if(flood_fill(parser) == FAILURE)
 		exit_parser(parser, "map not surrounded by walls\n");
 	print_map(parser->cb->map);
 }
@@ -81,7 +81,8 @@ void	parser(t_cb *cb, char **argv)
 	ft_bzero(&parser, sizeof(parser));
 	parser.cb = cb;
 	parser.cb->map.textures_arr = ft_calloc(6, sizeof(char **));
-
+	if (!parser.cb->map.textures_arr)
+		exit_parser(&parser, "malloc fail\n");
 	validate_input(&parser, argv);
 	print_textures(&parser);
 	close(parser.temp_fd);

@@ -23,6 +23,8 @@ typedef struct s_render_data
 	int		cam_col;
 	int		texture_col;
 	double	rot_offset;
+	double	wall_height;
+	t_vec2	ray_dir;
 }			t_render_data;
 
 void		put_pixel(t_img img, int x, int y, int color);

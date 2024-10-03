@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:16:21 by hrother           #+#    #+#             */
-/*   Updated: 2024/09/30 12:16:23 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/03 13:59:52 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,19 @@ void	put_pixel(t_img img, int x, int y, int color)
 
 void	draw_wall_line(t_render_data *data)
 {
-	int		len;
 	int		i;
 	double	y_scale;
 	int		y_offest;
 
- 	len = HEIGHT / (distance(data->cb->player.pos, data->wall_hit)
-			* (data->rot_offset));
-	y_scale = (double)data->texture.height / len;
-	y_offest = HEIGHT / 2 - len / 2;
+	y_scale = (double)data->texture.height / data->wall_height;
+	y_offest = HEIGHT / 2 - data->wall_height / 2 + (data->cb->player.z_pos * data->wall_height/10);
 	i = 0;
 	while (i < y_offest && i < HEIGHT)
 	{
 		put_pixel(data->cb->img, data->cam_col, i, data->cb->map.ceil_color);
 		i++;
 	}
-	while (i < y_offest + len && i < HEIGHT)
+	while (i < y_offest + data->wall_height && i < HEIGHT)
 	{
 		put_pixel(data->cb->img, data->cam_col, i, get_pixel(data->texture,
 				data->texture_col, (i - y_offest) * y_scale));

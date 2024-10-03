@@ -44,7 +44,7 @@ typedef struct s_parser
 }			t_parser;
 
 void		validate_path(t_parser *parser, char **argv);
-int			flood_fill(t_cb *cb);
+int			flood_fill(t_parser *parser);
 void		print_cord(t_cb *cb);
 void		print_map(t_map map);
 // parser

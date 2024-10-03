@@ -91,7 +91,7 @@ char	*get_next_line(int fd)
 	if (str && *str)
 	{
 		ret = trim_after(&str, nl_i + 1);
-		if (*str == '\0')
+		if (str != NULL && *str == '\0')
 			(free(str), str = NULL);
 		return (ret);
 	}
