@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/02 15:50:28 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/03 13:22:00 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ void						print_cord(t_cb *cb);
 
 // rendering
 void						draw_view(t_cb *cb);
-
+int	is_wall(t_cb *cb, int x, int y);
 // parser
 void						parser(t_cb *cb, char **argv);
 
