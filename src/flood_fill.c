@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+#include "parser.h"
 
 void	print_cord(t_cb *cb)
 {
@@ -24,21 +25,25 @@ void	print_cord(t_cb *cb)
 	}
 }
 
-void	append_cord(t_cb *cb, int x, int y)
+void	append_cord(t_parser *parser, int x, int y)
 {
 	t_valid_cords	*temp;
 
-	temp = cb->cords;
+	temp = parser->cb->cords;
 	if (!temp)
 	{
-		cb->cords = malloc(sizeof(t_valid_cords));
-		temp = cb->cords;
+		parser->cb->cords = malloc(sizeof(t_valid_cords));
+		temp = parser->cb->cords;
+		if (temp == NULL)
+			exit_parser(parser, "malloc fail\n");
 	}
 	else
 	{
 		while (temp->next)
 			temp = temp->next;
 		temp->next = malloc(sizeof(t_valid_cords));
+		if (temp->next == NULL)
+			exit_parser(parser, "malloc fail\n");
 		temp = temp->next;
 	}
 	temp->x = x;
@@ -46,7 +51,7 @@ void	append_cord(t_cb *cb, int x, int y)
 	temp->next = NULL;
 }
 
-int	fill_rec(t_cb *cb, t_map *map, int x, int y)
+int	fill_rec(t_parser *parser, t_map *map, int x, int y)
 {
 	int	ret;
 
@@ -58,16 +63,16 @@ int	fill_rec(t_cb *cb, t_map *map, int x, int y)
 	if (map->arr[y][x] != 0)
 		return (FAILURE);
 	map->arr[y][x] = 3;
-	append_cord(cb, x, y);
-	ret |= fill_rec(cb, map, x - 1, y);
-	ret |= fill_rec(cb, map, x + 1, y);
-	ret |= fill_rec(cb, map, x, y - 1);
-	ret |= fill_rec(cb, map, x, y + 1);
+	append_cord(parser, x, y);
+	ret |= fill_rec(parser, map, x - 1, y);
+	ret |= fill_rec(parser, map, x + 1, y);
+	ret |= fill_rec(parser, map, x, y - 1);
+	ret |= fill_rec(parser, map, x, y + 1);
 	return (ret);
 }
 
-int	flood_fill(t_cb *cb)
+int	flood_fill(t_parser *parser)
 {
-	return (fill_rec(cb, &cb->map, (int)cb->player.pos.x,
-			(int)cb->player.pos.y));
+	return (fill_rec(parser, &parser->cb->map, (int)parser->cb->player.pos.x,
+			(int)parser->cb->player.pos.y));
 }

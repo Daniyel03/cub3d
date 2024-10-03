@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/03 13:59:58 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/03 14:05:34 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,10 @@ int							empty(char *str);
 void						exit_cub(t_cb *cb, char *str);
 long						get_time_ms(void);
 double						clamp_rot(double rot);
+void						free_cords(t_cb *cb);
+void						free_map(t_cb *cb);
+
+int							is_wall(t_cb *cb, int x, int y);
 
 // vector utils
 t_vec2						get_dir_vec(double distance, double rot);

@@ -92,15 +92,8 @@ void	exit_parser(t_parser *parser, char *errormessage)
 	// if (parser->number)
 	// 	free(parser->number);
 
-	if (parser->cb->map.arr)
-	{
-		if (parser->cb->map.y)
-			while (parser->cb->map.y)
-				free(parser->cb->map.arr[--parser->cb->map.y]);
-		free(parser->cb->map.arr);
-	}
-	ft_bzero(parser, sizeof(&parser));
-
+	free_cords(parser->cb);
+	free_map(parser->cb);
 
 	// exit_cub(parser->cb, "exit");
 	if (errormessage)
