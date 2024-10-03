@@ -24,34 +24,24 @@ void	set_to(void *val, double rate, t_cb *cb)
 	*((double *)val) = rate;
 }
 
-void	init_keybind(t_keybind *keybind, int keycode, t_key_func func,
-		double *val, double rate)
-{
-	keybind->keycode = keycode;
-	keybind->pressed = 0;
-	keybind->val = val;
-	keybind->rate = rate;
-	keybind->func = func;
-}
-
 void	init_keybinds(t_cb *cb)
 {
 	cb->keybinds = malloc(sizeof(t_keybind) * 10);
-	init_keybind(&cb->keybinds[0], XK_s, add_to_val, &cb->player.input.y,
-		-WALK_SPEED);
-	init_keybind(&cb->keybinds[1], XK_w, add_to_val, &cb->player.input.y,
-		WALK_SPEED);
-	init_keybind(&cb->keybinds[2], XK_a, add_to_val, &cb->player.input.x,
-		WALK_SPEED);
-	init_keybind(&cb->keybinds[3], XK_d, add_to_val, &cb->player.input.x,
-		-WALK_SPEED);
-	init_keybind(&cb->keybinds[4], XK_Left, add_to_val, &cb->player.rot,
-		TURN_SPEED);
-	init_keybind(&cb->keybinds[5], XK_Right, add_to_val, &cb->player.rot,
-		-TURN_SPEED);
-	init_keybind(&cb->keybinds[6], XK_space, set_to, &cb->player.up_vel,
-		JUMP_FORCE);
-	init_keybind(&cb->keybinds[7], 0, NULL, NULL, 0);
+	cb->keybinds[0] = (t_keybind){XK_s, add_to_val, &cb->player.input.y,
+		-WALK_SPEED, 0};
+	cb->keybinds[1] = (t_keybind){XK_w, add_to_val, &cb->player.input.y,
+		WALK_SPEED, 0};
+	cb->keybinds[2] = (t_keybind){XK_a, add_to_val, &cb->player.input.x,
+		WALK_SPEED, 0};
+	cb->keybinds[3] = (t_keybind){XK_d, add_to_val, &cb->player.input.x,
+		-WALK_SPEED, 0};
+	cb->keybinds[4] = (t_keybind){XK_Left, add_to_val, &cb->player.rot,
+		TURN_SPEED, 0};
+	cb->keybinds[5] = (t_keybind){XK_Right, add_to_val, &cb->player.rot,
+		-TURN_SPEED, 0};
+	cb->keybinds[6] = (t_keybind){XK_space, set_to, &cb->player.up_vel,
+		JUMP_FORCE, 0};
+	cb->keybinds[7] = (t_keybind){0, NULL, NULL, 0, 0};
 }
 
 int	set_key(int keycode, int state, t_cb *cb)

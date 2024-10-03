@@ -124,10 +124,10 @@ typedef void				(*t_key_func)(void *val, double rate, t_cb *cb);
 typedef struct s_keybind
 {
 	int						keycode;
-	int						pressed;
+	t_key_func				func;
 	double					*val;
 	double					rate;
-	t_key_func				func;
+	int						pressed;
 }							t_keybind;
 
 /**
