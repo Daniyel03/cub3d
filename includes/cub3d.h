@@ -6,7 +6,7 @@
 /*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/02 14:21:08 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/03 13:59:58 by hrother          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@
 // movement
 # define WALK_SPEED 4
 # define TURN_SPEED 3
-# define JUMP_FORCE 500
-# define GRAVITY 1000
+# define JUMP_FORCE 25
+# define GRAVITY 100
 
 // colors
 # define WHITE 0xffffff
