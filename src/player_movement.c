@@ -3,15 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   player_movement.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:27:52 by hrother           #+#    #+#             */
-/*   Updated: 2024/09/30 12:28:58 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/03 15:47:38 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 #include <X11/X.h>
+
+int check(t_cb *cb, t_vec2 pos, t_vec2 input)
+{
+	if ((floor(pos.x) - floor(pos.x + input.x)) && ((floor(pos.y) - floor(pos.y + input.y)))
+			&& is_wall(cb,floor(pos.x + input.x),floor(pos.y + input.y)))
+				return 1;
+	return 0;
+}
 
 void	valid_x_ll(t_cb *cb)
 {
@@ -69,8 +77,11 @@ void	valid_x_ll(t_cb *cb)
 	if ((cb->player.pos.y + cb->player.input.y) == floor(cb->player.pos.y)
 		&& cb->player.input.y < 0)
 		cb->player.input.y += 0.02;
-	cb->player.pos.x += cb->player.input.x;
-	cb->player.pos.y += cb->player.input.y;
+	if (!check(cb, cb->player.pos, cb->player.input))
+	{
+		cb->player.pos.x += cb->player.input.x;
+		cb->player.pos.y += cb->player.input.y;
+	}
 }
 
 void	player_walk(t_cb *cb)

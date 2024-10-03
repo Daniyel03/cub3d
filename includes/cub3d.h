@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/09/30 12:21:04 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/03 15:30:08 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void						draw_view(t_cb *cb);
 
 // parser
 void						parser(t_cb *cb, char **argv);
-
+int	is_wall(t_cb *cb, int x, int y);
 // parser_utils
 int							empty(char *str);
 
