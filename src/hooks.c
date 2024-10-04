@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 14:35:49 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/02 14:19:01 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/04 22:36:42 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	set_deltatime(t_cb *cb)
 	static long	old_time = 0;
 
 	new_time = get_time_ms();
+	if (new_time == 0)
+		exit_cub(cb, NULL);
 	cb->deltatime = (new_time - old_time) / 1000.0;
 	printf("fps: %f\n", 1 / cb->deltatime);
 	old_time = new_time;

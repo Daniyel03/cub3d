@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 15:06:44 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/02 12:57:37 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/04 22:39:58 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ long	get_time_ms(void)
 	long			time;
 
 	if (gettimeofday(&tv, NULL) == -1)
-		perror("gettimeofday"); // is this protection enough?
+	{
+		perror("gettimeofday");
+		return (0);
+	}
 	time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	return (time);
 }
