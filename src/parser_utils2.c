@@ -30,6 +30,8 @@ int	read_until_not_empty(t_parser *parser)
 {
 	set_fd(parser);
 	parser->temp = get_next_line(parser->temp_fd);
+	if (parser->temp == NULL && parser->line_count == 0)
+		exit_parser(parser, "empty file"); //test gnl fail during iteration
 	if (parser->line_count == 0)
 		parser->line_count = 1;
 	while (parser->temp)

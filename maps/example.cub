@@ -1,3 +1,4 @@
+
 C 100,100,250
 NO maps/textures/mossy.xpm
 EA maps/textures/checker.xpm
@@ -6,7 +7,8 @@ SO maps/textures/wood.xpm
 F 150,100,50
 
 11111111
-10010101
-10E00001
+10E10101
+10000001
+10000001
 10000001
 11111111

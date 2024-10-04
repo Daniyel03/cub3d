@@ -71,6 +71,8 @@ void	test_texture_path(t_parser *parser)
 void	check_texture(t_parser *parser)
 {
 	parser->str = get_next_line(parser->temp_fd);
+	if (parser->str == NULL)
+		exit_parser(parser, NULL);
 	parser->line_count++;
 	parser->temp = parser->str;
 	iterate_until_no_space(&parser->temp);

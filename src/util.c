@@ -73,19 +73,22 @@ void	exit_cub(t_cb *cb, char *str)
 	free(cb->keybinds);
 	if (str)
 		printf("%s", str);
-	free(cb->map.textures_arr[0]);
-	cb->map.textures_arr[0] = NULL;
-	free(cb->map.textures_arr[1]);
-	cb->map.textures_arr[1] = NULL;
-	free(cb->map.textures_arr[2]);
-	cb->map.textures_arr[2] = NULL;
-	free(cb->map.textures_arr[3]);
-	cb->map.textures_arr[3] = NULL;
-	free(cb->map.textures_arr[4]);
-	cb->map.textures_arr[4] = NULL;
-	free(cb->map.textures_arr[5]);
-	cb->map.textures_arr[5] = NULL;
-	free(cb->map.textures_arr);
+	if (cb->map.textures_arr)
+	{
+		free(cb->map.textures_arr[0]);
+		cb->map.textures_arr[0] = NULL;
+		free(cb->map.textures_arr[1]);
+		cb->map.textures_arr[1] = NULL;
+		free(cb->map.textures_arr[2]);
+		cb->map.textures_arr[2] = NULL;
+		free(cb->map.textures_arr[3]);
+		cb->map.textures_arr[3] = NULL;
+		free(cb->map.textures_arr[4]);
+		cb->map.textures_arr[4] = NULL;
+		free(cb->map.textures_arr[5]);
+		cb->map.textures_arr[5] = NULL;
+		free(cb->map.textures_arr);
+	}	
 	cb->map.textures_arr = NULL;
 	exit(0); // TODO: exit with errorcode when an error occured
 }

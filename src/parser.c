@@ -86,4 +86,5 @@ void	parser(t_cb *cb, char **argv)
 	validate_input(&parser, argv);
 	print_textures(&parser);
 	close(parser.temp_fd);
+	// exit_parser(&parser, NULL);
 }
