@@ -6,7 +6,7 @@
 /*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 14:35:49 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/04 22:36:42 by hannes           ###   ########.fr       */
+/*   Updated: 2024/10/04 22:55:40 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,6 @@ int	close_win(t_cb *cb)
 	exit_cub(cb, "window closed\n");
 	exit(0);
 	return (0);
-}
-
-void	set_deltatime(t_cb *cb)
-{
-	long		new_time;
-	static long	old_time = 0;
-
-	new_time = get_time_ms();
-	if (new_time == 0)
-		exit_cub(cb, NULL);
-	cb->deltatime = (new_time - old_time) / 1000.0;
-	printf("fps: %f\n", 1 / cb->deltatime);
-	old_time = new_time;
 }
 
 int	on_loop(t_cb *cb)
