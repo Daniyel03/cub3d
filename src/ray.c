@@ -33,7 +33,7 @@ int	check_hit_wall(t_cb *cb, t_vec2 coor, t_vec2 direction)
 {
 	coor = add_vec(coor, scale_vec(direction, 0.0000001));
 	(void)direction;
-	return (is_wall(cb, (int)coor.x, (int)coor.y));
+	return (is_wall(cb, (int) floor(coor.x), (int) floor(coor.y)));
 }
 
 t_vec2	next_wall_x(t_cb *cb, t_vec2 dir)
