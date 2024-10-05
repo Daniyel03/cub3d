@@ -28,7 +28,7 @@ void check_file_and_iterate(t_parser *parser)
 	parser->temp_fd = open(parser->file, O_RDONLY);
 	if (parser->temp_fd == -1)
 		exit_parser(parser, "texture file doesnt exist\n");
-	if (ft_strlen(parser->file) <= 4 || ft_strncmp(ft_substr(parser->file, ft_strlen(parser->file) - 4, 5), ".xpm", 5))
+	if (ft_strlen(parser->file) <= 4 || ft_strncmp(parser->file + ft_strlen(parser->file) - 4, ".xpm", 5))
 		exit_parser(parser, "not a proper .xpm file\n");
 	iterate_until_space(&parser->temp);
 	iterate_until_no_space(&parser->temp);
