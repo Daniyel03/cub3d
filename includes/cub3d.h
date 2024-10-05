@@ -36,22 +36,12 @@
 
 // rendering
 # define FOV 1.570796327 // in radians
-# define Y_SCALE 500
-# define MAP_SCALE 50
 
 // movement
 # define WALK_SPEED 4
 # define TURN_SPEED 3
 # define JUMP_FORCE 25
 # define GRAVITY 100
-
-// colors
-# define WHITE 0xffffff
-# define RED 0xff0000
-# define GREEN 0x00ff00
-# define BLUE 0x0000ff
-# define SHADE1 0xdbb11a
-# define SHADE2 0xb89723
 
 typedef struct s_cb			t_cb;
 
