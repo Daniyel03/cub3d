@@ -94,31 +94,3 @@ void	check_texture(t_parser *parser)
 			"too many elements, just pass direction and texturefile\n"));
 }
 
-void	validate_textures(t_parser *parser)
-{
-	read_until_not_empty(parser);
-	check_texture(parser);
-	set_texture(parser);
-
-	read_until_not_empty(parser);
-	check_texture(parser);
-	set_texture(parser);
-
-	read_until_not_empty(parser);
-	check_texture(parser);
-	set_texture(parser);
-	
-	read_until_not_empty(parser);
-	check_texture(parser);
-	set_texture(parser);
-	
-	read_until_not_empty(parser);
-	check_texture(parser);
-	set_texture(parser);
-	
-	read_until_not_empty(parser);
-	check_texture(parser);
-	set_texture(parser);
-
-	
-}

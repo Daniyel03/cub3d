@@ -38,18 +38,18 @@ void	cub3d(char **argv)
 
 	init_struct(&cb);
 	parser(&cb, argv);
-	// // printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
-	init_mlx(&cb);
-	// TODO: protection
-	cb.map.textures[0] = init_texture(cb.map.textures_arr[0], &cb);
-	cb.map.textures[1] = init_texture(cb.map.textures_arr[1], &cb);
-	cb.map.textures[2] = init_texture(cb.map.textures_arr[2], &cb);
-	cb.map.textures[3] = init_texture(cb.map.textures_arr[3], &cb);
-	cb.map.ceil_color = hex_to_int(cb.map.textures_arr[4]);
-	cb.map.floor_color = hex_to_int(cb.map.textures_arr[5]);
-	init_keybinds(&cb);
-	setup_hooks(&cb);
-	mlx_loop(cb.mlx);
+	// // // printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
+	// init_mlx(&cb);
+	// // TODO: protection
+	// cb.map.textures[0] = init_texture(cb.map.textures_arr[0], &cb);
+	// cb.map.textures[1] = init_texture(cb.map.textures_arr[1], &cb);
+	// cb.map.textures[2] = init_texture(cb.map.textures_arr[2], &cb);
+	// cb.map.textures[3] = init_texture(cb.map.textures_arr[3], &cb);
+	// cb.map.ceil_color = hex_to_int(cb.map.textures_arr[4]);
+	// cb.map.floor_color = hex_to_int(cb.map.textures_arr[5]);
+	// init_keybinds(&cb);
+	// setup_hooks(&cb);
+	// mlx_loop(cb.mlx);
 	exit_cub(&cb, "success\n");
 }
 

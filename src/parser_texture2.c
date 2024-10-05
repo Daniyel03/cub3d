@@ -28,6 +28,14 @@ void	check_digit(t_parser *parser)
 		exit_parser(parser, "invalid rgb input\n");
 }
 
+void	numarray_to_hexadecimal_prep(int *temp, char **table, char **temp1, char **temp2)
+{
+	(*table) = NULL;
+	(*temp1) = NULL;
+	(*temp2) = NULL;
+	(*temp) = 0;
+}
+
 void	numarray_to_hexadecimal(t_parser *parser)
 {
 	char	*table;
@@ -35,6 +43,8 @@ void	numarray_to_hexadecimal(t_parser *parser)
 	char	*temp2;
 	int		temp;
 
+
+	numarray_to_hexadecimal_prep(&temp, &table, &temp1, &temp2);
 	table = "0123456789abcdef";
 	if (parser->i < 16)
 	{
@@ -44,10 +54,8 @@ void	numarray_to_hexadecimal(t_parser *parser)
 		temp2 = ft_strjoin(parser->number, temp1);
 		if (temp2 == NULL)
 			exit_parser(parser, NULL);
-		free(parser->number);
-		free(temp1);
-		parser->number = temp2;
-		temp2 = NULL;
+
+		return (free(parser->number), parser->number = NULL, free(temp1), temp1 = NULL, parser->number = temp2, temp2 = NULL, (void)0);
 	}
 	else
 	{

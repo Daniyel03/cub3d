@@ -36,6 +36,26 @@ void	iterate_line(t_parser *parser, int *x, char *str)
 	}
 }
 
+void	next_line(t_parser *parser, char **str, int *y, int *x)
+{
+	parser->cb->map.arr[(*y)][(*x)] = -1;
+	(*y)++;
+	free((*str));
+	(*str) = get_next_line(parser->temp_fd);
+	(*x) = -1;
+}
+
+void	fill_line_prep(t_parser *parser, char **str, int *y, int *x)
+{
+	(*x) = -1;
+	(*y) = 0;
+	parser->i = parser->map_line;
+	set_fd(parser);
+	(*str) = get_next_line(parser->temp_fd);
+	if ((*str) == NULL)
+		exit_cub(parser->cb, NULL);
+}
+
 void	fill_lines(t_parser *parser)
 {
 	char	*str;
@@ -43,17 +63,7 @@ void	fill_lines(t_parser *parser)
 	int		x;
 	int		y;
 
-	x = -1;
-	y = 0;
-
-
-	parser->i = parser->map_line;
-	set_fd(parser);
-
-	str = get_next_line(parser->temp_fd);
-	// str = NULL;
-	if (str == NULL)
-		exit_cub(parser->cb, NULL);
+	fill_line_prep(parser, &str, &y, &x);
 	while (y < parser->cb->map.y)
 	{
 		if (str == NULL)
@@ -69,11 +79,7 @@ void	fill_lines(t_parser *parser)
 				parser->cb->map.arr[y][x] = ft_atoi(c);
 			free(c);
 		}
-		parser->cb->map.arr[y][x] = -1;
-		y++;
-		free(str);
-		str = get_next_line(parser->temp_fd);
-		x = -1;
+		next_line(parser, &str, &y, &x);
 	}
 }
 
