@@ -20,7 +20,6 @@ void	add_to_val(void *val, double rate, t_cb *cb)
 void	set_to(void *val, double rate, t_cb *cb)
 {
 	(void)cb;
-	printf("setting to: %f\n", rate);
 	*((double *)val) = rate;
 }
 
