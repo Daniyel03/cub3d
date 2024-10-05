@@ -21,6 +21,19 @@ void	set_texture_reset(t_parser *parser)
 	parser->temp = NULL;
 }
 
+void check_file_and_iterate(t_parser *parser)
+{
+	if (close(parser->temp_fd) == -1)
+		exit_parser(parser, NULL);
+	parser->temp_fd = open(parser->file, O_RDONLY);
+	if (parser->temp_fd == -1)
+		exit_parser(parser, "texture file doesnt exist\n");
+	if (ft_strlen(parser->file) <= 4 || ft_strncmp(ft_substr(parser->file, ft_strlen(parser->file) - 4, 5), ".xpm", 5))
+		exit_parser(parser, "not a proper .xpm file\n");
+	iterate_until_space(&parser->temp);
+	iterate_until_no_space(&parser->temp);
+}
+
 void	set_texture(t_parser *parser)
 {
 	parser->temp = parser->str;
@@ -53,16 +66,7 @@ void	test_texture_path(t_parser *parser)
 	if (parser->temp[0] == 'F' || parser->temp[0] == 'C')
 		rgb_to_hexadecimal(parser);
 	else
-	{
-		if (close(parser->temp_fd) == -1)
-			exit_parser(parser, NULL);
-		parser->temp_fd = open(parser->file, O_RDONLY);
-		if (parser->temp_fd == -1)
-			exit_parser(parser, "texture file doesnt exist\n");
-		// (close(parser->temp_fd));
-		iterate_until_space(&parser->temp);
-		iterate_until_no_space(&parser->temp);
-	}
+		check_file_and_iterate(parser);
 	iterate_until_space(&parser->temp);
 	iterate_until_no_space(&parser->temp);
 	parser->i = 0;

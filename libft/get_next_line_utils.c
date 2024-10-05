@@ -43,15 +43,15 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (i);
 }
 
-size_t	ft_strlen(const char *str)
-{
-	size_t	len;
+// size_t	ft_strlen(const char *str)
+// {
+// 	size_t	len;
 
-	len = 0;
-	while (str[len])
-		len++;
-	return (len);
-}
+// 	len = 0;
+// 	while (str[len])
+// 		len++;
+// 	return (len);
+// }
 
 char	*ft_strjoin(const char *str, const char *buffer)
 {

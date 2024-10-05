@@ -59,7 +59,7 @@ void	free_cords(t_cb *cb)
 	}
 }
 
-void	exit_cub(t_cb *cb, char *str)
+void	exit_cub(t_cb *cb, char *err_msg)
 {
 	free_cords(cb);
 	free_map(cb);
@@ -71,8 +71,9 @@ void	exit_cub(t_cb *cb, char *str)
 		mlx_destroy_display(cb->mlx);
 	free(cb->mlx);
 	free(cb->keybinds);
-	if (str)
-		printf("%s", str);
+	ft_putstr_fd("Error\n", 2);
+	if (err_msg)
+		ft_putstr_fd(err_msg, 2);
 	if (cb->map.textures_arr)
 	{
 		free(cb->map.textures_arr[0]);

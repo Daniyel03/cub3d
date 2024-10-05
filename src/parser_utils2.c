@@ -98,6 +98,7 @@ void	exit_parser(t_parser *parser, char *errormessage)
 	free_map(parser->cb);
 
 	// exit_cub(parser->cb, "exit");
+	ft_putstr_fd("Error\n", 2);
 	if (errormessage)
 		ft_putstr_fd(errormessage, 2);
 	exit(0);
