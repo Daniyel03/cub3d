@@ -6,7 +6,7 @@
 /*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:35:43 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/05 11:23:27 by hannes           ###   ########.fr       */
+/*   Updated: 2024/10/05 12:03:45 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ int	init_mlx(t_cb *cb)
 {
 	cb->mlx = mlx_init();
 	if (!cb->mlx)
-		return (exit_cub(cb, "mlx error"), FAILURE);
+		exit_cub(cb, "mlx error", 1);
 	cb->win = mlx_new_window(cb->mlx, WIDTH, HEIGHT, "cub3D");
 	if (!cb->win)
-		return (exit_cub(cb, "mlx error"), FAILURE);
+		exit_cub(cb, "mlx error", 1);
 	cb->img.img = mlx_new_image(cb->mlx, WIDTH, HEIGHT);
 	cb->img.addr = mlx_get_data_addr(cb->img.img, &cb->img.bits_per_pixel,
 			&cb->img.line_length, &cb->img.endian);
 	if (cb->img.img == NULL || cb->img.addr == NULL)
-		return (exit_cub(cb, "mlx error"), FAILURE);
+		exit_cub(cb, "mlx error", 1);
 	cb->img.width = WIDTH;
 	cb->img.height = HEIGHT;
 	return (0);

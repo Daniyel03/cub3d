@@ -40,20 +40,19 @@ void	cub3d(char **argv)
 	parser(&cb, argv);
 	// // printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
 	init_mlx(&cb);
-	// TODO: protection
 	cb.map.textures[0] = init_texture(cb.map.textures_arr[0], &cb);
 	cb.map.textures[1] = init_texture(cb.map.textures_arr[1], &cb);
 	cb.map.textures[2] = init_texture(cb.map.textures_arr[2], &cb);
 	cb.map.textures[3] = init_texture(cb.map.textures_arr[3], &cb);
 	if (!cb.map.textures[0].img || !cb.map.textures[1].img
 		|| !cb.map.textures[2].img || !cb.map.textures[3].img)
-		exit_cub(&cb, "invalid texture\n");
+		exit_cub(&cb, "invalid texture\n", 1);
 	cb.map.ceil_color = hex_to_int(cb.map.textures_arr[4]);
 	cb.map.floor_color = hex_to_int(cb.map.textures_arr[5]);
 	init_keybinds(&cb);
 	setup_hooks(&cb);
 	mlx_loop(cb.mlx);
-	exit_cub(&cb, "success\n");
+	exit_cub(&cb, "success\n", 1);
 }
 
 int	main(int argc, char **argv)

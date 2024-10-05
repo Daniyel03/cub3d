@@ -6,7 +6,7 @@
 /*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 14:35:49 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/04 22:55:40 by hannes           ###   ########.fr       */
+/*   Updated: 2024/10/05 12:01:59 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	close_win(t_cb *cb)
 {
-	exit_cub(cb, "window closed\n");
+	exit_cub(cb, "window closed\n", 0);
 	exit(0);
 	return (0);
 }

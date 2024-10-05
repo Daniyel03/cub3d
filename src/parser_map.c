@@ -53,7 +53,7 @@ void	fill_line_prep(t_parser *parser, char **str, int *y, int *x)
 	set_fd(parser);
 	(*str) = get_next_line(parser->temp_fd);
 	if ((*str) == NULL)
-		exit_cub(parser->cb, NULL);
+		exit_cub(parser->cb, NULL, 1);
 }
 
 void	fill_lines(t_parser *parser)
@@ -67,12 +67,12 @@ void	fill_lines(t_parser *parser)
 	while (y < parser->cb->map.y)
 	{
 		if (str == NULL)
-			exit_cub(parser->cb, NULL);
+			exit_cub(parser->cb, NULL, 1);
 		while (str[++x] && str[x] != '\n')
 		{
 			c = ft_substr(str, x, 1);
 			if (c == NULL)
-				(free(str), exit_cub(parser->cb, "malloc fail\n"));
+				(free(str), exit_cub(parser->cb, "malloc fail\n", 1));
 			if (!ft_strncmp(c, " ", 1))
 				parser->cb->map.arr[y][x] = 2;
 			else
@@ -100,12 +100,12 @@ void	validate_alloc_lines(t_parser *parser)
 		parser->cb->map.arr[parser->cb->map.y] = malloc(sizeof(int) * (x + 1));
 		// parser->cb->map.arr[parser->cb->map.y] = NULL;
 		if (!parser->cb->map.arr[parser->cb->map.y++])
-			return (exit_cub(parser->cb, NULL));
+			return (exit_cub(parser->cb, NULL, 1));
 		free(str);
 		str = get_next_line(parser->temp_fd);
 	}
 	if (!parser->cb->map.y)
-		return (exit_cub(parser->cb, NULL));
+		return (exit_cub(parser->cb, NULL, 1));
 	if (parser->cb->player.pos.x == -1)
 		exit_parser(parser, 
 		"No player position set, set it by placing either 'N', 'S', 'W', or 'E' within the map.\n");

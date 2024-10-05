@@ -33,7 +33,7 @@ void	set_deltatime(t_cb *cb)
 
 	new_time = get_time_ms();
 	if (new_time == 0)
-		exit_cub(cb, NULL);
+		exit_cub(cb, NULL, 1);
 	cb->deltatime = (new_time - old_time) / 1000.0;
 	printf("fps: %f\n", 1 / cb->deltatime);
 	old_time = new_time;

@@ -6,7 +6,7 @@
 /*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 22:47:19 by hannes            #+#    #+#             */
-/*   Updated: 2024/10/04 22:58:09 by hannes           ###   ########.fr       */
+/*   Updated: 2024/10/05 12:01:03 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	free_cords(t_cb *cb)
 	}
 }
 
-void	exit_cub(t_cb *cb, char *str)
+void	exit_cub(t_cb *cb, char *str, int status_code)
 {
 	free_cords(cb);
 	free_map(cb);
@@ -72,5 +72,5 @@ void	exit_cub(t_cb *cb, char *str)
 		free(cb->map.textures_arr[5]);
 		free(cb->map.textures_arr);
 	}
-	exit(0); // TODO: exit with errorcode when an error occured
+	exit(status_code);
 }
