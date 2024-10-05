@@ -6,7 +6,7 @@
 /*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:08:33 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/04 23:00:28 by hannes           ###   ########.fr       */
+/*   Updated: 2024/10/05 11:25:43 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ void	cub3d(char **argv)
 	cb.map.textures[1] = init_texture(cb.map.textures_arr[1], &cb);
 	cb.map.textures[2] = init_texture(cb.map.textures_arr[2], &cb);
 	cb.map.textures[3] = init_texture(cb.map.textures_arr[3], &cb);
+	if (!cb.map.textures[0].img || !cb.map.textures[1].img
+		|| !cb.map.textures[2].img || !cb.map.textures[3].img)
+		exit_cub(&cb, "invalid texture\n");
 	cb.map.ceil_color = hex_to_int(cb.map.textures_arr[4]);
 	cb.map.floor_color = hex_to_int(cb.map.textures_arr[5]);
 	init_keybinds(&cb);

@@ -6,7 +6,7 @@
 /*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:35:43 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/04 22:59:36 by hannes           ###   ########.fr       */
+/*   Updated: 2024/10/05 11:23:27 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ t_img	init_texture(char *filename, t_cb *cb)
 
 	texture.img = mlx_xpm_file_to_image(cb->mlx, filename, &texture.width,
 			&texture.height);
+	if (!texture.img)
+		return (texture.addr = NULL, texture);
 	texture.addr = mlx_get_data_addr(texture.img, &texture.bits_per_pixel,
 			&texture.line_length, &texture.endian);
 	return (texture);
