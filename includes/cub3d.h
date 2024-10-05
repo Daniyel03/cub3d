@@ -153,6 +153,7 @@ void						print_cord(t_cb *cb);
 
 // rendering
 void						draw_view(t_cb *cb);
+void						draw_map(t_cb *cb);
 
 // parser
 void						parser(t_cb *cb, char **argv);
