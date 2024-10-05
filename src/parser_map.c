@@ -61,6 +61,8 @@ void	fill_lines(t_parser *parser)
 		while (str[++x] && str[x] != '\n')
 		{
 			c = ft_substr(str, x, 1);
+			if (c == NULL)
+				(free(str), exit_cub(parser->cb, "malloc fail\n"));
 			if (!ft_strncmp(c, " ", 1))
 				parser->cb->map.arr[y][x] = 2;
 			else

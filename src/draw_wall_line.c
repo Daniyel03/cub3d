@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_wall_line.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:16:21 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/03 13:59:52 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/04 22:58:28 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	draw_wall_line(t_render_data *data)
 	int		y_offest;
 
 	y_scale = (double)data->texture.height / data->wall_height;
-	y_offest = HEIGHT / 2 - data->wall_height / 2 + (data->cb->player.z_pos * data->wall_height/10);
+	y_offest = HEIGHT / 2 - data->wall_height / 2 + (data->cb->player.z_pos
+			* data->wall_height / 10);
 	i = 0;
 	while (i < y_offest && i < HEIGHT)
 	{

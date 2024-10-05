@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/03 15:30:08 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/04 22:56:21 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,13 +166,13 @@ void						draw_view(t_cb *cb);
 
 // parser
 void						parser(t_cb *cb, char **argv);
-int	is_wall(t_cb *cb, int x, int y);
+int							is_wall(t_cb *cb, int x, int y);
 // parser_utils
 int							empty(char *str);
 
 // util
 void						exit_cub(t_cb *cb, char *str);
-long						get_time_ms(void);
+void						set_deltatime(t_cb *cb);
 double						clamp_rot(double rot);
 void						free_cords(t_cb *cb);
 void						free_map(t_cb *cb);

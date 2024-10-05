@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 12:35:43 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/02 12:37:24 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/04 22:59:36 by hannes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
 
 int	init_mlx(t_cb *cb)
 {
@@ -28,12 +27,6 @@ int	init_mlx(t_cb *cb)
 		return (exit_cub(cb, "mlx error"), FAILURE);
 	cb->img.width = WIDTH;
 	cb->img.height = HEIGHT;
-	// cb->texture.img = mlx_new_image(cb->mlx, 100, 100);
-	// cb->texture.addr = mlx_get_data_addr(cb->texture.img,
-	// &cb->texture.bits_per_pixel, &cb->texture.line_length,
-	// &cb->texture.endian);
-	// if (cb->texture.img == NULL || cb->texture.addr == NULL)
-	// return (exit_cub(cb, "mlx error"), FAILURE);
 	return (0);
 }
 
