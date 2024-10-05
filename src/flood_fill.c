@@ -71,8 +71,47 @@ int	fill_rec(t_parser *parser, t_map *map, int x, int y)
 	return (ret);
 }
 
+void crop_map(t_parser *parser)
+{
+	int min_x = 10000;
+	int min_y = 10000;
+	int max_x = 0;
+	int max_y = 0;
+	int limit[4];
+	int y;
+	int x;
+
+	y = 0;
+	while (y < parser->cb->map.y)
+	{
+		x = 0;
+		while(parser->cb->map.arr[y][x] != -1)
+		{
+			if (parser->cb->map.arr[y][x] == 3)
+			{
+				if(x < min_x)
+					min_x = x;
+				if(y < min_y)
+					min_y = y;
+				if(x > max_x)
+					max_x = x;
+				if(y > max_y)
+					max_y = y;
+			}
+			x++;
+		}
+		y++;
+	}
+	printf("%i,%i; %i,%i\n", min_x, min_y, max_x, max_y);
+}
+
 int	flood_fill(t_parser *parser)
 {
-	return (fill_rec(parser, &parser->cb->map, (int)parser->cb->player.pos.x,
-			(int)parser->cb->player.pos.y));
+	int res;
+
+	res = fill_rec(parser, &parser->cb->map, (int)parser->cb->player.pos.x,
+			(int)parser->cb->player.pos.y);
+	print_map(parser->cb->map);
+	crop_map(parser);
+	return (res);
 }
