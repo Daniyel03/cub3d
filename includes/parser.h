@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:21:17 by dscholz           #+#    #+#             */
-/*   Updated: 2024/10/05 14:32:03 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/05 14:40:32 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,7 @@
 # include "../libft/libft.h"
 # include "cub3d.h"
 
-# define WRONG_PLAYER_POS "No player position set, set it by placing either 'N', 'S', 'W', or 'E' within the map.\n"
-
-/*
-typedef struct s_valid_map
-{
-	// int last_graphic;
-	// int						fd_textures;
-	// int						fd_map;
-
-}			t_valid_map;
-*/
+# define WRONG_PLAYER_POS "only 'N', 'S', 'W', or 'E' within the map.\n"
 
 typedef struct s_parser
 {
@@ -71,11 +61,11 @@ void		print_textures(t_parser *parser);
 void		exit_parser(t_parser *parser, char *errormessage);
 
 // parser_utils2
-void	check_digit(t_parser *parser);
-void	set_player_rot(t_parser *parser, int *x, char *str);
-void	iterate_line(t_parser *parser, int *x, char *str);
-void	next_line(t_parser *parser, char **str, int *y, int *x);
-void	fill_line_prep(t_parser *parser, char **str, int *y, int *x);
+void		check_digit(t_parser *parser);
+void		set_player_rot(t_parser *parser, int *x, char *str);
+void		iterate_line(t_parser *parser, int *x, char *str);
+void		next_line(t_parser *parser, char **str, int *y, int *x);
+void		fill_line_prep(t_parser *parser, char **str, int *y, int *x);
 
 // parser_map
 void		set_player_rot(t_parser *parser, int *x, char *str);
