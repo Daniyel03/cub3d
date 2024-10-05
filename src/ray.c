@@ -14,8 +14,10 @@
 
 int	is_wall(t_cb *cb, int x, int y)
 {
-	t_valid_cords	*temp;
 
+	return (x < 0 || y < 0 || x > 149 || y > 149 || cb->map.arr[y][x] != 3);
+	/*
+	t_valid_cords	*temp;
 	temp = cb->cords;
 	while (temp)
 	{
@@ -24,6 +26,7 @@ int	is_wall(t_cb *cb, int x, int y)
 		temp = temp->next;
 	}
 	return (1);
+	*/
 }
 
 int	check_hit_wall(t_cb *cb, t_vec2 coor, t_vec2 direction)
