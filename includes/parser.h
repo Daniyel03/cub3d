@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:21:17 by dscholz           #+#    #+#             */
-/*   Updated: 2024/09/30 12:25:36 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/05 13:44:16 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,13 @@ void		set_fd(t_parser *parser);
 int			read_until_not_empty(t_parser *parser);
 void		print_textures(t_parser *parser);
 void		exit_parser(t_parser *parser, char *errormessage);
+
+// parser_utils2
+void	check_digit(t_parser *parser);
+void	set_player_rot(t_parser *parser, int *x, char *str);
+void	iterate_line(t_parser *parser, int *x, char *str);
+void	next_line(t_parser *parser, char **str, int *y, int *x);
+void	fill_line_prep(t_parser *parser, char **str, int *y, int *x);
 
 // parser_map
 void		set_player_rot(t_parser *parser, int *x, char *str);

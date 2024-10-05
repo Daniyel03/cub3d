@@ -6,27 +6,42 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:27:52 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/03 15:47:38 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/05 13:47:59 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 #include <X11/X.h>
 
-int check(t_cb *cb, t_vec2 pos, t_vec2 input)
+int	check_if_diagonal_and_wall(t_cb *cb, t_vec2 pos, t_vec2 input)
 {
-	if ((floor(pos.x) - floor(pos.x + input.x)) && ((floor(pos.y) - floor(pos.y + input.y)))
-			&& is_wall(cb,floor(pos.x + input.x),floor(pos.y + input.y)))
-				return 1;
-	return 0;
+	if ((floor(pos.x) - floor(pos.x + input.x)) && ((floor(pos.y) - floor(pos.y
+					+ input.y))) && is_wall(cb, floor(pos.x + input.x),
+			floor(pos.y + input.y)))
+		return (1);
+	return (0);
 }
 
-void	valid_x_ll(t_cb *cb)
+void	adjust_if_pos_is_wall(t_cb *cb)
+{
+	if ((cb->player.pos.x + cb->player.input.x) == ceil(cb->player.pos.x)
+		&& cb->player.input.x > 0)
+		cb->player.input.x -= 0.02;
+	else if ((cb->player.pos.x + cb->player.input.x) == floor(cb->player.pos.x)
+		&& cb->player.input.x < 0)
+		cb->player.input.x += 0.02;
+	if ((cb->player.pos.y + cb->player.input.y) == ceil(cb->player.pos.y)
+		&& cb->player.input.y > 0)
+		cb->player.input.y -= 0.02;
+	else if ((cb->player.pos.y + cb->player.input.y) == floor(cb->player.pos.y)
+		&& cb->player.input.y < 0)
+		cb->player.input.y += 0.02;
+}
+
+void	check_and_adjust_x_input(t_cb *cb)
 {
 	t_valid_cords	*temp;
 
-	// printf("walking: %f, %f\n", cb->player.input.x, cb->player.input.y);
-	// x 1,1
 	temp = cb->cords;
 	while (temp)
 	{
@@ -48,6 +63,13 @@ void	valid_x_ll(t_cb *cb)
 		}
 	}
 	temp = cb->cords;
+}
+
+void	check_and_adjust_y_input(t_cb *cb)
+{
+	t_valid_cords	*temp;
+
+	temp = cb->cords;
 	while (temp)
 	{
 		if (((cb->player.pos.y + cb->player.input.y) > temp->y)
@@ -65,29 +87,17 @@ void	valid_x_ll(t_cb *cb)
 						- cb->player.pos.y);
 		}
 	}
-	if ((cb->player.pos.x + cb->player.input.x) == ceil(cb->player.pos.x)
-		&& cb->player.input.x > 0)
-		cb->player.input.x -= 0.02;
-	if ((cb->player.pos.y + cb->player.input.y) == ceil(cb->player.pos.y)
-		&& cb->player.input.y > 0)
-		cb->player.input.y -= 0.02;
-	if ((cb->player.pos.x + cb->player.input.x) == floor(cb->player.pos.x)
-		&& cb->player.input.x < 0)
-		cb->player.input.x += 0.02;
-	if ((cb->player.pos.y + cb->player.input.y) == floor(cb->player.pos.y)
-		&& cb->player.input.y < 0)
-		cb->player.input.y += 0.02;
-	if (!check(cb, cb->player.pos, cb->player.input))
-	{
-		cb->player.pos.x += cb->player.input.x;
-		cb->player.pos.y += cb->player.input.y;
-	}
 }
 
 void	player_walk(t_cb *cb)
 {
 	cb->player.input = rotate(cb->player.input, cb->player.rot * -1);
-	// cb->player.pos.x += cb->player.input.x;
-	// cb->player.pos.y += cb->player.input.y;
-	valid_x_ll(cb);
+	check_and_adjust_x_input(cb);
+	check_and_adjust_y_input(cb);
+	adjust_if_pos_is_wall(cb);
+	if (!check_if_diagonal_and_wall(cb, cb->player.pos, cb->player.input))
+	{
+		cb->player.pos.x += cb->player.input.x;
+		cb->player.pos.y += cb->player.input.y;
+	}
 }

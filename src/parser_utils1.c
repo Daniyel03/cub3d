@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_utils1.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/05 13:30:50 by dscholz           #+#    #+#             */
+/*   Updated: 2024/10/05 13:31:31 by dscholz          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 // #include "../includes/cub3d.h"
 #include "../includes/parser.h"
 #include <fcntl.h>
@@ -38,6 +50,6 @@ void	iterate_until_space(char **str)
 void	is_dir_set(t_parser *parser)
 {
 	if (parser->cb->map.textures_arr[parser->i])
-		return (exit_parser(parser, 
-			"direction already set / exists more than once\n"));
+		return (exit_parser(parser,
+				"direction already set / exists more than once\n"));
 }

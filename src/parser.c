@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 10:04:52 by dscholz           #+#    #+#             */
-/*   Updated: 2024/10/02 13:52:46 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/05 13:45:05 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ void	parser(t_cb *cb, char **argv)
 	if (!parser.cb->map.textures_arr)
 		exit_parser(&parser, "malloc fail\n");
 	validate_input(&parser, argv);
-	print_textures(&parser);
 	close(parser.temp_fd);
 	// exit_parser(&parser, NULL);
 }

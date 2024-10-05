@@ -1,61 +1,6 @@
 #include "../includes/cub3d.h"
 #include "../includes/parser.h"
 
-void	set_player_rot(t_parser *parser, int *x, char *str)
-{
-	if (str[(*x)] == 'N')
-		return (parser->cb->player.rot = PI, (void)0);
-	if (str[(*x)] == 'S')
-		return (parser->cb->player.rot = 0, (void)0);
-	if (str[(*x)] == 'E')
-		return (parser->cb->player.rot = PI * -0.25, (void)0);
-	if (str[(*x)] == 'W')
-		return (parser->cb->player.rot = PI * 1.5, (void)0);
-}
-
-void	iterate_line(t_parser *parser, int *x, char *str)
-{
-	while (str[(*x)] && str[(*x)] != '\n')
-	{
-		if (!(str[(*x)] == 'N' || str[(*x)] == 'W' || str[(*x)] == 'S'
-				|| str[(*x)] == 'E') && str[(*x)] != '0' && str[(*x)] != '1'
-			&& str[(*x)] != ' ' && str[(*x)] != '\0' && str[(*x)] != '\n')
-			return (close(parser->temp_fd), free(str), exit_parser(parser,
-					"invalid map input, only 0 and 1 allowed\n"));
-		if (str[(*x)] == 'N' || str[(*x)] == 'W' || str[(*x)] == 'S'
-			|| str[(*x)] == 'E')
-		{
-			if (parser->cb->player.pos.x != -1)
-				return (close(parser->temp_fd), free(str), exit_parser(parser,
-						"invalid map input, only one player position\n"));
-			parser->cb->player.pos.x = (*x) + 0.5;
-			parser->cb->player.pos.y = parser->cb->map.y + 0.5;
-			set_player_rot(parser, x, str);
-		}
-		(*x)++;
-	}
-}
-
-void	next_line(t_parser *parser, char **str, int *y, int *x)
-{
-	parser->cb->map.arr[(*y)][(*x)] = -1;
-	(*y)++;
-	free((*str));
-	(*str) = get_next_line(parser->temp_fd);
-	(*x) = -1;
-}
-
-void	fill_line_prep(t_parser *parser, char **str, int *y, int *x)
-{
-	(*x) = -1;
-	(*y) = 0;
-	parser->i = parser->map_line;
-	set_fd(parser);
-	(*str) = get_next_line(parser->temp_fd);
-	if ((*str) == NULL)
-		exit_cub(parser->cb, NULL, 1);
-}
-
 void	fill_lines(t_parser *parser)
 {
 	char	*str;

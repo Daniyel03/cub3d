@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_utils2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/05 13:27:55 by dscholz           #+#    #+#             */
+/*   Updated: 2024/10/05 13:30:34 by dscholz          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/parser.h"
 
 int	str_is_number(char *str)
@@ -5,8 +17,8 @@ int	str_is_number(char *str)
 	while (*str && ft_isdigit(*str))
 		str++;
 	if (*str == '\0')
-		return 1;
-	return 0;
+		return (1);
+	return (0);
 }
 
 // if line found, read until count != i,
@@ -31,7 +43,7 @@ int	read_until_not_empty(t_parser *parser)
 	set_fd(parser);
 	parser->temp = get_next_line(parser->temp_fd);
 	if (parser->temp == NULL && parser->line_count == 0)
-		exit_parser(parser, "empty file"); //test gnl fail during iteration
+		exit_parser(parser, "empty file");
 	if (parser->line_count == 0)
 		parser->line_count = 1;
 	while (parser->temp)
@@ -45,23 +57,32 @@ int	read_until_not_empty(t_parser *parser)
 		parser->temp = get_next_line(parser->temp_fd);
 		parser->line_count++;
 	}
-	return 0;
+	return (0);
 }
 
-void	print_textures(t_parser *parser)
+void	free_map_texture_arr(t_parser *parser)
 {
-	printf("0: %s\n", parser->cb->map.textures_arr[0]);
-	printf("1: %s\n", parser->cb->map.textures_arr[1]);
-	printf("2: %s\n", parser->cb->map.textures_arr[2]);
-	printf("3: %s\n", parser->cb->map.textures_arr[3]);
-	printf("4: %s\n", parser->cb->map.textures_arr[4]);
-	printf("5: %s\n", parser->cb->map.textures_arr[5]);
-
+	if (parser->cb->map.textures_arr)
+	{
+		free(parser->cb->map.textures_arr[0]);
+		parser->cb->map.textures_arr[0] = NULL;
+		free(parser->cb->map.textures_arr[1]);
+		parser->cb->map.textures_arr[1] = NULL;
+		free(parser->cb->map.textures_arr[2]);
+		parser->cb->map.textures_arr[2] = NULL;
+		free(parser->cb->map.textures_arr[3]);
+		parser->cb->map.textures_arr[3] = NULL;
+		free(parser->cb->map.textures_arr[4]);
+		parser->cb->map.textures_arr[4] = NULL;
+		free(parser->cb->map.textures_arr[5]);
+		parser->cb->map.textures_arr[5] = NULL;
+		free(parser->cb->map.textures_arr);
+		parser->cb->map.textures_arr = NULL;
+	}
 }
 
 void	exit_parser(t_parser *parser, char *errormessage)
 {
-	// print_textures(parser);
 	parser->i = 0;
 	if (parser->numbers)
 	{
@@ -73,31 +94,13 @@ void	exit_parser(t_parser *parser, char *errormessage)
 		free(parser->numbers);
 		parser->numbers = NULL;
 	}
-	free(parser->cb->map.textures_arr[0]);
-	parser->cb->map.textures_arr[0] = NULL;
-	free(parser->cb->map.textures_arr[1]);
-	parser->cb->map.textures_arr[1] = NULL;
-	free(parser->cb->map.textures_arr[2]);
-	parser->cb->map.textures_arr[2] = NULL;
-	free(parser->cb->map.textures_arr[3]);
-	parser->cb->map.textures_arr[3] = NULL;
-	free(parser->cb->map.textures_arr[4]);
-	parser->cb->map.textures_arr[4] = NULL;
-	free(parser->cb->map.textures_arr[5]);
-	parser->cb->map.textures_arr[5] = NULL;
-	free(parser->cb->map.textures_arr);
-	parser->cb->map.textures_arr = NULL;
+	free_map_texture_arr(parser);
 	if (parser->str)
 		free(parser->str);
 	if (parser->file)
 		free(parser->file);
-	// if (parser->number)
-	// 	free(parser->number);
-
 	free_cords(parser->cb);
 	free_map(parser->cb);
-
-	// exit_cub(parser->cb, "exit");
 	ft_putstr_fd("Error\n", 2);
 	if (errormessage)
 		ft_putstr_fd(errormessage, 2);
