@@ -1,6 +1,6 @@
 CC=clang
 # CFLAGS = -g  -fsanitize=address -Wall -Wextra -Werror -I./includes -I./includes/42get_next_line-master
-CFLAGS = -pg -g -Wall -Wextra -Werror -I./includes
+CFLAGS = -g -Wall -Wextra -Werror -I./includes
 RM = rm -rf
 #-fsanitize=address,leak,undefined
 SRC_DIR = src

@@ -16,9 +16,9 @@ void	free_map(t_cb *cb)
 {
 	if (cb->map.arr)
 	{
-		if (cb->map.y)
-			while (cb->map.y)
-				free(cb->map.arr[--cb->map.y]);
+		if (cb->map.height)
+			while (cb->map.height)
+				free(cb->map.arr[--cb->map.height]);
 		free(cb->map.arr);
 	}
 	if (cb->map.textures[0].img)

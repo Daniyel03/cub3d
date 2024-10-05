@@ -167,6 +167,7 @@ void						set_deltatime(t_cb *cb);
 double						clamp_rot(double rot);
 void						free_cords(t_cb *cb);
 void						free_map(t_cb *cb);
+void						free_ptr_arr(void **arr, int size);
 
 int							is_wall(t_cb *cb, int x, int y);
 

@@ -122,7 +122,7 @@ void	copy_new_map(t_parser *parser, int limit[4])
 			new_arr[y][x++] = 1;
 		y++;
 	}
-	free(parser->cb->map.arr);
+	free_ptr_arr((void **)parser->cb->map.arr, parser->cb->map.y);
 	parser->cb->map.arr = new_arr;
 }
 
