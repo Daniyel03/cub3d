@@ -6,12 +6,11 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 13:31:44 by dscholz           #+#    #+#             */
-/*   Updated: 2024/10/05 13:40:37 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/05 14:27:53 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parser.h"
-
 
 void	numarray_to_hexadecimal_prep(int *temp, char **table,
 			char **temp1, char **temp2)

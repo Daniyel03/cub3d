@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 18:41:07 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/01 18:41:08 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/05 14:32:52 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	is_wall(t_cb *cb, int x, int y)
 
 int	check_hit_wall(t_cb *cb, t_vec2 coor, t_vec2 direction)
 {
-	// TODO: this is a haky fix. Maybe find sth cleaner
 	coor = add_vec(coor, scale_vec(direction, 0.0000001));
 	(void)direction;
 	return (is_wall(cb, (int)coor.x, (int)coor.y));

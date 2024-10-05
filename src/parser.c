@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 10:04:52 by dscholz           #+#    #+#             */
-/*   Updated: 2024/10/05 13:45:05 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/05 14:27:08 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	check_commas(t_parser *parser)
 	parser->i = 0;
 	while (parser->temp[parser->i])
 	{
-		if (parser->temp[parser->i] == ',' && !ft_isdigit(parser->temp[parser->i
-				+ 1]))
+		if (parser->temp[parser->i] == ','
+			&& !ft_isdigit(parser->temp[parser->i + 1]))
 			exit_parser(parser, "false rgb input\n");
 		parser->i++;
 	}
@@ -70,29 +70,23 @@ void	validate_input(t_parser *parser, char **argv)
 	read_until_not_empty(parser);
 	check_texture(parser);
 	set_texture(parser);
-
 	read_until_not_empty(parser);
 	check_texture(parser);
 	set_texture(parser);
-
 	read_until_not_empty(parser);
 	check_texture(parser);
 	set_texture(parser);
-	
 	read_until_not_empty(parser);
 	check_texture(parser);
 	set_texture(parser);
-	
 	read_until_not_empty(parser);
 	check_texture(parser);
 	set_texture(parser);
-	
 	read_until_not_empty(parser);
 	check_texture(parser);
 	set_texture(parser);
-	
 	alloc_array(parser);
-	if(flood_fill(parser) == FAILURE)
+	if (flood_fill(parser) == FAILURE)
 		exit_parser(parser, "map not surrounded by walls\n");
 	print_map(parser->cb->map);
 }
@@ -108,5 +102,4 @@ void	parser(t_cb *cb, char **argv)
 		exit_parser(&parser, "malloc fail\n");
 	validate_input(&parser, argv);
 	close(parser.temp_fd);
-	// exit_parser(&parser, NULL);
 }

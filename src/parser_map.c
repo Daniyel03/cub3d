@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_map.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/05 14:30:01 by dscholz           #+#    #+#             */
+/*   Updated: 2024/10/05 14:32:14 by dscholz          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 #include "../includes/parser.h"
 
@@ -43,7 +55,6 @@ void	validate_alloc_lines(t_parser *parser)
 		x = 0;
 		iterate_line(parser, &x, str);
 		parser->cb->map.arr[parser->cb->map.y] = malloc(sizeof(int) * (x + 1));
-		// parser->cb->map.arr[parser->cb->map.y] = NULL;
 		if (!parser->cb->map.arr[parser->cb->map.y++])
 			return (exit_cub(parser->cb, NULL, 1));
 		free(str);
@@ -52,8 +63,7 @@ void	validate_alloc_lines(t_parser *parser)
 	if (!parser->cb->map.y)
 		return (exit_cub(parser->cb, NULL, 1));
 	if (parser->cb->player.pos.x == -1)
-		exit_parser(parser, 
-		"No player position set, set it by placing either 'N', 'S', 'W', or 'E' within the map.\n");
+		exit_parser(parser, WRONG_PLAYER_POS);
 }
 
 void	alloc_array(t_parser *parser)
@@ -63,11 +73,9 @@ void	alloc_array(t_parser *parser)
 
 	temp = NULL;
 	count = 0;
-
 	set_fd(parser);
 	read_until_not_empty(parser);
 	parser->map_line = parser->i;
-
 	temp = get_next_line(parser->temp_fd);
 	while ((temp) && count++ != -1)
 	{

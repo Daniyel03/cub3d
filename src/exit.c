@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 22:47:19 by hannes            #+#    #+#             */
-/*   Updated: 2024/10/05 12:01:03 by hannes           ###   ########.fr       */
+/*   Updated: 2024/10/05 14:33:01 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	free_cords(t_cb *cb)
 			free(cb->cords);
 			cb->cords = ptr;
 		}
-		// free(cb->cords);
 	}
 }
 

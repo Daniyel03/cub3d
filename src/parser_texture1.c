@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_texture1.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/05 14:27:18 by dscholz           #+#    #+#             */
+/*   Updated: 2024/10/05 14:29:47 by dscholz          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3d.h"
 #include "../includes/parser.h"
-
 
 void	set_texture_reset(t_parser *parser)
 {
@@ -21,14 +32,15 @@ void	set_texture_reset(t_parser *parser)
 	parser->temp = NULL;
 }
 
-void check_file_and_iterate(t_parser *parser)
+void	check_file_and_iterate(t_parser *parser)
 {
 	if (close(parser->temp_fd) == -1)
 		exit_parser(parser, NULL);
 	parser->temp_fd = open(parser->file, O_RDONLY);
 	if (parser->temp_fd == -1)
 		exit_parser(parser, "texture file doesnt exist\n");
-	if (ft_strlen(parser->file) <= 4 || ft_strncmp(parser->file + ft_strlen(parser->file) - 4, ".xpm", 5))
+	if (ft_strlen(parser->file) <= 4 || ft_strncmp(parser->file
+			+ ft_strlen(parser->file) - 4, ".xpm", 5))
 		exit_parser(parser, "not a proper .xpm file\n");
 	iterate_until_space(&parser->temp);
 	iterate_until_no_space(&parser->temp);
@@ -90,7 +102,6 @@ void	check_texture(t_parser *parser)
 	iterate_until_no_space(&parser->temp);
 	test_texture_path(parser);
 	if (parser->temp[0] != '\0')
-		return (exit_parser(parser, 
-			"too many elements, just pass direction and texturefile\n"));
+		return (exit_parser(parser,
+				"too many elements, just pass direction and texturefile\n"));
 }
-

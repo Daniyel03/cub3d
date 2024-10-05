@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:21:17 by dscholz           #+#    #+#             */
-/*   Updated: 2024/10/05 13:44:16 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/05 14:32:03 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "../libft/libft.h"
 # include "cub3d.h"
+
+# define WRONG_PLAYER_POS "No player position set, set it by placing either 'N', 'S', 'W', or 'E' within the map.\n"
 
 /*
 typedef struct s_valid_map

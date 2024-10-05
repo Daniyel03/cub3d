@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:08:33 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/05 11:25:43 by hannes           ###   ########.fr       */
+/*   Updated: 2024/10/05 14:32:38 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	cub3d(char **argv)
 
 	init_struct(&cb);
 	parser(&cb, argv);
-	// // printf("player: %f, %f\n", cb.player.pos.x, cb.player.pos.y);
 	init_mlx(&cb);
 	cb.map.textures[0] = init_texture(cb.map.textures_arr[0], &cb);
 	cb.map.textures[1] = init_texture(cb.map.textures_arr[1], &cb);
@@ -57,7 +56,6 @@ void	cub3d(char **argv)
 
 int	main(int argc, char **argv)
 {
-	// perror("");
 	if (argc == 2)
 		cub3d(argv);
 	return (0);
