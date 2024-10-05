@@ -31,6 +31,8 @@ void	set_fd(t_parser *parser)
 	while (++parser->i < parser->line_count)
 	{
 		parser->str = get_next_line(parser->temp_fd);
+		if (parser->str == NULL)
+			exit_parser(parser, "malloc fail\n");
 		free(parser->str);
 		parser->str = NULL;
 	}
