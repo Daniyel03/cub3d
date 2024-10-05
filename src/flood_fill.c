@@ -63,7 +63,6 @@ int	fill_rec(t_parser *parser, t_map *map, int x, int y)
 	if (map->arr[y][x] != 0)
 		return (FAILURE);
 	map->arr[y][x] = 3;
-	append_cord(parser, x, y);
 	ret |= fill_rec(parser, map, x - 1, y);
 	ret |= fill_rec(parser, map, x + 1, y);
 	ret |= fill_rec(parser, map, x, y - 1);
@@ -99,7 +98,7 @@ void	get_limits(t_map map, int limit[])
 	}
 }
 
-void	copy_new_map(t_map *map, int limit[4])
+void	copy_new_map(t_parser *parser, int limit[4])
 {
 	int	y;
 	int	x;
@@ -107,22 +106,24 @@ void	copy_new_map(t_map *map, int limit[4])
 
 	y = 0;
 	x = 0;
-	new_arr = ft_calloc(map->height, sizeof(int *));
-	while (y < map->height)
+	new_arr = ft_calloc(parser->cb->map.height, sizeof(int *));
+	while (y < parser->cb->map.height)
 	{
-		new_arr[y] = ft_calloc(map->width, sizeof(int));
+		new_arr[y] = ft_calloc(parser->cb->map.width, sizeof(int));
 		x = 0;
-		while (x < map->width && map->arr[y + limit[1]][x + limit[0]] != -1)
+		while (x < parser->cb->map.width && parser->cb->map.arr[y + limit[1]][x + limit[0]] != -1)
 		{
-			new_arr[y][x] = map->arr[y + limit[1]][x + limit[0]];
+			new_arr[y][x] = parser->cb->map.arr[y + limit[1]][x + limit[0]];
+			if (new_arr[y][x] == 3)
+				append_cord(parser, x, y);
 			x++;
 		}
-		while (x < map->width)
+		while (x < parser->cb->map.width)
 			new_arr[y][x++] = 1;
 		y++;
 	}
-	free(map->arr);
-	map->arr = new_arr;
+	free(parser->cb->map.arr);
+	parser->cb->map.arr = new_arr;
 }
 
 void	crop_map(t_parser *parser)
@@ -133,7 +134,9 @@ void	crop_map(t_parser *parser)
 	printf("%i,%i; %i,%i\n", limit[0], limit[1], limit[2], limit[3]);
 	parser->cb->map.width = limit[2] - limit[0] + 1;
 	parser->cb->map.height = limit[3] - limit[1] + 1;
-	copy_new_map(&parser->cb->map, limit);
+	copy_new_map(parser, limit);
+	parser->cb->player.pos.x -= limit[0];
+	parser->cb->player.pos.y -= limit[1];
 }
 
 int	flood_fill(t_parser *parser)
@@ -143,5 +146,6 @@ int	flood_fill(t_parser *parser)
 	res = fill_rec(parser, &parser->cb->map, (int)parser->cb->player.pos.x,
 			(int)parser->cb->player.pos.y);
 	crop_map(parser);
+	print_cord(parser->cb);
 	return (res);
 }
