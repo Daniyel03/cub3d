@@ -42,7 +42,7 @@ void	draw_view(t_cb *cb)
 		data.ray_dir.y = player_dir.y - player_dir.x * offset_vec;
 		data.wall_hit = next_wall(&data, data.ray_dir);
 		data.rot_offset = angle(get_dir_vec(1, cb->player.rot), data.ray_dir);
-		data.wall_height = HEIGHT / (distance(data.cb->player.pos,
+		data.wall_height = WIDTH / plane_len / (distance(data.cb->player.pos,
 					data.wall_hit) * (data.rot_offset));
 		draw_wall_line(&data);
 		data.cam_col++;

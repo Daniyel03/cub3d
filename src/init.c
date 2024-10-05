@@ -16,17 +16,17 @@ int	init_mlx(t_cb *cb)
 {
 	cb->mlx = mlx_init();
 	if (!cb->mlx)
-		exit_cub(cb, "mlx error", 1);
+		exit_cub(cb, "mlx error\n", 1);
 	cb->win = mlx_new_window(cb->mlx, WIDTH, HEIGHT, "cub3D");
 	if (!cb->win)
-		exit_cub(cb, "mlx error", 1);
+		exit_cub(cb, "mlx error\n", 1);
 	cb->img.img = mlx_new_image(cb->mlx, WIDTH, HEIGHT);
 	if (cb->img.img == NULL)
-		exit_cub(cb, "mlx error", 1);
+		exit_cub(cb, "mlx error\n", 1);
 	cb->img.addr = mlx_get_data_addr(cb->img.img, &cb->img.bits_per_pixel,
 			&cb->img.line_length, &cb->img.endian);
 	if (cb->img.addr == NULL)
-		exit_cub(cb, "mlx error", 1);
+		exit_cub(cb, "mlx error\n", 1);
 	cb->img.width = WIDTH;
 	cb->img.height = HEIGHT;
 	return (0);
