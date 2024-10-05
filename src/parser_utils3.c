@@ -45,7 +45,7 @@ void	set_player_rot(t_parser *parser, int *x, char *str)
 	if (str[(*x)] == 'S')
 		return (parser->cb->player.rot = 0, (void)0);
 	if (str[(*x)] == 'E')
-		return (parser->cb->player.rot = PI * -0.25, (void)0);
+		return (parser->cb->player.rot = PI * 0.5, (void)0);
 	if (str[(*x)] == 'W')
 		return (parser->cb->player.rot = PI * 1.5, (void)0);
 }
