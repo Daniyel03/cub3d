@@ -67,7 +67,30 @@ void	check_commas(t_parser *parser)
 void	validate_input(t_parser *parser, char **argv)
 {
 	get_filename(parser, argv);
-	validate_textures(parser);
+	read_until_not_empty(parser);
+	check_texture(parser);
+	set_texture(parser);
+
+	read_until_not_empty(parser);
+	check_texture(parser);
+	set_texture(parser);
+
+	read_until_not_empty(parser);
+	check_texture(parser);
+	set_texture(parser);
+	
+	read_until_not_empty(parser);
+	check_texture(parser);
+	set_texture(parser);
+	
+	read_until_not_empty(parser);
+	check_texture(parser);
+	set_texture(parser);
+	
+	read_until_not_empty(parser);
+	check_texture(parser);
+	set_texture(parser);
+	
 	alloc_array(parser);
 	if(flood_fill(parser) == FAILURE)
 		exit_parser(parser, "map not surrounded by walls\n");
