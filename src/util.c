@@ -46,10 +46,10 @@ void	print_map(t_map map)
 
 	y = 0;
 	x = 0;
-	while (y < map.y)
+	while (y < map.height)
 	{
 		x = 0;
-		while (map.arr[y][x] != -1)
+		while (x < map.width)
 		{
 			printf("%d ", map.arr[y][x]);
 			x++;
@@ -66,4 +66,13 @@ double	clamp_rot(double rot)
 	else if (rot < 0)
 		return (rot + 2 * PI);
 	return (rot);
+}
+
+void free_ptr_arr(void **arr, int size)
+{
+	while(size--)
+	{
+		free(arr[size]);
+	}
+	free(arr);
 }

@@ -33,6 +33,7 @@ int	on_loop(t_cb *cb)
 	cb->player.z_pos += cb->player.up_vel * cb->deltatime;
 	ft_bzero(cb->img.addr, HEIGHT * cb->img.line_length);
 	draw_view(cb);
+	// draw_map(cb);
 	mlx_put_image_to_window(cb->mlx, cb->win, cb->img.img, 0, 0);
 	return (0);
 }
