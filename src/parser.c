@@ -85,8 +85,7 @@ void	validate_input(t_parser *parser, char **argv)
 	read_until_not_empty(parser);
 	check_texture(parser);
 	set_texture(parser);
-	if (read_until_not_empty(parser))
-		exit_parser(parser, "content after map\n");
+	read_until_not_empty(parser);
 	alloc_array(parser);
 	if (flood_fill(parser) == FAILURE)
 		exit_parser(parser, "map not surrounded by walls\n");
