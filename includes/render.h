@@ -31,5 +31,6 @@ void		put_pixel(t_img img, int x, int y, int color);
 double		distance(t_vec2 a, t_vec2 b);
 void		draw_wall_line(t_render_data *data);
 t_vec2		next_wall(t_render_data *data, t_vec2 dir);
+void		draw_line(t_vec2 start, t_vec2 end, int color, t_img img);
 
 #endif

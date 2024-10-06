@@ -36,6 +36,11 @@
 
 // rendering
 # define FOV 1.570796327 // in radians
+#define MAP_SCALE 200
+#define MAP_X 20
+#define MAP_Y 20
+#define WHITE 0xffffff
+
 
 // movement
 # define WALK_SPEED 4
