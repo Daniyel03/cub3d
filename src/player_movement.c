@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:27:52 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/06 16:15:10 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/06 19:13:56 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,26 @@ int	check_if_diagonal_and_wall(t_cb *cb, t_vec2 pos, t_vec2 input)
 					+ input.y))) && is_wall(cb, floor(pos.x + input.x),
 			floor(pos.y + input.y)))
 		return (1);
-	if ((input.y < 0 && input.x == 0) && (floor(pos.y) + 0.02) > (pos.y + input.y) && is_wall(cb, floor(pos.y + input.y - 0.02), floor(pos.x + input.x)))
-		return 1;
+		
+	if ((input.y < 0 && (input.x <= 0.00001 && input.x >= -0.00001))
+		&& (floor(pos.y) + 0.02) > (pos.y + input.y) && is_wall(cb,
+			floor(pos.x), floor(pos.y + input.y - 0.02)))
+		return (1);
+		
+	if (input.y > 0 && (input.x <= 0.00001 && input.x >= -0.00001)
+		&& (ceil(pos.y) - 0.02) < (pos.y + input.y) && is_wall(cb, floor(pos.x),
+			floor(pos.y + input.y + 0.02)))
+		return (1);
+		
+	if ((input.x < 0 && (input.y <= 0.00001 && input.y >= -0.00001))
+		&& (floor(pos.x) + 0.02) > (pos.x + input.x) && is_wall(cb, floor(pos.x
+				+ input.x - 0.02), floor(pos.y)))
+		return (1);
+		
+	if (input.x > 0 && (input.y <= 0.00001 && input.y >= -0.00001)
+		&& (ceil(pos.x) - 0.02) < (pos.x + input.x) && is_wall(cb, floor(pos.x
+				+ input.x + 0.02), floor(pos.y)))
+		return (1);
 	return (0);
 }
 
@@ -102,5 +120,6 @@ void	player_walk(t_cb *cb)
 		cb->player.pos.x += cb->player.input.x;
 		cb->player.pos.y += cb->player.input.y;
 	}
-	printf("x %f y %f, x %f y %f\n", cb->player.pos.x, cb->player.pos.y, cb->player.input.x, cb->player.input.y);
+	printf("x %.100f y %.100f, x %.100f y %.100f\n", cb->player.pos.x,
+		cb->player.pos.y, cb->player.input.x, cb->player.input.y);
 }
