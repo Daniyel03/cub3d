@@ -51,12 +51,25 @@ void	append_cord(t_parser *parser, int x, int y)
 	temp->next = NULL;
 }
 
+int check_x(t_map *map, int x, int y)
+{
+	int i;
+	i = 0;
+	while(i <= x)
+	{
+		if (map->arr[y-1][x] == -1)
+			return (FAILURE);
+		i++;
+	}
+	return (SUCCESS);
+}
+
 int	fill_rec(t_parser *parser, t_map *map, int x, int y)
 {
 	int	ret;
 
 	ret = SUCCESS;
-	if (y < 0 || y > map->y - 1 || x < 0)
+	if (y < 0 || y > map->y - 1 || x < 0 || check_x(map, x, y))
 		return (FAILURE);
 	if (map->arr[y][x] == 1 || map->arr[y][x] == 3)
 		return (SUCCESS);
