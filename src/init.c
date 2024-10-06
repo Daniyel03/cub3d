@@ -40,6 +40,7 @@ void	init_struct(t_cb *cb)
 	cb->player.pos.y = -1;
 	cb->keybinds = NULL;
 	cb->mlx = NULL;
+	cb->show_map = 0;
 }
 
 t_img	init_texture(char *filename, t_cb *cb)

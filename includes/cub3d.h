@@ -138,6 +138,7 @@ typedef struct s_cb
 	t_player				player;
 	t_valid_cords			*cords;
 	double					deltatime;
+	int	show_map;
 }							t_cb;
 
 // x '2' y '1'

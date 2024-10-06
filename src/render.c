@@ -91,7 +91,7 @@ void	draw_map(t_cb *cb)
 		x = 0;
 		while (x < WIDTH)
 		{
-			if (y / scale >= cb->map.height || x / scale > cb->map.width)
+			if (y / scale >= cb->map.height || x / scale >= cb->map.width)
 				break ;
 			if (is_player(x, y, cb->player.pos, scale))
 				put_pixel(cb->img, x + MAP_X, y + MAP_Y, 0xff0000);
