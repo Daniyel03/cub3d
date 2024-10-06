@@ -154,7 +154,6 @@ void	crop_map(t_parser *parser)
 	int	limit[4] = {1000, 1000, 0, 0};
 
 	get_limits(parser->cb->map, limit);
-	printf("%i,%i; %i,%i\n", limit[0], limit[1], limit[2], limit[3]);
 	parser->cb->map.width = limit[2] - limit[0] + 1;
 	parser->cb->map.height = limit[3] - limit[1] + 1;
 	copy_new_map(parser, limit);
