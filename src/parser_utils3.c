@@ -78,6 +78,7 @@ void	next_line(t_parser *parser, char **str, int *y, int *x)
 	parser->cb->map.arr[(*y)][(*x)] = -1;
 	(*y)++;
 	free((*str));
+	(*str) = NULL;
 	(*str) = get_next_line(parser->temp_fd);
 	(*x) = -1;
 }

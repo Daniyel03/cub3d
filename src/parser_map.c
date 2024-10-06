@@ -38,6 +38,7 @@ void	fill_lines(t_parser *parser)
 		}
 		next_line(parser, &str, &y, &x);
 	}
+	free(str); str = NULL;
 }
 
 void	validate_alloc_lines(t_parser *parser)
@@ -46,11 +47,12 @@ void	validate_alloc_lines(t_parser *parser)
 	int		x;
 
 	parser->cb->map.y = 0;
+	str = NULL;
 	x = 0;
 	parser->i = parser->map_line;
 	set_fd(parser);
 	str = get_next_line(parser->temp_fd);
-	while (str)
+	while (str && empty_line(str))
 	{
 		x = 0;
 		iterate_line(parser, &x, str);
@@ -58,8 +60,11 @@ void	validate_alloc_lines(t_parser *parser)
 		if (!parser->cb->map.arr[parser->cb->map.y++])
 			return (exit_cub(parser->cb, NULL, 1));
 		free(str);
+		str = NULL;
 		str = get_next_line(parser->temp_fd);
 	}
+	free(str);
+	str = NULL;
 	if (!parser->cb->map.y)
 		return (exit_cub(parser->cb, NULL, 1));
 	if (parser->cb->player.pos.x == -1)
@@ -77,11 +82,22 @@ void	alloc_array(t_parser *parser)
 	read_until_not_empty(parser);
 	parser->map_line = parser->i;
 	temp = get_next_line(parser->temp_fd);
-	while ((temp) && count++ != -1)
+	while (count++ != -1 && temp && empty_line(temp))
 	{
 		free(temp);
+		temp = NULL;
 		temp = get_next_line(parser->temp_fd);
 	}
+	while (temp && !empty_line(temp))
+	{
+		free(temp);
+		temp = NULL;
+		temp = get_next_line(parser->temp_fd);
+		if (temp && empty_line(temp))
+			exit_parser(parser, "shit after\n");
+	}
+	free(temp);
+	temp = NULL;
 	parser->cb->map.arr = malloc(sizeof(int *) * count);
 	if (!parser->cb->map.arr || !count)
 		return (exit_parser(parser, NULL));
