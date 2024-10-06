@@ -48,6 +48,8 @@ int	set_key(int keycode, int state, t_cb *cb)
 	int	i;
 
 	i = 0;
+	if (keycode == XK_Tab && state == 1)
+		cb->show_map = 1 - cb->show_map;
 	while (cb->keybinds[i].keycode != 0)
 	{
 		if (cb->keybinds[i].keycode == keycode)
