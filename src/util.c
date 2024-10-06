@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 15:06:44 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/04 22:56:50 by hannes           ###   ########.fr       */
+/*   Updated: 2024/10/06 15:29:28 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	set_deltatime(t_cb *cb)
 	if (new_time == 0)
 		exit_cub(cb, NULL, 1);
 	cb->deltatime = (new_time - old_time) / 1000.0;
-	printf("fps: %f\n", 1 / cb->deltatime);
+	// printf("fps: %f\n", 1 / cb->deltatime);
 	old_time = new_time;
 }
 

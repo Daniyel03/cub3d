@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 14:30:01 by dscholz           #+#    #+#             */
-/*   Updated: 2024/10/05 14:32:14 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/06 17:15:45 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	validate_alloc_lines(t_parser *parser)
 	free(str);
 	str = NULL;
 	if (!parser->cb->map.y)
-		return (exit_cub(parser->cb, NULL, 1));
+		return (exit_cub(parser->cb, "map is missing after textures\n", 1));
 	if (parser->cb->player.pos.x == -1)
 		exit_parser(parser, WRONG_PLAYER_POS);
 }
@@ -94,7 +94,7 @@ void	alloc_array(t_parser *parser)
 		temp = NULL;
 		temp = get_next_line(parser->temp_fd);
 		if (temp && empty_line(temp))
-			exit_parser(parser, "shit after\n");
+			exit_parser(parser, "no content after map allowed\n");
 	}
 	free(temp);
 	temp = NULL;

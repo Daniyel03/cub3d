@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:27:52 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/05 13:47:59 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/06 16:15:10 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	check_if_diagonal_and_wall(t_cb *cb, t_vec2 pos, t_vec2 input)
 					+ input.y))) && is_wall(cb, floor(pos.x + input.x),
 			floor(pos.y + input.y)))
 		return (1);
+	if ((input.y < 0 && input.x == 0) && (floor(pos.y) + 0.02) > (pos.y + input.y) && is_wall(cb, floor(pos.y + input.y - 0.02), floor(pos.x + input.x)))
+		return 1;
 	return (0);
 }
 
@@ -100,4 +102,5 @@ void	player_walk(t_cb *cb)
 		cb->player.pos.x += cb->player.input.x;
 		cb->player.pos.y += cb->player.input.y;
 	}
+	printf("x %f y %f, x %f y %f\n", cb->player.pos.x, cb->player.pos.y, cb->player.input.x, cb->player.input.y);
 }

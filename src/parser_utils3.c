@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 14:32:24 by dscholz           #+#    #+#             */
-/*   Updated: 2024/10/05 14:32:24 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/06 17:06:46 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	check_digit(t_parser *parser)
 	iterate_until_space(&parser->temp);
 	iterate_until_no_space(&parser->temp);
 	parser->i = 0;
-	while (!ft_isspace(parser->temp[parser->i]))
+	while (!ft_isspace(parser->temp[parser->i]) && parser->temp[parser->i])
 		parser->i++;
 	if (!ft_isdigit(parser->file[0])
 		|| !ft_isdigit(parser->file[parser->i - 1]))

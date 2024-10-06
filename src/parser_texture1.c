@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 14:27:18 by dscholz           #+#    #+#             */
-/*   Updated: 2024/10/05 14:29:47 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/06 16:35:32 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	set_texture(t_parser *parser)
 
 void	test_texture_path(t_parser *parser)
 {
-	while (!ft_isspace(parser->temp[parser->i]))
+	while (!ft_isspace(parser->temp[parser->i]) && parser->temp[parser->i] != '\0')
 		parser->i++;
 	parser->file = ft_substr(parser->temp, 0, parser->i);
 	if (parser->file == NULL)
