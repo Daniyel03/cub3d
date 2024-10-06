@@ -14,26 +14,14 @@
 
 int	is_wall(t_cb *cb, int x, int y)
 {
-
-	return (x < 0 || y < 0 || x >= cb->map.width || y >= cb->map.height || cb->map.arr[y][x] != 3);
-	/*
-	t_valid_cords	*temp;
-	temp = cb->cords;
-	while (temp)
-	{
-		if (temp->x == x && temp->y == y)
-			return (0);
-		temp = temp->next;
-	}
-	return (1);
-	*/
+	return (x < 0 || y < 0 || x >= cb->map.width || y >= cb->map.height
+		|| cb->map.arr[y][x] != 3);
 }
 
 int	check_hit_wall(t_cb *cb, t_vec2 coor, t_vec2 direction)
 {
 	coor = add_vec(coor, scale_vec(direction, 0.0000001));
-	(void)direction;
-	return (is_wall(cb, (int) floor(coor.x), (int) floor(coor.y)));
+	return (is_wall(cb, (int)floor(coor.x), (int)floor(coor.y)));
 }
 
 t_vec2	next_wall_x(t_cb *cb, t_vec2 dir)

@@ -88,4 +88,6 @@ void		append_zero(t_parser *parser);
 void		set_digits(t_parser *parser);
 void		rgb_to_hexadecimal(t_parser *parser);
 
+void		crop_map(t_parser *parser);
+
 #endif

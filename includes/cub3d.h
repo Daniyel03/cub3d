@@ -36,11 +36,10 @@
 
 // rendering
 # define FOV 1.570796327 // in radians
-#define MAP_SCALE 200
-#define MAP_X 20
-#define MAP_Y 20
-#define WHITE 0xffffff
-
+# define MAP_SCALE 200
+# define MAP_X 20
+# define MAP_Y 20
+# define WHITE 0xffffff
 
 // movement
 # define WALK_SPEED 4
@@ -138,7 +137,7 @@ typedef struct s_cb
 	t_player				player;
 	t_valid_cords			*cords;
 	double					deltatime;
-	int	show_map;
+	int						show_map;
 }							t_cb;
 
 // x '2' y '1'

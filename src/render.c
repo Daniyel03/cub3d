@@ -69,6 +69,7 @@ void	draw_player_rays(t_cb *cb)
 		i += 100;
 	}
 }
+
 int	is_player(int x, int y, t_vec2 player_pos, double scale)
 {
 	t_vec2	pixel;
@@ -80,10 +81,11 @@ int	is_player(int x, int y, t_vec2 player_pos, double scale)
 
 void	draw_map(t_cb *cb)
 {
-	int	y;
-	int	x;
+	int		y;
+	int		x;
+	double	scale;
 
-	double scale = MAP_SCALE / (double) cb->map.width;
+	scale = MAP_SCALE / (double)cb->map.width;
 	y = 0;
 	x = 0;
 	while (y < HEIGHT)
@@ -101,5 +103,4 @@ void	draw_map(t_cb *cb)
 		}
 		y++;
 	}
-	// draw_player_rays(cb);
 }
