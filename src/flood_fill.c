@@ -107,15 +107,18 @@ void	copy_new_map(t_parser *parser, int limit[4])
 	y = 0;
 	x = 0;
 	new_arr = ft_calloc(parser->cb->map.height, sizeof(int *));
+	if (new_arr == NULL)
+		exit_parser(parser, "malloc fail\n");
 	while (y < parser->cb->map.height)
 	{
-		new_arr[y] = ft_calloc(parser->cb->map.width, sizeof(int));
+			new_arr[y] = ft_calloc(parser->cb->map.width, sizeof(int));
+		if (new_arr[y] == NULL)
+			(free_ptr_arr((void **)new_arr, y), exit_parser(parser, "malloc fail\n"));
 		x = 0;
-		while (x < parser->cb->map.width && parser->cb->map.arr[y + limit[1]][x + limit[0]] != -1)
+		while (x < parser->cb->map.width && parser->cb->map.arr[y + limit[1]][x
+			+ limit[0]] != -1)
 		{
 			new_arr[y][x] = parser->cb->map.arr[y + limit[1]][x + limit[0]];
-			if (new_arr[y][x] == 3)
-				append_cord(parser, x, y);
 			x++;
 		}
 		while (x < parser->cb->map.width)
@@ -123,7 +126,27 @@ void	copy_new_map(t_parser *parser, int limit[4])
 		y++;
 	}
 	free_ptr_arr((void **)parser->cb->map.arr, parser->cb->map.y);
+	parser->cb->map.y = 0;
 	parser->cb->map.arr = new_arr;
+}
+
+void	setup_coord_lst(t_parser *parser)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < parser->cb->map.height)
+	{
+		x = 0;
+		while (x < parser->cb->map.width)
+		{
+			if (parser->cb->map.arr[y][x] == 3)
+				append_cord(parser, x, y);
+			x++;
+		}
+		y++;
+	}
 }
 
 void	crop_map(t_parser *parser)
@@ -146,6 +169,6 @@ int	flood_fill(t_parser *parser)
 	res = fill_rec(parser, &parser->cb->map, (int)parser->cb->player.pos.x,
 			(int)parser->cb->player.pos.y);
 	crop_map(parser);
-	print_cord(parser->cb);
+	setup_coord_lst(parser);
 	return (res);
 }

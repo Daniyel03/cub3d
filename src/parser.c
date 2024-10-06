@@ -88,7 +88,7 @@ void	validate_input(t_parser *parser, char **argv)
 	alloc_array(parser);
 	if (flood_fill(parser) == FAILURE)
 		exit_parser(parser, "map not surrounded by walls\n");
-	print_map(parser->cb->map);
+	// print_map(parser->cb->map);
 }
 
 void	parser(t_cb *cb, char **argv)

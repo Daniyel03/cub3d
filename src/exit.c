@@ -16,10 +16,10 @@ void	free_map(t_cb *cb)
 {
 	if (cb->map.arr)
 	{
-		if (cb->map.height)
-			while (cb->map.height)
-				free(cb->map.arr[--cb->map.height]);
-		free(cb->map.arr);
+		if (cb->map.y == 0)
+			free_ptr_arr((void **)cb->map.arr, cb->map.height);
+		else
+			free_ptr_arr((void **)cb->map.arr, cb->map.y);
 	}
 	if (cb->map.textures[0].img)
 		mlx_destroy_image(cb->mlx, cb->map.textures[0].img);
