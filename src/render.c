@@ -48,3 +48,58 @@ void	draw_view(t_cb *cb)
 		data.cam_col++;
 	}
 }
+
+#define MAP_SCALE 50
+#define MAP_X 100
+#define MAP_Y 100
+#define WHITE 0xffffff
+
+void	draw_line(t_vec2 start, t_vec2 end, int color, t_img img);
+
+void	draw_player_rays(t_cb *cb)
+{
+	t_vec2			vec;
+	int				i;
+	double			rot_offset;
+	t_render_data	data;
+
+	data.cb = cb;
+	i = 0;
+	while (i < WIDTH)
+	{
+		rot_offset = FOV / WIDTH * i - FOV / 2;
+		vec = get_dir_vec(1, cb->player.rot + rot_offset);
+		vec = next_wall(&data, vec);
+		draw_line(add_vec(scale_vec(cb->player.pos, MAP_SCALE), (t_vec2){MAP_X,
+				MAP_Y}), add_vec(scale_vec(vec, MAP_SCALE), (t_vec2){MAP_X,
+				MAP_Y}), WHITE, cb->img);
+		i += 100;
+	}
+}
+
+void	draw_map(t_cb *cb)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	x = 0;
+	while (y < HEIGHT)
+	{
+		x = 0;
+		while (x < WIDTH)
+		{
+			if (y / MAP_SCALE >= cb->map.height || x / MAP_SCALE > cb->map.width)
+				break ;
+			// if (is_player(x, y, cb->player.pos))
+				// put_pixel(cb->img, x, y, 0xff0000);
+			else if (cb->map.arr[y / MAP_SCALE][x / MAP_SCALE] == 1)
+				put_pixel(cb->img, x + MAP_X, y + MAP_Y, 0x0000ff);
+			else if (cb->map.arr[y / MAP_SCALE][x / MAP_SCALE] == 3)
+				put_pixel(cb->img, x + MAP_X, y + MAP_Y, 0x00ff00);
+			x++;
+		}
+		y++;
+	}
+	draw_player_rays(cb);
+}
