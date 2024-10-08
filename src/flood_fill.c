@@ -13,18 +13,6 @@
 #include "../includes/cub3d.h"
 #include "parser.h"
 
-void	print_cord(t_cb *cb)
-{
-	t_valid_cords	*temp;
-
-	temp = cb->cords;
-	while (temp)
-	{
-		printf("x '%d' y '%d'\n", temp->x, temp->y);
-		temp = temp->next;
-	}
-}
-
 void	append_cord(t_parser *parser, int x, int y)
 {
 	t_valid_cords	*temp;

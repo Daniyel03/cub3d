@@ -40,32 +40,37 @@ void	get_limits(t_map map, int limit[])
 	}
 }
 
+void	new_row(t_parser *parser, int **new_arr, int limit[4], int y)
+{
+	int	x;
+
+	new_arr[y] = ft_calloc(parser->cb->map.width, sizeof(int));
+	if (new_arr[y] == NULL)
+		(free_ptr_arr((void **)new_arr, y), exit_parser(parser,
+				"malloc fail\n"));
+	x = 0;
+	while (x < parser->cb->map.width && parser->cb->map.arr[y + limit[1]][x
+		+ limit[0]] != -1)
+	{
+		new_arr[y][x] = parser->cb->map.arr[y + limit[1]][x + limit[0]];
+		x++;
+	}
+	while (x < parser->cb->map.width)
+		new_arr[y][x++] = 1;
+}
+
 void	copy_new_map(t_parser *parser, int limit[4])
 {
 	int	y;
-	int	x;
 	int	**new_arr;
 
 	y = 0;
-	x = 0;
 	new_arr = ft_calloc(parser->cb->map.height, sizeof(int *));
 	if (new_arr == NULL)
 		exit_parser(parser, "malloc fail\n");
 	while (y < parser->cb->map.height)
 	{
-		new_arr[y] = ft_calloc(parser->cb->map.width, sizeof(int));
-		if (new_arr[y] == NULL)
-			(free_ptr_arr((void **)new_arr, y), exit_parser(parser,
-					"malloc fail\n"));
-		x = 0;
-		while (x < parser->cb->map.width && parser->cb->map.arr[y + limit[1]][x
-			+ limit[0]] != -1)
-		{
-			new_arr[y][x] = parser->cb->map.arr[y + limit[1]][x + limit[0]];
-			x++;
-		}
-		while (x < parser->cb->map.width)
-			new_arr[y][x++] = 1;
+		new_row(parser, new_arr, limit, y);
 		y++;
 	}
 	free_ptr_arr((void **)parser->cb->map.arr, parser->cb->map.y);
