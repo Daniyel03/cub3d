@@ -58,9 +58,7 @@ int	check_x(t_map *map, int x, int y)
 	i = 0;
 	while (i <= x)
 	{
-		if (y - 1 >= 0 && map->arr[y - 1][i] == -1)
-			return (FAILURE);
-		if (y + 1 < map->y && map->arr[y + 1][i] == -1)
+		if (map->arr[y][i] == -1)
 			return (FAILURE);
 		i++;
 	}

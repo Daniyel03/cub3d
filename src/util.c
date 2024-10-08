@@ -68,9 +68,9 @@ double	clamp_rot(double rot)
 	return (rot);
 }
 
-void free_ptr_arr(void **arr, int size)
+void	free_ptr_arr(void **arr, int size)
 {
-	while(size--)
+	while (size--)
 	{
 		free(arr[size]);
 	}
