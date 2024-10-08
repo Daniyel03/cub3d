@@ -51,13 +51,16 @@ void	append_cord(t_parser *parser, int x, int y)
 	temp->next = NULL;
 }
 
-int check_x(t_map *map, int x, int y)
+int	check_x(t_map *map, int x, int y)
 {
-	int i;
+	int	i;
+
 	i = 0;
-	while(i <= x)
+	while (i <= x)
 	{
-		if (map->arr[y-1][x] == -1)
+		if (y - 1 >= 0 && map->arr[y - 1][i] == -1)
+			return (FAILURE);
+		if (y + 1 < map->y && map->arr[y + 1][i] == -1)
 			return (FAILURE);
 		i++;
 	}
@@ -108,6 +111,8 @@ int	flood_fill(t_parser *parser)
 
 	res = fill_rec(parser, &parser->cb->map, (int)parser->cb->player.pos.x,
 			(int)parser->cb->player.pos.y);
+	if (res == FAILURE)
+		return (res);
 	crop_map(parser);
 	setup_coord_lst(parser);
 	return (res);
