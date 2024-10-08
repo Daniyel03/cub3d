@@ -16,6 +16,7 @@ src/input_handler.c \
 src/main.c \
 src/parser.c \
 src/parser_map.c \
+src/parser_map2.c \
 src/parser_texture1.c \
 src/parser_texture2.c \
 src/parser_utils1.c \
