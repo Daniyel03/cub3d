@@ -14,7 +14,6 @@
 
 int	close_win(t_cb *cb)
 {
-	exit_cub(cb, "window closed\n", 0);
 	exit(0);
 	return (0);
 }

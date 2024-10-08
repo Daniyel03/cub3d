@@ -116,6 +116,4 @@ void	player_walk(t_cb *cb)
 		cb->player.pos.x += cb->player.input.x;
 		cb->player.pos.y += cb->player.input.y;
 	}
-	printf("x %.100f y %.100f, x %.100f y %.100f\n", cb->player.pos.x,
-		cb->player.pos.y, cb->player.input.x, cb->player.input.y);
 }
