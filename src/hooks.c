@@ -14,7 +14,7 @@
 
 int	close_win(t_cb *cb)
 {
-	exit(0);
+	exit_cub(cb, NULL, 0);
 	return (0);
 }
 
