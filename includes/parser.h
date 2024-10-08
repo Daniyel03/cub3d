@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:21:17 by dscholz           #+#    #+#             */
-/*   Updated: 2024/10/05 14:40:32 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/08 16:21:08 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_parser
 void		validate_path(t_parser *parser, char **argv);
 int			flood_fill(t_parser *parser);
 void		print_cord(t_cb *cb);
-void		print_map(t_map map);
+void		alloc_array_prep(t_parser *parser, char **temp, int *count);
 // parser
 void		get_filename(t_parser *parser, char **argv);
 int			check_direction(t_parser *parser);
@@ -89,5 +89,5 @@ void		set_digits(t_parser *parser);
 void		rgb_to_hexadecimal(t_parser *parser);
 
 void		crop_map(t_parser *parser);
-
+void		alloc_array_prep(t_parser *parser, char **temp, int *count);
 #endif

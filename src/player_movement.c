@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:27:52 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/06 19:13:56 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/08 15:56:31 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,18 @@ int	check_if_diagonal_and_wall(t_cb *cb, t_vec2 pos, t_vec2 input)
 					+ input.y))) && is_wall(cb, floor(pos.x + input.x),
 			floor(pos.y + input.y)))
 		return (1);
-		
 	if ((input.y < 0 && (input.x <= 0.00001 && input.x >= -0.00001))
 		&& (floor(pos.y) + 0.02) > (pos.y + input.y) && is_wall(cb,
 			floor(pos.x), floor(pos.y + input.y - 0.02)))
 		return (1);
-		
 	if (input.y > 0 && (input.x <= 0.00001 && input.x >= -0.00001)
 		&& (ceil(pos.y) - 0.02) < (pos.y + input.y) && is_wall(cb, floor(pos.x),
 			floor(pos.y + input.y + 0.02)))
 		return (1);
-		
 	if ((input.x < 0 && (input.y <= 0.00001 && input.y >= -0.00001))
 		&& (floor(pos.x) + 0.02) > (pos.x + input.x) && is_wall(cb, floor(pos.x
 				+ input.x - 0.02), floor(pos.y)))
 		return (1);
-		
 	if (input.x > 0 && (input.y <= 0.00001 && input.y >= -0.00001)
 		&& (ceil(pos.x) - 0.02) < (pos.x + input.x) && is_wall(cb, floor(pos.x
 				+ input.x + 0.02), floor(pos.y)))

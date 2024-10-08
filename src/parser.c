@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 10:04:52 by dscholz           #+#    #+#             */
-/*   Updated: 2024/10/05 14:27:08 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/08 16:20:25 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	validate_input(t_parser *parser, char **argv)
 	alloc_array(parser);
 	if (flood_fill(parser) == FAILURE)
 		exit_parser(parser, "map not surrounded by walls\n");
-	// print_map(parser->cb->map);
 }
 
 void	parser(t_cb *cb, char **argv)

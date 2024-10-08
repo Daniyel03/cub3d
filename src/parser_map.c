@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 14:30:01 by dscholz           #+#    #+#             */
-/*   Updated: 2024/10/06 17:15:45 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/08 16:10:02 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,18 @@ void	fill_lines(t_parser *parser)
 		}
 		next_line(parser, &str, &y, &x);
 	}
-	free(str); str = NULL;
+	free(str);
+	str = NULL;
+}
+
+void	validate_alloc_lines_prep(t_parser *parser, char **str, int *x)
+{
+	parser->cb->map.y = 0;
+	(*str) = NULL;
+	(*x) = 0;
+	parser->i = parser->map_line;
+	set_fd(parser);
+	(*str) = get_next_line(parser->temp_fd);
 }
 
 void	validate_alloc_lines(t_parser *parser)
@@ -46,12 +57,7 @@ void	validate_alloc_lines(t_parser *parser)
 	char	*str;
 	int		x;
 
-	parser->cb->map.y = 0;
-	str = NULL;
-	x = 0;
-	parser->i = parser->map_line;
-	set_fd(parser);
-	str = get_next_line(parser->temp_fd);
+	validate_alloc_lines_prep(parser, &str, &x);
 	while (str && empty_line(str))
 	{
 		x = 0;
@@ -71,31 +77,31 @@ void	validate_alloc_lines(t_parser *parser)
 		exit_parser(parser, WRONG_PLAYER_POS);
 }
 
+void	after_map_check(t_parser *parser, char **temp)
+{
+	while ((*temp) && !empty_line((*temp)))
+	{
+		free((*temp));
+		(*temp) = NULL;
+		(*temp) = get_next_line(parser->temp_fd);
+		if ((*temp) && empty_line((*temp)))
+			exit_parser(parser, "no content after map allowed\n");
+	}
+}
+
 void	alloc_array(t_parser *parser)
 {
 	int		count;
 	char	*temp;
 
-	temp = NULL;
-	count = 0;
-	set_fd(parser);
-	read_until_not_empty(parser);
-	parser->map_line = parser->i;
-	temp = get_next_line(parser->temp_fd);
+	alloc_array_prep(parser, &temp, &count);
 	while (count++ != -1 && temp && empty_line(temp))
 	{
 		free(temp);
 		temp = NULL;
 		temp = get_next_line(parser->temp_fd);
 	}
-	while (temp && !empty_line(temp))
-	{
-		free(temp);
-		temp = NULL;
-		temp = get_next_line(parser->temp_fd);
-		if (temp && empty_line(temp))
-			exit_parser(parser, "no content after map allowed\n");
-	}
+	after_map_check(parser, &temp);
 	free(temp);
 	temp = NULL;
 	parser->cb->map.arr = malloc(sizeof(int *) * count);
@@ -103,6 +109,5 @@ void	alloc_array(t_parser *parser)
 		return (exit_parser(parser, NULL));
 	if (close(parser->temp_fd) == -1)
 		return (exit_parser(parser, NULL));
-	validate_alloc_lines(parser);
-	fill_lines(parser);
+	return (validate_alloc_lines(parser), fill_lines(parser), (void)0);
 }

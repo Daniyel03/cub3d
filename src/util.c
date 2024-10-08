@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 15:06:44 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/06 15:29:28 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/08 16:20:31 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,7 @@ void	set_deltatime(t_cb *cb)
 	if (new_time == 0)
 		exit_cub(cb, NULL, 1);
 	cb->deltatime = (new_time - old_time) / 1000.0;
-	// printf("fps: %f\n", 1 / cb->deltatime);
 	old_time = new_time;
-}
-
-void	print_map(t_map map)
-{
-	int	y;
-	int	x;
-
-	y = 0;
-	x = 0;
-	while (y < map.height)
-	{
-		x = 0;
-		while (x < map.width)
-		{
-			printf("%d ", map.arr[y][x]);
-			x++;
-		}
-		printf("\n");
-		y++;
-	}
 }
 
 double	clamp_rot(double rot)
