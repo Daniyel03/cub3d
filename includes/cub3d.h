@@ -29,6 +29,7 @@
 # define SUCCESS 0
 # define FAILURE -1
 # define PI 3.1415926
+# define MAX_DEPTH 8000
 
 // window
 # define WIDTH 1080
@@ -44,7 +45,7 @@
 // movement
 # define WALK_SPEED 4
 # define TURN_SPEED 3
-# define JUMP_FORCE 25
+# define JUMP_FORCE 1e307
 # define GRAVITY 100
 
 typedef struct s_cb			t_cb;

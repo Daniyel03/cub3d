@@ -20,6 +20,7 @@ int	close_win(t_cb *cb)
 
 int	on_loop(t_cb *cb)
 {
+	printf("%f\n", cb->player.z_pos);
 	set_deltatime(cb);
 	cb->player.input = (t_vec2){0, 0};
 	apply_all_keys(cb);

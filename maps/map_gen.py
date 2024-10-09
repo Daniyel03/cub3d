@@ -37,7 +37,7 @@ def generate_map(width, height):
     return map_layout
 
 # Generate the map
-map_600x600 = generate_map(500, 500)
+map_600x600 = generate_map(499, 499)
 
 # To visualize a small part of the map (e.g., top-left 20x20)
 for row in map_600x600:

@@ -53,22 +53,24 @@ int	check_x(t_map *map, int x, int y)
 	return (SUCCESS);
 }
 
-int	fill_rec(t_parser *parser, t_map *map, int x, int y)
+int	fill_rec(t_parser *parser, int x, int y, int depth)
 {
 	int	ret;
 
+	if (depth > MAX_DEPTH)
+		return SUCCESS;
 	ret = SUCCESS;
-	if (y < 0 || y > map->y - 1 || x < 0 || check_x(map, x, y))
+	if (y < 0 || y > parser->cb->map.y - 1 || x < 0 || check_x(&parser->cb->map, x, y))
 		return (FAILURE);
-	if (map->arr[y][x] == 1 || map->arr[y][x] == 3)
+	if (parser->cb->map.arr[y][x] == 1 || parser->cb->map.arr[y][x] == 3)
 		return (SUCCESS);
-	if (map->arr[y][x] != 0)
+	if (parser->cb->map.arr[y][x] != 0)
 		return (FAILURE);
-	map->arr[y][x] = 3;
-	ret |= fill_rec(parser, map, x - 1, y);
-	ret |= fill_rec(parser, map, x + 1, y);
-	ret |= fill_rec(parser, map, x, y - 1);
-	ret |= fill_rec(parser, map, x, y + 1);
+	parser->cb->map.arr[y][x] = 3;
+	ret |= fill_rec(parser, x - 1, y, depth + 1);
+	ret |= fill_rec(parser, x + 1, y, depth + 1);
+	ret |= fill_rec(parser, x, y - 1, depth + 1);
+	ret |= fill_rec(parser, x, y + 1, depth + 1);
 	return (ret);
 }
 
@@ -95,8 +97,8 @@ int	flood_fill(t_parser *parser)
 {
 	int	res;
 
-	res = fill_rec(parser, &parser->cb->map, (int)parser->cb->player.pos.x,
-			(int)parser->cb->player.pos.y);
+	res = fill_rec(parser, (int)parser->cb->player.pos.x,
+			(int)parser->cb->player.pos.y, 0);
 	if (res == FAILURE)
 		return (res);
 	crop_map(parser);
