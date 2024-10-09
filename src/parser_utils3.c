@@ -70,8 +70,6 @@ void	iterate_line(t_parser *parser, int *x, char *str)
 			set_player_rot(parser, x, str);
 		}
 		(*x)++;
-		// if ((*x) > 500)
-		// 	exit_parser(parser, "map to big, x > 500\n");
 	}
 }
 

@@ -60,7 +60,8 @@ int	fill_rec(t_parser *parser, int x, int y, int depth)
 	if (depth > MAX_DEPTH)
 		exit_parser(parser, "your shit machine can handle this map\n");
 	ret = SUCCESS;
-	if (y < 0 || y > parser->cb->map.y - 1 || x < 0 || check_x(&parser->cb->map, x, y))
+	if (y < 0 || y > parser->cb->map.y - 1 || x < 0 || check_x(&parser->cb->map,
+			x, y))
 		return (FAILURE);
 	if (parser->cb->map.arr[y][x] == 1 || parser->cb->map.arr[y][x] == 3)
 		return (SUCCESS);
