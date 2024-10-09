@@ -52,6 +52,8 @@ fclean: clean
 	make fclean -C ./libft
 	$(RM) $(NAME)
 
+bonus: all
+
 re: fclean all
 
 .PHONY: all clean fclean re
