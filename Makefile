@@ -1,6 +1,5 @@
 CC=cc
 CFLAGS = -Wall -Wextra -Werror -I./includes
-#-fsanitize=address,leak,undefined
 RM = rm -rf
 SRC_DIR = src
 OBJ_DIR = obj
