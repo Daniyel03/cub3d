@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 14:32:24 by dscholz           #+#    #+#             */
-/*   Updated: 2024/10/09 14:08:57 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/09 17:10:17 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void	iterate_line(t_parser *parser, int *x, char *str)
 			set_player_rot(parser, x, str);
 		}
 		(*x)++;
-		if ((*x) > 500)
-			exit_parser(parser, "map to big, x > 500\n");
+		// if ((*x) > 500)
+		// 	exit_parser(parser, "map to big, x > 500\n");
 	}
 }
 

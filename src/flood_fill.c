@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   flood_fill.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hrother <hrother@student.42vienna.com>     +#+  +:+       +#+        */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:21:35 by hrother           #+#    #+#             */
-/*   Updated: 2024/09/30 12:22:31 by hrother          ###   ########.fr       */
+/*   Updated: 2024/10/09 17:30:53 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-#include "parser.h"
+#include "../includes/parser.h"
 
 void	append_cord(t_parser *parser, int x, int y)
 {
@@ -58,7 +58,7 @@ int	fill_rec(t_parser *parser, int x, int y, int depth)
 	int	ret;
 
 	if (depth > MAX_DEPTH)
-		return SUCCESS;
+		exit_parser(parser, "your shit machine can handle this map\n");
 	ret = SUCCESS;
 	if (y < 0 || y > parser->cb->map.y - 1 || x < 0 || check_x(&parser->cb->map, x, y))
 		return (FAILURE);

@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 14:30:01 by dscholz           #+#    #+#             */
-/*   Updated: 2024/10/09 14:07:40 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/09 17:09:58 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ void	alloc_array(t_parser *parser)
 	alloc_array_prep(parser, &temp, &count);
 	while (count++ != -1 && temp && empty_line(temp))
 	{
-		if (count > 500)
-			exit_parser(parser, "map to big, y > 500\n");
+		// if (count > 500)
+		// 	exit_parser(parser, "map to big, y > 500\n");
 		free(temp);
 		temp = NULL;
 		temp = get_next_line(parser->temp_fd);

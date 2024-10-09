@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hannes <hrother@student.42vienna.com>      +#+  +:+       +#+        */
+/*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 17:06:12 by hrother           #+#    #+#             */
-/*   Updated: 2024/10/05 12:01:18 by hannes           ###   ########.fr       */
+/*   Updated: 2024/10/09 17:30:16 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define SUCCESS 0
 # define FAILURE -1
 # define PI 3.1415926
-# define MAX_DEPTH 8000
+# define MAX_DEPTH 174458
 
 // window
 # define WIDTH 1080
