@@ -45,7 +45,7 @@
 // movement
 # define WALK_SPEED 4
 # define TURN_SPEED 3
-# define JUMP_FORCE 1e307
+# define JUMP_FORCE 0
 # define GRAVITY 100
 
 typedef struct s_cb			t_cb;
