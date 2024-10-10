@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:21:17 by dscholz           #+#    #+#             */
-/*   Updated: 2024/10/08 16:21:08 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/10 17:44:12 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void		append_zero(t_parser *parser);
 void		set_digits(t_parser *parser);
 void		rgb_to_hexadecimal(t_parser *parser);
 
+int			str_only_has_number(char *str);
 void		crop_map(t_parser *parser);
 void		alloc_array_prep(t_parser *parser, char **temp, int *count);
 #endif
