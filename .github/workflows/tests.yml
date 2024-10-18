@@ -20,7 +20,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git merge -s ours origin/testing
+          git merge origin/testing
 
       - name: debug
         run: ls */*
