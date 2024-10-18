@@ -35,7 +35,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OBJS)
 	make -C ./libft
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lmlx -lXext -lX11 -lm -L./libft -lft
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L. -lmlx -lXext -lX11 -lm -L./libft -lft
 
 
 $(OBJ_DIR):
