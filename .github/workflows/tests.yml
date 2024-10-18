@@ -17,7 +17,10 @@ jobs:
           fetch-depth: 0
 
       - name: merge testing branch
-        run: git merge origin/testing
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git merge origin/testing
 
       - name: Compile
         run: make all
