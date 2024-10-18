@@ -29,4 +29,4 @@ jobs:
         run: make all
 
       - name: test
-        run: ./tests.sh
+        run: bash tests.sh
