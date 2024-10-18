@@ -1,0 +1,27 @@
+name: tests
+
+on: 
+  workflow_dispatch:
+  push:
+    branches: [ "main", "testing" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Compile
+        run: make all
+
+      - name: Checkout testing branch
+        uses: action/checkout@v4
+        with: 
+          ref: testing
+          path: testing
+
+      - name: test
+        run: ./testing/tests.sh
