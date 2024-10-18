@@ -59,8 +59,6 @@ void	exit_cub(t_cb *cb, char *str, int status_code)
 		mlx_destroy_display(cb->mlx);
 	free(cb->mlx);
 	free(cb->keybinds);
-	if (str)
-		printf("%s", str);
 	if (cb->map.textures_arr)
 	{
 		free(cb->map.textures_arr[0]);
@@ -71,5 +69,7 @@ void	exit_cub(t_cb *cb, char *str, int status_code)
 		free(cb->map.textures_arr[5]);
 		free(cb->map.textures_arr);
 	}
+	if (str)
+		printf("%s", str);
 	exit(status_code);
 }

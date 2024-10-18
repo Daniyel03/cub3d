@@ -51,12 +51,13 @@ void	cub3d(char **argv)
 	init_keybinds(&cb);
 	setup_hooks(&cb);
 	mlx_loop(cb.mlx);
-	exit_cub(&cb, "success\n", 1);
+	exit_cub(&cb, "something went wrong\n", 1);
 }
 
 int	main(int argc, char **argv)
 {
 	if (argc == 2)
 		cub3d(argv);
-	return (0);
+	printf("expected one argument: filename\n");
+	return (1);
 }
