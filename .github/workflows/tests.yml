@@ -8,35 +8,19 @@ on:
     branches: [ "main" ]
 
 jobs:
-  update-testing-branch:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    
-    - name: Update testing branch
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git checkout testing
-        git merge origin/main
-        git push origin testing
-
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Compile
         run: make all
 
-      - name: Checkout testing branch
-        uses: action/checkout@v4
-        with: 
-          ref: testing
-          path: testing
+      - name: merge testing branch
+        run: git merge testing
 
       - name: test
-        run: ./testing/tests.sh
+        run: ./tests.sh
