@@ -32,7 +32,7 @@ for file in maps/valid/*; do
         EXIT_CODE=$?
         echo "\ncub3D exited with exit code: $EXIT_CODE"
         # exit code 2 is for mlx errors, they are expected in gh actions
-        if $EXIT_CODE != 2; then
+        if [ $EXIT_CODE != 2 ]; then
             exit 1
         fi
         echo "Success"
@@ -56,7 +56,7 @@ for file in maps/invalid/*; do
         wait $pid
         EXIT_CODE=$?
         echo "cub3D exited with exit code: $EXIT_CODE"
-        if $EXIT_CODE != 1; then
+        if [ $EXIT_CODE != 1 ]; then
             echo "wrong exit code"
             exit 1
         fi
