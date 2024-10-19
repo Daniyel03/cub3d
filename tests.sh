@@ -51,7 +51,7 @@ for file in maps/invalid/*; do
     else
         wait $pid
         EXIT_CODE=$?
-        echo "\ncub3D exited with exit code: $EXIT_CODE"
+        echo "cub3D exited with exit code: $EXIT_CODE"
         if $EXIT_CODE != 1; then
             echo "wrong exit code"
             exit 1
