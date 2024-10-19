@@ -30,8 +30,11 @@ for file in maps/valid/*; do
     else
         wait $pid
         EXIT_CODE=$?
-        echo "\ncub3D exited early with exit code: $EXIT_CODE"
-        exit 1
+        echo "\ncub3D exited with exit code: $EXIT_CODE"
+        # exit code 2 is for mlx errors, they are expected in gh actions
+        if $EXIT_CODE != 2; then
+            exit 1
+        echo "Success"
     fi
 done
 
