@@ -34,6 +34,7 @@ for file in maps/valid/*; do
         # exit code 2 is for mlx errors, they are expected in gh actions
         if $EXIT_CODE != 2; then
             exit 1
+        fi
         echo "Success"
     fi
 done
