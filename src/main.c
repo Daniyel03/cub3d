@@ -58,6 +58,6 @@ int	main(int argc, char **argv)
 {
 	if (argc == 2)
 		cub3d(argv);
-	printf("expected one argument: filename\n");
+	ft_putstr_fd("expected one argument: filename\n", 2);
 	return (1);
 }

@@ -69,7 +69,9 @@ void	exit_cub(t_cb *cb, char *str, int status_code)
 		free(cb->map.textures_arr[5]);
 		free(cb->map.textures_arr);
 	}
-	if (str)
+	if (str && status_code == 0)
 		printf("%s", str);
+	else if (str)
+		ft_putstr_fd(str, 2);
 	exit(status_code);
 }
