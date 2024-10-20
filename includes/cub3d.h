@@ -43,6 +43,7 @@
 # define WHITE 0xffffff
 
 // movement
+#define SENSITIVITY 0.5
 # define WALK_SPEED 4
 # define TURN_SPEED 3
 # define JUMP_FORCE 0

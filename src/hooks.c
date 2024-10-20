@@ -53,10 +53,21 @@ int	on_keyreleased(int keycode, t_cb *cb)
 	return (0);
 }
 
+int	on_mouse_move(int x, int y, t_cb *cb)
+{
+	(void)y;
+	int delta_x = x - (WIDTH/2);
+	cb->player.rot -= delta_x * SENSITIVITY * 0.001;
+	printf("mouse x:%i\n", delta_x);
+	mlx_mouse_move(cb->mlx, cb->win, WIDTH / 2, HEIGHT / 2);
+	return (0);
+}
+
 void	setup_hooks(t_cb *cb)
 {
 	mlx_hook(cb->win, 17, ButtonPressMask, close_win, cb);
 	mlx_hook(cb->win, 2, KeyPressMask, on_keypressed, cb);
 	mlx_hook(cb->win, 3, KeyReleaseMask, on_keyreleased, cb);
+	mlx_hook(cb->win, MotionNotify, PointerMotionMask, on_mouse_move, cb);
 	mlx_loop_hook(cb->mlx, on_loop, cb);
 }
