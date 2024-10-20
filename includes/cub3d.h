@@ -43,7 +43,7 @@
 # define WHITE 0xffffff
 
 // movement
-#define SENSITIVITY 0.5
+# define SENSITIVITY 0.5
 # define WALK_SPEED 4
 # define TURN_SPEED 3
 # define JUMP_FORCE 0
@@ -140,6 +140,7 @@ typedef struct s_cb
 	t_valid_cords			*cords;
 	double					deltatime;
 	int						show_map;
+	int						use_mouse;
 }							t_cb;
 
 // x '2' y '1'

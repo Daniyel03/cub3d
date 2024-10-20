@@ -18,26 +18,23 @@ int	close_win(t_cb *cb)
 	return (0);
 }
 
-int	on_mouse_move(int x, int y, t_cb *cb)
+void	mouse_rotate(t_cb *cb)
 {
-	(void)y;
-	int delta_x = x - (WIDTH/2);
-	cb->player.rot -= delta_x * SENSITIVITY * 0.01;
-	printf("mouse x:%i\n", delta_x);
+	int	x;
+	int	y;
+
+	mlx_mouse_get_pos(cb->mlx, cb->win, &x, &y);
+	cb->player.rot -= (x - (WIDTH / 2)) * SENSITIVITY * 0.01;
 	mlx_mouse_move(cb->mlx, cb->win, WIDTH / 2, HEIGHT / 2);
-	return (0);
 }
 
 int	on_loop(t_cb *cb)
 {
 	set_deltatime(cb);
-	printf("time: %f\n", cb->deltatime);
 	cb->player.input = (t_vec2){0, 0};
 	apply_all_keys(cb);
-	int mouse_x;
-	int mouse_y;
-	mlx_mouse_get_pos(cb->mlx,cb->win,&mouse_x,&mouse_y);
-	on_mouse_move(mouse_x, mouse_y, cb);
+	if (cb->use_mouse)
+		mouse_rotate(cb);
 	cb->player.rot = clamp_rot(cb->player.rot);
 	player_walk(cb);
 	if (cb->player.z_pos > 0)
@@ -50,6 +47,26 @@ int	on_loop(t_cb *cb)
 	if (cb->show_map)
 		draw_map(cb);
 	mlx_put_image_to_window(cb->mlx, cb->win, cb->img.img, 0, 0);
+	return (0);
+}
+
+int	on_button_pressed(int button, int x, int y, t_cb *cb)
+{
+	(void)x;
+	(void)y;
+	if (button != 1)
+		return (0);
+	if (cb->use_mouse)
+	{
+		cb->use_mouse = 0;
+		mlx_mouse_show(cb->mlx, cb->win);
+	}
+	else
+	{
+		mlx_mouse_hide(cb->mlx, cb->win);
+		mlx_mouse_move(cb->mlx, cb->win, WIDTH / 2, HEIGHT / 2);
+		cb->use_mouse = 1;
+	}
 	return (0);
 }
 
@@ -73,6 +90,6 @@ void	setup_hooks(t_cb *cb)
 	mlx_hook(cb->win, 17, ButtonPressMask, close_win, cb);
 	mlx_hook(cb->win, 2, KeyPressMask, on_keypressed, cb);
 	mlx_hook(cb->win, 3, KeyReleaseMask, on_keyreleased, cb);
-	// mlx_hook(cb->win, MotionNotify, PointerMotionMask, on_mouse_move, cb);
+	mlx_mouse_hook(cb->win, on_button_pressed, cb);
 	mlx_loop_hook(cb->mlx, on_loop, cb);
 }

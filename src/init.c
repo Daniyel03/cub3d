@@ -41,6 +41,7 @@ void	init_struct(t_cb *cb)
 	cb->keybinds = NULL;
 	cb->mlx = NULL;
 	cb->show_map = 0;
+	cb->use_mouse = 0;
 }
 
 t_img	init_texture(char *filename, t_cb *cb)
