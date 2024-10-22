@@ -15,10 +15,31 @@ if [ $? != 1 ]; then
     exit 1
 fi
 
+check_leaks() {
+    if grep -q "definitely lost:" valgrind-out.txt; then
+        echo "Memory leaks detected! Check valgrind-out.txt for details"
+        echo "Summary:"
+        grep -A 4 "LEAK SUMMARY:" valgrind-out.txt
+        exit 1
+        return 1
+    else
+        echo "No memory leaks detected"
+        return 0
+    fi
+    if grep -q "Invalid" valgrind-out.txt; then
+        echo "Invalid read/write detected! Check valgrind-out.txt for details"
+        exit 1
+        return 1
+    fi
+}
+
 for file in maps/valid/*; do
     echo ----------
     echo testsing $file
-    ./cub3D "$file" &
+    valgrind --leak-check=full \
+        --show-leak-kinds=all \
+        --log-file=valgrind-out.txt \
+        ./cub3D "$file" &
     pid=$!
     sleep 1
     if kill -0 $pid 2>/dev/null; then
@@ -36,13 +57,17 @@ for file in maps/valid/*; do
             exit 1
         fi
         echo "Success"
+        check_leaks
     fi
 done
 
 for file in maps/invalid/*; do
     echo ----------
     echo testsing $file
-    ./cub3D "$file" &
+    valgrind --leak-check=full \
+        --show-leak-kinds=all \
+        --log-file=valgrind-out.txt \
+        ./cub3D "$file" &
     pid=$!
     sleep 1
     if kill -0 $pid 2>/dev/null; then
@@ -62,4 +87,5 @@ for file in maps/invalid/*; do
         fi
         echo "Success"
     fi
+    check_leaks
 done

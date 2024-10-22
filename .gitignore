@@ -3,4 +3,4 @@
 cub3D
 .vscode
 *.out
-vgcore.*
+valgrind-out.txt
