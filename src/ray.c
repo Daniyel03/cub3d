@@ -14,7 +14,7 @@
 
 int	is_wall(t_cb *cb, int x, int y)
 {
-	return (x < 0 || y < 0 || x >= cb->map.width || y >= cb->map.height
+	return (x < 0 || y < 0 || y >= cb->map.height
 		|| cb->map.arr[y][x] != 3);
 }
 

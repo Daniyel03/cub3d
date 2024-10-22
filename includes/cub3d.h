@@ -163,7 +163,6 @@ void						draw_map(t_cb *cb);
 
 // parser
 void						parser(t_cb *cb, char **argv);
-int							is_wall(t_cb *cb, int x, int y);
 // parser_utils
 int							empty(char *str);
 
