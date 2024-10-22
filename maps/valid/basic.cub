@@ -1,0 +1,13 @@
+SO maps/textures/south.xpm
+WE maps/textures/west.xpm
+NO maps/textures/north.xpm
+
+F 220,100,0
+EA maps/textures/east.xpm
+C 225,30,0
+
+111111
+100101
+101001
+1100N1
+111111

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#setup
+chmod 000 maps/invalid/no_perm.cub
+
 echo test with no args
 ./cub3D
 if [ $? != 1 ]; then
@@ -51,7 +54,7 @@ for file in maps/valid/*; do
     else
         wait $pid
         EXIT_CODE=$?
-        echo "\ncub3D exited with exit code: $EXIT_CODE"
+        echo "cub3D exited with exit code: $EXIT_CODE"
         # exit code 2 is for mlx errors, they are expected in gh actions
         if [ $EXIT_CODE != 2 ]; then
             exit 1
