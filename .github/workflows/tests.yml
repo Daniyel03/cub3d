@@ -23,11 +23,13 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git merge origin/testing
 
-      - name: debug
-        run: ls */*
-
       - name: Compile
         run: make all
+
+      - name: Install Valgrind
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y valgrind
 
       - name: test
         run: bash tests.sh
