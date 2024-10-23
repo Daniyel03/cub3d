@@ -85,7 +85,11 @@ void	after_map_check(t_parser *parser, char **temp)
 		(*temp) = NULL;
 		(*temp) = get_next_line(parser->temp_fd);
 		if ((*temp) && empty_line((*temp)))
-			return (free(*temp), exit_parser(parser, "no content after map allowed\n"));
+		{
+			free(*temp);
+			*temp = NULL;
+			exit_parser(parser, "no content after map allowed\n");
+		}
 	}
 }
 
@@ -98,8 +102,8 @@ void	alloc_array(t_parser *parser)
 	while (count++ != -1 && temp && empty_line(temp))
 	{
 		if (count == 1 && !str_only_has_number(temp))
-			return (free(temp), temp = NULL,
-				exit_parser(parser, "content before map\n"));
+			return (free(temp), temp = NULL, exit_parser(parser,
+					"content before map\n"));
 		free(temp);
 		temp = NULL;
 		temp = get_next_line(parser->temp_fd);
