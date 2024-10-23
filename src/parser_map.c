@@ -6,7 +6,7 @@
 /*   By: dscholz <dscholz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 14:30:01 by dscholz           #+#    #+#             */
-/*   Updated: 2024/10/10 17:44:00 by dscholz          ###   ########.fr       */
+/*   Updated: 2024/10/23 17:59:44 by dscholz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	after_map_check(t_parser *parser, char **temp)
 		(*temp) = NULL;
 		(*temp) = get_next_line(parser->temp_fd);
 		if ((*temp) && empty_line((*temp)))
-			exit_parser(parser, "no content after map allowed\n");
+			return (free(*temp), exit_parser(parser, "no content after map allowed\n"));
 	}
 }
 
